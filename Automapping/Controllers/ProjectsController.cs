@@ -29,9 +29,13 @@ namespace Automapping.Controllers
             //    x.AddProfile<ProjectMapperConfiguration>();
             //});
             var mapperConfiguration = new MapperConfiguration(cgf =>
-                cgf.CreateMap<Project, ProjectViewModel>());
+                cgf.CreateMap<Project, ProjectViewModel>()
+                    .ForMember(x => x.FioDesigner,
+                        o 
+                            =>  o.Ignore()));
+                
 
-            //mapperConfiguration.AssertConfigurationIsValid();
+            mapperConfiguration.AssertConfigurationIsValid();
 
             var mapper = new Mapper(mapperConfiguration);
             var project = mapper.Map<IEnumerable<ProjectViewModel>>(_context.GetAll());
