@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Automapping.Models;
+using Automapping.Profiles;
 using Automapping.Repository;
 using Automapping.ViewModels;
 
@@ -29,9 +24,16 @@ namespace Automapping.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var config = new MapperConfiguration(cgf =>
+            //var mapperConfiguration = new MapperConfiguration(x =>
+            //{
+            //    x.AddProfile<ProjectMapperConfiguration>();
+            //});
+            var mapperConfiguration = new MapperConfiguration(cgf =>
                 cgf.CreateMap<Project, ProjectViewModel>());
-            var mapper = new Mapper(config);
+
+            //mapperConfiguration.AssertConfigurationIsValid();
+
+            var mapper = new Mapper(mapperConfiguration);
             var project = mapper.Map<IEnumerable<ProjectViewModel>>(_context.GetAll());
             return View(project);
             //return _context.Projects != null ? 

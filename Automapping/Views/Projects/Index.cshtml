@@ -11,9 +11,12 @@
 <th>
     @Html.DisplayNameFor(model => model.OrderValue)
 </th>
-<th>
-    @Html.DisplayNameFor(model => model.FioDesigner)
-</th>
+    <th>
+        @Html.DisplayNameFor(model => model.FioDesigner)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Price)
+    </th>
     <th></th>
 </tr>
 </thead>
@@ -23,9 +26,12 @@
     <td>
         @Html.DisplayFor(modelItem => item.OrderValue)
     </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.FioDesigner)
-    </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FioDesigner)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
     </tr>
 }
 </tbody>
