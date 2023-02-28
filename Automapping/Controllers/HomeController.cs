@@ -1,8 +1,8 @@
-﻿using Automapping.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using AutoMapper;
-using Automapping.ViewModels;
+using DataAccessLayer.Models;
+using Presentation.ViewModels;
 
 namespace Automapping.Controllers
 {

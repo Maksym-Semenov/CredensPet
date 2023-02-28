@@ -1,4 +1,4 @@
-﻿namespace Automapping.Repository;
+﻿namespace Automapping.Infrastructure;
 
 public interface IRepository<T> where T : class
 {

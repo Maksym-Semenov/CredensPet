@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Automapping.Models;
-using Automapping.ViewModels;
+using DataAccessLayer.Models;
+using Presentation.ViewModels;
 
 namespace Automapping.Profiles;
 

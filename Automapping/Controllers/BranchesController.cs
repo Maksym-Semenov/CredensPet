@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAccessLayer.EF;
+using DataAccessLayer.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Automapping.Models;
 
 namespace Automapping.Controllers
 {

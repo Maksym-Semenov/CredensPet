@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Automapping.Models;
+namespace DataAccessLayer.EF;
 
 public partial class CredensTestContext : DbContext
 {

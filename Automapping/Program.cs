@@ -1,6 +1,8 @@
-using Automapping.Models;
-using Automapping.Repository;
+using DataAccessLayer.Models;
+using DataAccessLayer.EF;
 using Microsoft.EntityFrameworkCore;
+using Automapping.Infrastructure;
+using Automapping.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

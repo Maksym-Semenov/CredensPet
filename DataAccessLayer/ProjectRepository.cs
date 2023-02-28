@@ -1,4 +1,6 @@
-﻿using Automapping.Models;
+﻿using Automapping.Infrastructure;
+using DataAccessLayer.EF;
+using DataAccessLayer.Models;
 
 namespace Automapping.Repository;
 

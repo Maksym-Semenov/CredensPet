@@ -1,6 +1,8 @@
-﻿namespace Automapping.ViewModels;
+﻿using Presentation.ViewModels;
 
-public class UserDetailViewModel
+namespace Automapping.ViewModels;
+
+public class UserDetailViewModel    
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

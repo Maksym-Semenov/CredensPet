@@ -1,4 +1,4 @@
-namespace Automapping.Models
+namespace DataAccessLayer.Models
 {
     public class ErrorViewModel
     {

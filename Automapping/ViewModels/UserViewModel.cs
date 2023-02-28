@@ -1,4 +1,4 @@
-﻿namespace Automapping.ViewModels;
+﻿namespace Presentation.ViewModels;
 
 public class UserViewModel
 {

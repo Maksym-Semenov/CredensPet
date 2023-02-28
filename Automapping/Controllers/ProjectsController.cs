@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using Automapping.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using Automapping.Models;
-using Automapping.Profiles;
-using Automapping.Repository;
-using Automapping.ViewModels;
+using DataAccessLayer.Models;
+using Presentation.ViewModels;
 
 namespace Automapping.Controllers
 {
