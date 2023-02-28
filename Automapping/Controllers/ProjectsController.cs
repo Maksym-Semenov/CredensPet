@@ -32,7 +32,7 @@ namespace Automapping.Controllers
             var config = new MapperConfiguration(cgf =>
                 cgf.CreateMap<Project, ProjectViewModel>());
             var mapper = new Mapper(config);
-            var project = mapper.Map<List<ProjectViewModel>>(_context.GetAll());
+            var project = mapper.Map<IEnumerable<ProjectViewModel>>(_context.GetAll());
             return View(project);
             //return _context.Projects != null ? 
             //              View(await _context.Projects.ToListAsync()) :
