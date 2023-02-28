@@ -1,4 +1,5 @@
 using Automapping.Models;
+using Automapping.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,8 @@ builder.Services.AddDbContext<CredensTestContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped(typeof(IRepository<Project>), typeof(ProjectRepository));
 
 var app = builder.Build();
 

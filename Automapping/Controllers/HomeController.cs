@@ -1,6 +1,8 @@
 ﻿using Automapping.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using AutoMapper;
+using Automapping.ViewModels;
 
 namespace Automapping.Controllers
 {
@@ -15,6 +17,9 @@ namespace Automapping.Controllers
 
         public IActionResult Index()
         {
+            var config = new MapperConfiguration(cgf => 
+                cgf.CreateMap<User, UserViewModel>());
+            var mapper = new Mapper(config);
             return View();
         }
 
