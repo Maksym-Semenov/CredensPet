@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.EF;
 using DataAccessLayer.Models;
 
-namespace Automapping.Controllers
+namespace Presentation.Controllers
 {
     public class ContactsController : Controller
     {

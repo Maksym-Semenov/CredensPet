@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Automapping.Infrastructure;
+using CredensPet.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using DataAccessLayer.Models;
 using Presentation.ViewModels;
 
-namespace Automapping.Controllers
+namespace Presentation.Controllers
 {
     public class ProjectsController : Controller
     {

@@ -3,7 +3,7 @@ using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Automapping.Controllers
+namespace Presentation.Controllers
 {
     public class BranchesController : Controller
     {

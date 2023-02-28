@@ -1,8 +1,9 @@
 using DataAccessLayer.Models;
 using DataAccessLayer.EF;
 using Microsoft.EntityFrameworkCore;
-using Automapping.Infrastructure;
-using Automapping.Repository;
+using CredensPet.Infrastructure;
+using DataAccessLayer.Repository;
+using BusinessLogicLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<CredensTestContext>(options =>
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped(typeof(IRepository<Project>), typeof(ProjectRepository));
+builder.Services.AddScoped(typeof(IService<Project>), typeof(ProjectService));
 
 var app = builder.Build();
 

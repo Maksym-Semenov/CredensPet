@@ -1,8 +1,8 @@
-﻿using Automapping.Infrastructure;
+﻿using CredensPet.Infrastructure;
 using DataAccessLayer.EF;
 using DataAccessLayer.Models;
 
-namespace Automapping.Repository;
+namespace DataAccessLayer.Repository;
 
 public class ProjectRepository : IRepository<Project>
 {

@@ -4,7 +4,7 @@ using AutoMapper;
 using DataAccessLayer.Models;
 using Presentation.ViewModels;
 
-namespace Automapping.Controllers
+namespace Presentation.Controllers
 {
     public class HomeController : Controller
     {
