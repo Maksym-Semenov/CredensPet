@@ -1,47 +1,31 @@
 ﻿using AutoMapper;
-using CredensPet.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using DataAccessLayer.Models;
-using Presentation.ViewModels;
+using CredensPet.Infrastructure;
+using CredensPet.Infrastructure.DTO;
+using Presentation.Profiles;
 
 namespace Presentation.Controllers
 {
     public class ProjectsController : Controller
     {
-        private readonly IRepository<Project> _context;
-        public ProjectsController(IRepository<Project> context)
+        private readonly IService<ProjectDTO> _service;
+        public ProjectsController(IService<ProjectDTO> service)
         {
-            _context = context;
+            _service = service;
         }
-
-        //public ProjectsController(CredensTestContext context)
-        //{
-        //    _context = context;
-        //}
 
         // GET: Projects
         public async Task<IActionResult> Index()
         {
-
-            //var mapperConfiguration = new MapperConfiguration(x =>
-            //{
-            //    x.AddProfile<ProjectMapperConfiguration>();
-            //});
-            var mapperConfiguration = new MapperConfiguration(cgf =>
-                cgf.CreateMap<Project, ProjectViewModel>()
-                    .ForMember(x => x.FioDesigner,
-                        o 
-                            =>  o.Ignore()));
-                
-
-            mapperConfiguration.AssertConfigurationIsValid();
+            var mapperConfiguration = new MapperConfiguration(x =>
+                x.AddProfile<ProjectMapperConfiguration>());
+             mapperConfiguration.AssertConfigurationIsValid();
 
             var mapper = new Mapper(mapperConfiguration);
-            var project = mapper.Map<IEnumerable<ProjectViewModel>>(_context.GetAll());
-            return View(project);
-            //return _context.Projects != null ? 
-            //              View(await _context.Projects.ToListAsync()) :
-            //              Problem("Entity set 'CredensTestContext.Projects'  is null.");
+            var project = mapper.Map<IEnumerable<ProjectDTO>>(_service.GetAll());
+            return project != null ? 
+                View(project) : 
+                Problem("Entity set 'CredensTestContext.Projects'  is null.");
         }
 
         // GET: Projects/Details/5

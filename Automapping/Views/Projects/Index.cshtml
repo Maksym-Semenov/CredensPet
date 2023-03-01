@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Presentation.ViewModels.ProjectViewModel>
+﻿@model IEnumerable<CredensPet.Infrastructure.DTO.ProjectDTO>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,14 +12,20 @@
     @Html.DisplayNameFor(model => model.OrderValue)
 </th>
     <th>
-        @Html.DisplayNameFor(model => model.FioDesigner)
+        @Html.DisplayNameFor(model => model.OrderMonth)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.OrderYear)
     </th>
     <th>
         @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectId)
-            </th>
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.OrderName)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Street)
+    </th>
     <th></th>
 </tr>
 </thead>
@@ -30,10 +36,19 @@
         @Html.DisplayFor(modelItem => item.OrderValue)
     </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FioDesigner)
+            @Html.DisplayFor(modelItem => item.OrderMonth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderYear)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Street)
         </td>
     </tr>
 }

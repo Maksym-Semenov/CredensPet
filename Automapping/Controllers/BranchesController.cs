@@ -7,9 +7,9 @@ namespace Presentation.Controllers
 {
     public class BranchesController : Controller
     {
-        private readonly CredensTestContext _context;
+        private readonly CredensContext _context;
 
-        public BranchesController(CredensTestContext context)
+        public BranchesController(CredensContext context)
         {
             _context = context;
         }

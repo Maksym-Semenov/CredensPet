@@ -7,9 +7,9 @@ namespace Presentation.Controllers
 {
     public class ContactsController : Controller
     {
-        private readonly CredensTestContext _context;
+        private readonly CredensContext _context;
 
-        public ContactsController(CredensTestContext context)
+        public ContactsController(CredensContext context)
         {
             _context = context;
         }
