@@ -6,7 +6,6 @@ using DataAccessLayer.Repository;
 using BusinessLogicLayer;
 using CredensPet.Infrastructure.DTO;
 using DataAccessLayer.MappingProfiles;
-using Presentation.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,11 +19,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped(typeof(IRepository<ProjectDTO>), typeof(ProjectRepository));
 builder.Services.AddScoped(typeof(IService<ProjectDTO>), typeof(ProjectService));
 
-var config = new MapperConfiguration(c => {
-    c.AddProfile<ProjectMapperConfiguration>();
-    c.AddProfile<ProjectDTOMapperConfiguration>();
-});
-builder.Services.AddSingleton<IMapper>(s => config.CreateMapper());
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

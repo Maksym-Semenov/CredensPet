@@ -8,20 +8,20 @@ using Presentation.Profiles;
 
 namespace DataAccessLayer.Repository;
 
-public class ProjectRepository : IRepository<ProjectDTO>
+public class BranchRepository : IRepository<BranchDTO>
 {
     private readonly CredensContext _context;
     private readonly IMapper _mapper;
-    public ProjectRepository(CredensContext context)
+    public BranchRepository(CredensContext context)
     {
         _context = context;
-        _mapper = GenericMapperConfiguration<Project, ProjectDTO>.MapTo();
+        _mapper = GenericMapperConfiguration<Branch, BranchDTO>.MapTo();
     }
 
-    public IEnumerable<ProjectDTO> GetAll()
+    public IEnumerable<BranchDTO> GetAll()
     {
-        var project = _mapper.Map<IEnumerable<ProjectDTO>>(_context.Projects);
-        return project;
+        var branch = _mapper.Map<IEnumerable<BranchDTO>>(_context.Branches);
+        return branch;
     }
 
     //public IQueryable<Project> GetAll()
@@ -29,17 +29,17 @@ public class ProjectRepository : IRepository<ProjectDTO>
     //    return _context.Projects.AsQueryable();
     //}
 
-    public void Add(ProjectDTO entity)
+    public void Add(BranchDTO entity)
     {
         throw new NotImplementedException();
     }
 
-    public void Update(ProjectDTO entity)
+    public void Update(BranchDTO entity)
     {
         throw new NotImplementedException();
     }
 
-    public void Delete(ProjectDTO entity)
+    public void Delete(BranchDTO entity)
     {
         throw new NotImplementedException();
     }

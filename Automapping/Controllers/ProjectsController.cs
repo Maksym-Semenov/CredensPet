@@ -3,26 +3,27 @@ using Microsoft.AspNetCore.Mvc;
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using Presentation.Profiles;
+using Presentation.ViewModels;
 
 namespace Presentation.Controllers
 {
     public class ProjectsController : Controller
     {
         private readonly IService<ProjectDTO> _service;
+        private readonly IMapper _mapper;
         public ProjectsController(IService<ProjectDTO> service)
         {
             _service = service;
+            _mapper = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
         }
 
         // GET: Projects
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var mapperConfiguration = new MapperConfiguration(x =>
-                x.AddProfile<ProjectMapperConfiguration>());
-             mapperConfiguration.AssertConfigurationIsValid();
-
-            var mapper = new Mapper(mapperConfiguration);
-            var project = mapper.Map<IEnumerable<ProjectDTO>>(_service.GetAll());
+            //var mapperConfiguration = new MapperConfiguration(x =>
+                //x.AddProfile(DTOToViewModel));
+            //var mapper = new Mapper(mapperConfiguration);
+            var project = _mapper.Map<IEnumerable<ProjectViewModel>>(_service.GetAll());
             return project != null ? 
                 View(project) : 
                 Problem("Entity set 'CredensTestContext.Projects'  is null.");
