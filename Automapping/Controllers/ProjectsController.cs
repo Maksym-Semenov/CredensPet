@@ -20,7 +20,7 @@ namespace Presentation.Controllers
         // GET: Projects
         public IActionResult Index()
         {
-            var project = _mapper.Map<IEnumerable<ProjectViewModel>>(_service.GetAll());
+            var project = _mapper.Map<IEnumerable<UserViewModel>>(_service.GetAll());
             return project != null ? 
                 View(project) : 
                 Problem("Entity set 'CredensTestContext.Projects'  is null.");
