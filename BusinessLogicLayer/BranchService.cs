@@ -12,6 +12,12 @@ public class BranchService : IService<BranchDTO>
         _branchRepository = branchRepository;
     }
 
+    public IEnumerable<BranchDTO> GetAll()
+    {
+        var branchDTO = _branchRepository.GetAll();
+        return branchDTO;
+    }
+
     public void Add(BranchDTO entity)
     {
         throw new NotImplementedException();
@@ -22,11 +28,7 @@ public class BranchService : IService<BranchDTO>
         throw new NotImplementedException();
     }
 
-    public IEnumerable<BranchDTO> GetAll()
-    {
-        var branchDTO = _branchRepository.GetAll();
-        return branchDTO;
-    }
+   
 
     public void Update(BranchDTO entity)
     {

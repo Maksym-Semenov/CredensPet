@@ -22,6 +22,8 @@ builder.Services.AddScoped(typeof(IService<ProjectDTO>), typeof(ProjectService))
 builder.Services.AddScoped(typeof(IRepository<BranchDTO>), typeof(BranchRepository));
 builder.Services.AddScoped(typeof(IService<BranchDTO>), typeof(BranchService));
 
+builder.Services.AddScoped(typeof(IRepository<ContactDTO>), typeof(ContactRepository));
+builder.Services.AddScoped(typeof(IService<ContactDTO>), typeof(ContactService));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
