@@ -1,26 +1,34 @@
 ﻿using CredensPet.Infrastructure;
+using CredensPet.Infrastructure.DTO;
 using DataAccessLayer.Models;
 
 namespace BusinessLogicLayer;
 
-public class BranchService : IService<Branch>
+public class BranchService : IService<BranchDTO>
 {
-    public void Add(Branch entity)
+    private readonly IRepository<BranchDTO> _branchRepository;
+    public BranchService(IRepository<BranchDTO> branchRepository)
+    {
+        _branchRepository = branchRepository;
+    }
+
+    public void Add(BranchDTO entity)
     {
         throw new NotImplementedException();
     }
 
-    public void Delete(Branch entity)
+    public void Delete(BranchDTO entity)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Branch> GetAll()
+    public IEnumerable<BranchDTO> GetAll()
     {
-        throw new NotImplementedException();
+        var branchDTO = _branchRepository.GetAll();
+        return branchDTO;
     }
 
-    public void Update(Branch entity)
+    public void Update(BranchDTO entity)
     {
         throw new NotImplementedException();
     }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataAccessLayer.Models.Branch>
+﻿@model IEnumerable<Presentation.ViewModels.BranchViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,12 +15,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsOpen)
-            </th>
+           @* <th>
+                @Html.DisplayNameFor(model => model.BranchId)
+            </th>*@
+           
             <th></th>
         </tr>
     </thead>
@@ -30,12 +28,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsOpen)
-            </td>
+           @* <td>
+                @Html.DisplayFor(modelItem => item.BranchId)
+            </td>*@
+            
             <td>
                 <a asp-action="Edit" asp-route-id="@item.BranchId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.BranchId">Details</a> |

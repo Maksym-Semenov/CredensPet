@@ -2,7 +2,6 @@
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using DataAccessLayer.EF;
-using DataAccessLayer.MappingProfiles;
 using DataAccessLayer.Models;
 using Presentation.Profiles;
 

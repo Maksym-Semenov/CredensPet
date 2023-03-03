@@ -20,9 +20,6 @@ namespace Presentation.Controllers
         // GET: Projects
         public IActionResult Index()
         {
-            //var mapperConfiguration = new MapperConfiguration(x =>
-                //x.AddProfile(DTOToViewModel));
-            //var mapper = new Mapper(mapperConfiguration);
             var project = _mapper.Map<IEnumerable<ProjectViewModel>>(_service.GetAll());
             return project != null ? 
                 View(project) : 

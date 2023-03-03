@@ -5,11 +5,11 @@ namespace BusinessLogicLayer;
 
 public class ProjectService : IService<ProjectDTO>
 {
-    private readonly IRepository<ProjectDTO> _repository;
+    private readonly IRepository<ProjectDTO> _projectRepository;
 
-    public ProjectService(IRepository<ProjectDTO> repository)
+    public ProjectService(IRepository<ProjectDTO> projectRepository)
     {
-        _repository = repository;
+        _projectRepository = projectRepository;
     }
 
     public void Add(ProjectDTO entity)
@@ -24,7 +24,7 @@ public class ProjectService : IService<ProjectDTO>
 
     public IEnumerable<ProjectDTO> GetAll()
     {
-        var projectDTO = _repository.GetAll();
+        var projectDTO = _projectRepository.GetAll();
         return projectDTO;
     }
 

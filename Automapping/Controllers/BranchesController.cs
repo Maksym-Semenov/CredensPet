@@ -1,37 +1,30 @@
 ﻿using AutoMapper;
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
-using DataAccessLayer.EF;
-using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
+using Presentation.ViewModels;
 
 namespace Presentation.Controllers
 {
     public class BranchesController : Controller
     {
-        private readonly IService<Branch> _service;
-        public BranchesController(IService<Branch> service)
+        private readonly IService<BranchDTO> _service;
+        private readonly IMapper _mapper;
+        public BranchesController(IService<BranchDTO> service)
         {
             _service = service;
+            _mapper = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
         }
 
         // GET: Branches
-        //public async Task<IActionResult> Index()
-        //{
-            //var mapperConfiguration = new MapperConfiguration(x =>
-            //    x.AddProfile(BranchMapperConfiguration));
-
-            //mapperConfiguration.AssertConfigurationIsValid();
-
-            //var mapper = new Mapper(mapperConfiguration);
-
-            //var branch = mapper.Map<IEnumerable<BranchDTO>>(_service.GetAll());
-            //  return branch != null ? 
-            //              View( branch) :
-            //              Problem("Entity set 'CredensTestContext.Branches'  is null.");
-       // }
+        public IActionResult Index()
+        {
+            var branch = _mapper.Map<IEnumerable<BranchViewModel>>(_service.GetAll());
+            return branch != null ?
+                        View(branch) :
+                        Problem("Entity set 'CredensTestContext.Branches'  is null.");
+        }
 
         //// GET: Branches/Details/5
         //public async Task<IActionResult> Details(int? id)
@@ -156,7 +149,7 @@ namespace Presentation.Controllers
         //    {
         //        _context.Branches.Remove(branch);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}

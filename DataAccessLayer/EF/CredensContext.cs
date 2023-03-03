@@ -5,14 +5,9 @@ namespace DataAccessLayer.EF;
 
 public partial class CredensContext : DbContext
 {
-    public CredensContext()
-    {
-    }
+    public CredensContext() { }
 
-    public CredensContext(DbContextOptions<CredensContext> options)
-        : base(options)
-    {
-    }
+    public CredensContext(DbContextOptions<CredensContext> options) : base(options) { }
 
     public virtual DbSet<Branch> Branches { get; set; }
 
