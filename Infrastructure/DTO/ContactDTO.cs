@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace CredensPet.Infrastructure.DTO;
 
-namespace Automapping.Models;
-
-public partial class Contact
+public class ContactDTO
 {
     public int ContactId { get; set; }
 

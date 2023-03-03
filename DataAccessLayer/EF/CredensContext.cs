@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Automapping.Models;
+namespace DataAccessLayer.EF;
 
-public partial class CredensTestContext : DbContext
+public partial class CredensContext : DbContext
 {
-    public CredensTestContext()
-    {
-    }
+    public CredensContext() { }
 
-    public CredensTestContext(DbContextOptions<CredensTestContext> options)
-        : base(options)
-    {
-    }
+    public CredensContext(DbContextOptions<CredensContext> options) : base(options) { }
 
     public virtual DbSet<Branch> Branches { get; set; }
 
@@ -24,7 +18,6 @@ public partial class CredensTestContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=MAX-PC;Database=CredensTest;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

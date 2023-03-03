@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Automapping.Models;
+﻿namespace DataAccessLayer.Models;
 
 public partial class Branch
 {

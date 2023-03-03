@@ -1,14 +1,29 @@
-using Automapping.Models;
+using AutoMapper;
+using DataAccessLayer.EF;
 using Microsoft.EntityFrameworkCore;
+using CredensPet.Infrastructure;
+using DataAccessLayer.Repository;
+using BusinessLogicLayer;
+using CredensPet.Infrastructure.DTO;
+using DataAccessLayer.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<CredensTestContext>(options =>
+builder.Services.AddDbContext<CredensContext>(options =>
     options.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped(typeof(IRepository<ProjectDTO>), typeof(ProjectRepository));
+builder.Services.AddScoped(typeof(IService<ProjectDTO>), typeof(ProjectService));
+
+builder.Services.AddScoped(typeof(IRepository<BranchDTO>), typeof(BranchRepository));
+builder.Services.AddScoped(typeof(IService<BranchDTO>), typeof(BranchService));
+
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

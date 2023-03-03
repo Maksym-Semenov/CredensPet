@@ -1,8 +1,10 @@
-﻿using Automapping.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using AutoMapper;
+using DataAccessLayer.Models;
+using Presentation.ViewModels;
 
-namespace Automapping.Controllers
+namespace Presentation.Controllers
 {
     public class HomeController : Controller
     {
@@ -15,6 +17,9 @@ namespace Automapping.Controllers
 
         public IActionResult Index()
         {
+            var config = new MapperConfiguration(cgf => 
+                cgf.CreateMap<User, UserViewModel>());
+            var mapper = new Mapper(config);
             return View();
         }
 
