@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Presentation.ViewModels.ProjectViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<table class="table">
+<thead>
+<tr>
+<th>
+    @Html.DisplayNameFor(model => model.ProjectId)
+</th>
+    <th>
+        @Html.DisplayNameFor(model => model.OrderValue)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.OrderMonth)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.OrderYear)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Price)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.OrderName)
+    </th>
+    <th></th>
+</tr>
+</thead>
+<tbody>
+@foreach (var item in Model) {
+    <tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.OrderValue)
+    </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderMonth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Street)
+        </td>
+    </tr>
+}
+</tbody>
+</table>
