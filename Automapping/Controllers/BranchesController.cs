@@ -44,26 +44,26 @@ namespace Presentation.Controllers
         //    return View(branch);
         //}
 
-        //// GET: Branches/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Branches/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: Branches/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Branches/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("BranchId,Name,Phone,IsOpen")] Branch branch)
+        //public async Task<IActionResult> Create([Bind("BranchId,Name,Phone,IsOpen")] BranchDTO branchDTO)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        _context.Add(branch);
-        //        await _context.SaveChangesAsync();
+        //        _service.Add(branchDTO);
+        //        await _service.SaveChangesAsync();
         //        return RedirectToAction(nameof(Index));
         //    }
-        //    return View(branch);
+        //    return View(branchDTO);
         //}
 
         //// GET: Branches/Edit/5

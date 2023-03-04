@@ -17,6 +17,11 @@ public class BranchRepository : IRepository<BranchDTO>
         _mapper = GenericMapperConfiguration<Branch, BranchDTO>.MapTo();
     }
 
+    public IQueryable<BranchDTO> GetAllQ()
+    {
+        throw new NotImplementedException();
+    }
+
     public IEnumerable<BranchDTO> GetAll()
     {
         var branch = _mapper.Map<IEnumerable<BranchDTO>>(_context.Branches);

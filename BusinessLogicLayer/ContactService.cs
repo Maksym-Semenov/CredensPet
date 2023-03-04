@@ -26,7 +26,6 @@ public class ContactService : IService<ContactDTO>
     {
         throw new NotImplementedException();
     }
-
    
 
     public void Update(ContactDTO entity)

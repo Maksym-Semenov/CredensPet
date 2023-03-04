@@ -28,8 +28,6 @@ public class BranchService : IService<BranchDTO>
         throw new NotImplementedException();
     }
 
-   
-
     public void Update(BranchDTO entity)
     {
         throw new NotImplementedException();
