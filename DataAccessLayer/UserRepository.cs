@@ -16,7 +16,7 @@ public class UserRepository : IRepository<UserDTO>
     {
         _context = context;
         _mapper1 = GenericMapperConfiguration<User, UserDTO>.MapTo();
-        _mapper1 = GenericMapperConfiguration<UserDTO, User>.MapTo();
+        _mapper2 = GenericMapperConfiguration<UserDTO, User>.MapTo();
     }
 
     public IEnumerable<UserDTO> GetAll()
