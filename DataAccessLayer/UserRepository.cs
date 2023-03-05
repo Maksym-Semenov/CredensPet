@@ -10,16 +10,18 @@ namespace DataAccessLayer.Repository;
 public class UserRepository : IRepository<UserDTO>
 {
     private readonly CredensContext _context;
-    private readonly IMapper _mapper;
+    private readonly IMapper _mapper1;
+    private readonly IMapper _mapper2;
     public UserRepository(CredensContext context)
     {
         _context = context;
-        _mapper = GenericMapperConfiguration<User, UserDTO>.MapTo();
+        _mapper1 = GenericMapperConfiguration<User, UserDTO>.MapTo();
+        _mapper1 = GenericMapperConfiguration<UserDTO, User>.MapTo();
     }
 
     public IEnumerable<UserDTO> GetAll()
     {
-        var user = _mapper.Map<IEnumerable<UserDTO>>(_context.Users);
+        var user = _mapper1.Map<IEnumerable<UserDTO>>(_context.Users);
         return user;
     }
 
@@ -28,9 +30,10 @@ public class UserRepository : IRepository<UserDTO>
     //    return _context.Projects.AsQueryable();
     //}
 
-    public void Add(UserDTO entity)
+    public async Task Add(UserDTO entity)
     {
-        throw new NotImplementedException();
+        var user = _mapper2.Map<User>(entity);
+        await _context.Users.AddAsync(user);
     }
 
     public void Update(UserDTO entity)
@@ -42,5 +45,9 @@ public class UserRepository : IRepository<UserDTO>
     {
         throw new NotImplementedException();
     }
-   
+
+    public Task SaveChangesAsync()
+    {
+        return _context.SaveChangesAsync();
+    }
 }

@@ -47,27 +47,27 @@ namespace Presentation.Controllers
         //    return View(user);
         //}
 
-        //// GET: Users/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Users/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: Users/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("UserId,FirstName,MiddleName,LastName,UserRoleId")] User user)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(user);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(user);
-        //}
+        // POST: Users/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("UserId,FirstName,MiddleName,LastName,UserRoleId")] UserDTO userDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.Add(userDTO);
+                _service.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(userDTO);
+        }
 
         //// GET: Users/Edit/5
         //public async Task<IActionResult> Edit(int? id)
@@ -152,7 +152,7 @@ namespace Presentation.Controllers
         //    {
         //        _context.Users.Remove(user);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}

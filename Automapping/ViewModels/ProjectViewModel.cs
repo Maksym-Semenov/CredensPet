@@ -8,6 +8,6 @@ public class ProjectViewModel
     public int OrderYear { get; set; }
     public int Price { get; set; }
     public string? OrderName { get; set; }
-    public string? Street { get; set; }
+    public string? City { get; set; }
 
 }

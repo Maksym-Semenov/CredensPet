@@ -5,21 +5,22 @@ namespace BusinessLogicLayer;
 
 public class ContactService : IService<ContactDTO>
 {
-    private readonly IRepository<ContactDTO> _branchRepository;
-    public ContactService(IRepository<ContactDTO> branchRepository)
+    private readonly IRepository<ContactDTO> _repository;
+    public ContactService(IRepository<ContactDTO> repository)
     {
-        _branchRepository = branchRepository;
+        _repository = repository;
     }
 
     public IEnumerable<ContactDTO> GetAll()
     {
-        var contactDTO = _branchRepository.GetAll();
+        var contactDTO = _repository.GetAll();
         return contactDTO;
     }
 
-    public void Add(ContactDTO entity)
+    public async Task Add(ContactDTO entity)
     {
-        throw new NotImplementedException();
+        var contact = _repository.Add(entity);
+        await _repository.SaveChangesAsync();
     }
 
     public void Delete(ContactDTO entity)
@@ -27,7 +28,11 @@ public class ContactService : IService<ContactDTO>
         throw new NotImplementedException();
     }
 
-   
+    public Task SaveChangesAsync()
+    {
+        return _repository.SaveChangesAsync();
+    }
+
 
     public void Update(ContactDTO entity)
     {

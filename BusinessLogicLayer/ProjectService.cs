@@ -5,16 +5,17 @@ namespace BusinessLogicLayer;
 
 public class ProjectService : IService<ProjectDTO>
 {
-    private readonly IRepository<ProjectDTO> _projectRepository;
+    private readonly IRepository<ProjectDTO> _repository;
 
-    public ProjectService(IRepository<ProjectDTO> projectRepository)
+    public ProjectService(IRepository<ProjectDTO> repository)
     {
-        _projectRepository = projectRepository;
+        _repository = repository;
     }
 
-    public void Add(ProjectDTO entity)
+    public async Task Add(ProjectDTO entity)
     {
-        throw new NotImplementedException();
+        await _repository.Add(entity);
+        await _repository.SaveChangesAsync();
     }
 
     public void Delete(ProjectDTO entity)
@@ -22,9 +23,14 @@ public class ProjectService : IService<ProjectDTO>
         throw new NotImplementedException();
     }
 
+    public Task SaveChangesAsync()
+    {
+        return _repository.SaveChangesAsync();
+    }
+
     public IEnumerable<ProjectDTO> GetAll()
     {
-        var projectDTO = _projectRepository.GetAll();
+        var projectDTO = _repository.GetAll();
         return projectDTO;
     }
 

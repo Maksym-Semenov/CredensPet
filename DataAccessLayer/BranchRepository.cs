@@ -10,16 +10,18 @@ namespace DataAccessLayer.Repository;
 public class BranchRepository : IRepository<BranchDTO>
 {
     private readonly CredensContext _context;
-    private readonly IMapper _mapper;
+    private readonly IMapper _mapper1;
+    private readonly IMapper _mapper2;
     public BranchRepository(CredensContext context)
     {
         _context = context;
-        _mapper = GenericMapperConfiguration<Branch, BranchDTO>.MapTo();
+        _mapper1 = GenericMapperConfiguration<Branch, BranchDTO>.MapTo();
+        _mapper2 = GenericMapperConfiguration<BranchDTO, Branch>.MapTo();
     }
 
     public IEnumerable<BranchDTO> GetAll()
     {
-        var branch = _mapper.Map<IEnumerable<BranchDTO>>(_context.Branches);
+        var branch = _mapper1.Map<IEnumerable<BranchDTO>>(_context.Branches);
         return branch;
     }
 
@@ -28,9 +30,10 @@ public class BranchRepository : IRepository<BranchDTO>
     //    return _context.Projects.AsQueryable();
     //}
 
-    public void Add(BranchDTO entity)
+    public async Task Add(BranchDTO entity)
     {
-        throw new NotImplementedException();
+        var branch = _mapper2.Map<Branch>(entity);
+        await _context.Branches.AddAsync(branch);
     }
 
     public void Update(BranchDTO entity)
@@ -42,5 +45,9 @@ public class BranchRepository : IRepository<BranchDTO>
     {
         throw new NotImplementedException();
     }
-   
+
+    public  Task SaveChangesAsync()
+    {
+        return _context.SaveChangesAsync();
+    }
 }
