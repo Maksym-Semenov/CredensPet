@@ -10,16 +10,18 @@ namespace DataAccessLayer.Repository;
 public class ContactRepository : IRepository<ContactDTO>
 {
     private readonly CredensContext _context;
-    private readonly IMapper _mapper;
+    private readonly IMapper _mapper1;
+    private readonly IMapper _mapper2;
     public ContactRepository(CredensContext context)
     {
         _context = context;
-        _mapper = GenericMapperConfiguration<Contact, ContactDTO>.MapTo();
+        _mapper1 = GenericMapperConfiguration<Contact, ContactDTO>.MapTo();
+        _mapper2 = GenericMapperConfiguration<ContactDTO, Contact>.MapTo();
     }
 
     public IEnumerable<ContactDTO> GetAll()
     {
-        var contact = _mapper.Map<IEnumerable<ContactDTO>>(_context.Contacts);
+        var contact = _mapper1.Map<IEnumerable<ContactDTO>>(_context.Contacts);
         return contact;
     }
 
@@ -28,9 +30,10 @@ public class ContactRepository : IRepository<ContactDTO>
     //    return _context.Projects.AsQueryable();
     //}
 
-    public void Add(ContactDTO entity)
+    public async Task Add(ContactDTO entity)
     {
-        throw new NotImplementedException();
+        var contact = _mapper2.Map<Contact>(entity);
+        await _context.Contacts.AddAsync(contact);
     }
 
     public void Update(ContactDTO entity)
@@ -42,5 +45,9 @@ public class ContactRepository : IRepository<ContactDTO>
     {
         throw new NotImplementedException();
     }
-   
+
+    public Task SaveChangesAsync()
+    {
+        return _context.SaveChangesAsync();
+    }
 }

@@ -50,21 +50,22 @@ namespace Presentation.Controllers
             return View();
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("ProjectId,OrderValue,OrderMonth,OrderYear,CustomerId,OrderName,Price,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Litera,BuildingPart,Apartment,Floor,ManagerId,MakerId,BranchId")] Project project)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(project);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(project);
-        //}
+        //POST: Projects/Create
+        //To protect from overposting attacks, enable the specific properties you want to bind to.
+        //For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+       [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("OrderValue,OrderMonth,OrderYear,OrderName,Price,City")] ProjectDTO projectDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.Add(projectDTO);
+                _service.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(projectDTO);
+        }
 
         // GET: Projects/Edit/5
         //public async Task<IActionResult> Edit(int? id)
@@ -149,7 +150,7 @@ namespace Presentation.Controllers
         //    {
         //        _context.Projects.Remove(project);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}

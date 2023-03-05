@@ -1,11 +1,9 @@
-using AutoMapper;
 using DataAccessLayer.EF;
 using Microsoft.EntityFrameworkCore;
 using CredensPet.Infrastructure;
 using DataAccessLayer.Repository;
 using BusinessLogicLayer;
 using CredensPet.Infrastructure.DTO;
-using DataAccessLayer.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 

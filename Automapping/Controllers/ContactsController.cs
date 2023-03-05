@@ -48,27 +48,27 @@ namespace Presentation.Controllers
         //    return View(contact);
         //}
 
-        //// GET: Contacts/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Contacts/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: Contacts/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("ContactId,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] Contact contact)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _service.Add(contact);
-        //        await _service;
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(contact);
-        //}
+        // POST: Contacts/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ContactId,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactDTO contactDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.Add(contactDTO);
+                _service.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(contactDTO);
+        }
 
         //// GET: Contacts/Edit/5
         //public async Task<IActionResult> Edit(int? id)
@@ -152,7 +152,7 @@ namespace Presentation.Controllers
         //    {
         //        _service.Delete(contact);
         //    }
-            
+
         //    await _service;
         //    return RedirectToAction(nameof(Index));
         //}

@@ -6,27 +6,34 @@ namespace BusinessLogicLayer;
 
 public class BranchService : IService<BranchDTO>
 {
-    private readonly IRepository<BranchDTO> _branchRepository;
-    public BranchService(IRepository<BranchDTO> branchRepository)
+    private readonly IRepository<BranchDTO> _repository;
+    public BranchService(IRepository<BranchDTO> repository)
     {
-        _branchRepository = branchRepository;
+        _repository = repository;
     }
 
     public IEnumerable<BranchDTO> GetAll()
     {
-        var branchDTO = _branchRepository.GetAll();
+        var branchDTO = _repository.GetAll();
         return branchDTO;
     }
 
-    public void Add(BranchDTO entity)
+    public async Task Add(BranchDTO entity)
     {
-        throw new NotImplementedException();
+        await _repository.Add(entity);
+        await _repository.SaveChangesAsync();
     }
 
     public void Delete(BranchDTO entity)
     {
         throw new NotImplementedException();
     }
+
+    public async Task SaveChangesAsync()
+    {
+        await _repository.SaveChangesAsync();
+    }
+
 
     public void Update(BranchDTO entity)
     {

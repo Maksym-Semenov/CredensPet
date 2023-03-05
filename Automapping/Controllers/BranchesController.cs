@@ -51,20 +51,18 @@ namespace Presentation.Controllers
         }
 
         // POST: Branches/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("BranchId,Name,Phone,IsOpen")] BranchDTO branchDTO)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _service.Add(branchDTO);
-        //        await _service.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(branchDTO);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("BranchId,Name")] BranchDTO branchDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.Add(branchDTO);
+                _service.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(branchDTO);
+        }
 
         //// GET: Branches/Edit/5
         //public async Task<IActionResult> Edit(int? id)

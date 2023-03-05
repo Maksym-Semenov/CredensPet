@@ -19,14 +19,20 @@ public class UserService : IService<UserDTO>
         return user;
     }
 
-    public void Add(UserDTO entity)
+    public async Task Add(UserDTO entity)
     {
-        throw new NotImplementedException();
+        var user = _repository.Add(entity);
+        await _repository.SaveChangesAsync();
     }
 
     public void Delete(UserDTO entity)
     {
         throw new NotImplementedException();
+    }
+
+    public Task SaveChangesAsync()
+    {
+        return _repository.SaveChangesAsync();
     }
 
     public void Update(UserDTO entity)
