@@ -2,13 +2,16 @@
 
 public interface IRepository<T> where T : class
 {
-    //IQueryable<T> GetAllQ();
-    IEnumerable<T> GetAll();
     void Add(T entity);
-    void Update(T entity);
+
     void Delete(T entity);
-    //Task SaveChangesAsync();
+
+    T Find(params object[] keys);
+
+    IEnumerable<T> GetAll();
+
     void SaveChanges();
-    Task<T> FindAsync(int? id);
+
+    void Update(T entity);
 
 }

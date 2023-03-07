@@ -23,15 +23,10 @@ public class ProjectService : IService<ProjectDTO>
         throw new NotImplementedException();
     }
 
-    public void SaveChanges()
+    public ProjectDTO Find(params object[] keys)
     {
-        _repository.SaveChanges();
-    }
-
-    public async Task<ProjectDTO> FindAsync(int? id)
-    {
-        var project = _repository.FindAsync(id);
-        return await project;
+        var projectDTO = _repository.Find(keys);
+        return projectDTO;
     }
 
     public IEnumerable<ProjectDTO> GetAll()
@@ -40,8 +35,14 @@ public class ProjectService : IService<ProjectDTO>
         return projectDTO;
     }
 
+    public void SaveChanges()
+    {
+        _repository.SaveChanges();
+    }
+
     public void Update(ProjectDTO entity)
     {
         throw new NotImplementedException();
     }
+
 }

@@ -20,21 +20,10 @@ public class ContactRepository : IRepository<ContactDTO>
         _mapper2 = GenericMapperConfiguration<ContactDTO, Contact>.MapTo();
     }
 
-    public IEnumerable<ContactDTO> GetAll()
-    {
-        var contact = _mapper1.Map<IEnumerable<ContactDTO>>(_context.Contacts);
-        return contact;
-    }
-
     public void Add(ContactDTO entity)
     {
-        var contact = _mapper2.Map<Contact>(entity);
-        _context.Contacts.Add(contact);
-    }
-
-    public void Update(ContactDTO entity)
-    {
-        throw new NotImplementedException();
+        var contactDTO = _mapper2.Map<Contact>(entity);
+        _context.Contacts.Add(contactDTO);
     }
 
     public void Delete(ContactDTO entity)
@@ -42,13 +31,26 @@ public class ContactRepository : IRepository<ContactDTO>
         throw new NotImplementedException();
     }
 
+    public ContactDTO Find(params object[] keys)
+    {
+        var contactDTO = _mapper1.Map<ContactDTO>(_context.Contacts.Find(keys));
+        return contactDTO;
+    }
+
+    public IEnumerable<ContactDTO> GetAll()
+    {
+        var contact = _mapper1.Map<IEnumerable<ContactDTO>>(_context.Contacts);
+        return contact;
+    }
+
     public void SaveChanges()
     {
         _context.SaveChanges();
     }
 
-    public Task<ContactDTO> FindAsync(int? id)
+    public void Update(ContactDTO entity)
     {
         throw new NotImplementedException();
     }
+   
 }

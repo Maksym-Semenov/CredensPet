@@ -12,12 +12,6 @@ public class BranchService : IService<BranchDTO>
         _repository = repository;
     }
 
-    public IEnumerable<BranchDTO> GetAll()
-    {
-        var branchDTO = _repository.GetAll();
-        return branchDTO;
-    }
-
     public void Add(BranchDTO entity)
     {
         _repository.Add(entity);
@@ -29,18 +23,26 @@ public class BranchService : IService<BranchDTO>
         throw new NotImplementedException();
     }
 
+    public BranchDTO Find(params object[] keys)
+    {
+        var branchDTO = _repository.Find(keys);
+        return branchDTO;
+    }
+
+    public IEnumerable<BranchDTO> GetAll()
+    {
+        var branchDTO = _repository.GetAll();
+        return branchDTO;
+    }
+
     public void SaveChanges()
     {
         _repository.SaveChanges();
     }
 
-    public Task<BranchDTO> FindAsync(int? id)
-    {
-        throw new NotImplementedException();
-    }
-
     public void Update(BranchDTO entity)
     {
-        throw new NotImplementedException();
+        _repository.Update(entity);
     }
+   
 }

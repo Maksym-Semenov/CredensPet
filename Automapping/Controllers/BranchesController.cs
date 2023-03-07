@@ -2,6 +2,7 @@
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
 
@@ -10,39 +11,33 @@ namespace Presentation.Controllers
     public class BranchesController : Controller
     {
         private readonly IService<BranchDTO> _service;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper1;
+        private readonly IMapper _mapper2;
+        private readonly IMapper _mapper3;
         public BranchesController(IService<BranchDTO> service)
         {
             _service = service;
-            _mapper = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
+            _mapper1 = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
+            _mapper2 = GenericMapperConfiguration<BranchDTO, BranchDetailsViewModel>.MapTo();
+            //_mapper3 = GenericMapperConfiguration<BranchDTO, BranchEditViewModel>.MapTo();
         }
 
         // GET: Branches
         public IActionResult Index()
         {
-            var branch = _mapper.Map<IEnumerable<BranchViewModel>>(_service.GetAll());
+            var branch = _mapper1.Map<IEnumerable<BranchViewModel>>(_service.GetAll());
             return branch != null ?
                         View(branch) :
                         Problem("Entity set 'CredensTestContext.Branches'  is null.");
         }
 
-        //// GET: Branches/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.Branches == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var branch = await _context.Branches
-        //        .FirstOrDefaultAsync(m => m.BranchId == id);
-        //    if (branch == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(branch);
-        //}
+        // GET: Branches/Details/5
+        public IActionResult Details(int id)
+        {
+            var branchDTO = _mapper2.Map<BranchDetailsViewModel>(_service
+                .Find(id));
+            return View(branchDTO);
+        }
 
         // GET: Branches/Create
         public IActionResult Create()
@@ -63,56 +58,61 @@ namespace Presentation.Controllers
             return View(branchDTO);
         }
 
-        //// GET: Branches/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Branches == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Branches/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            //if (id == null || _service == null)
+            //{
+            //    return NotFound();
+            //}
 
-        //    var branch = await _context.Branches.FindAsync(id);
-        //    if (branch == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(branch);
-        //}
+            var branchDTO = _mapper2.Map<BranchDTO>(_service.Find(id));
+            
+            //if (branch == null)
+            //{
+            //    return NotFound();
+            //}
+            return View(branchDTO);
+        }
 
-        //// POST: Branches/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("BranchId,Name,Phone,IsOpen")] Branch branch)
-        //{
-        //    if (id != branch.BranchId)
-        //    {
-        //        return NotFound();
-        //    }
+        // POST: Branches/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, [Bind("BranchId,Name,Phone,IsOpen")] BranchDTO branchDTO)
+        {
+            //if (id != branchDTO.BranchId)
+            //{
+            //    return NotFound();
+            //}
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(branch);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!BranchExists(branch.BranchId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(branch);
-        //}
+            if (ModelState.IsValid)
+            {
+                _service.Update(branchDTO);
+                _service.SaveChanges();
+            }
+            
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        _service.Update(branchDTO);
+            //        await _S.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!BranchExists(branchDTO.BranchId))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+                return RedirectToAction(nameof(Index));
+                return View();
+        }
+         
 
         //// GET: Branches/Delete/5
         //public async Task<IActionResult> Delete(int? id)
@@ -153,7 +153,7 @@ namespace Presentation.Controllers
 
         //private bool BranchExists(int id)
         //{
-        //  return (_context.Branches?.Any(e => e.BranchId == id)).GetValueOrDefault();
+        //    return (_service.Any(e => e.BranchId == id)).GetValueOrDefault();
         //}
     }
 }

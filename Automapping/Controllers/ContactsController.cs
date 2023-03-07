@@ -2,9 +2,6 @@
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DataAccessLayer.EF;
-using DataAccessLayer.Models;
 using Presentation.Profiles;
 using Presentation.ViewModels;
 
@@ -13,40 +10,31 @@ namespace Presentation.Controllers
     public class ContactsController : Controller
     {
         private readonly IService<ContactDTO> _service;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper1;
+        private readonly IMapper _mapper2;
 
         public ContactsController(IService<ContactDTO> service)
         {
             _service = service;
-            _mapper = GenericMapperConfiguration<ContactDTO, ContactViewModel>.MapTo();
+            _mapper1 = GenericMapperConfiguration<ContactDTO, ContactViewModel>.MapTo();
+            _mapper2 = GenericMapperConfiguration<ContactDTO, ContactDetailsViewModel>.MapTo();
         }
 
         // GET: Contacts
         public IActionResult Index()
         {
-            var contact = _mapper.Map<IEnumerable<ContactViewModel>>(_service.GetAll());
-              return contact != null ? 
-                          View(contact) :
+            var contactDTO = _mapper1.Map<IEnumerable<ContactViewModel>>(_service.GetAll());
+              return contactDTO != null ? 
+                          View(contactDTO) :
                           Problem("Entity set 'CredensTestContext.Contacts'  is null.");
         }
 
-        //// GET: Contacts/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _service == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var contact = await _service
-        //        .GetAll(m => m.ContactId == id);
-        //    if (contact == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(contact);
-        //}
+        // GET: Contacts/Details/5
+        public async Task<IActionResult> Details(int id)
+        {
+            var contactDTO = _mapper2.Map<ContactDetailsViewModel>(_service.Find(id));
+            return View(contactDTO);
+        }
 
         // GET: Contacts/Create
         public IActionResult Create()

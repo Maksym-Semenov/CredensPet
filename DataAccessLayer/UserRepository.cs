@@ -10,31 +10,20 @@ namespace DataAccessLayer.Repository;
 public class UserRepository : IRepository<UserDTO>
 {
     private readonly CredensContext _context;
-    private readonly IMapper _mapper1;
-    private readonly IMapper _mapper2;
+    private readonly IMapper _mapperForward;
+    private readonly IMapper _mapperBackward;
 
     public UserRepository(CredensContext context)
     {
         _context = context;
-        _mapper1 = GenericMapperConfiguration<User, UserDTO>.MapTo();
-        _mapper2 = GenericMapperConfiguration<UserDTO, User>.MapTo();
-    }
-
-    public IEnumerable<UserDTO> GetAll()
-    {
-        var user = _mapper1.Map<IEnumerable<UserDTO>>(_context.Users);
-        return user;
+        _mapperForward = GenericMapperConfiguration<User, UserDTO>.MapTo();
+        _mapperBackward = GenericMapperConfiguration<UserDTO, User>.MapTo();
     }
 
     public void Add(UserDTO entity)
     {
-        var user = _mapper2.Map<User>(entity);
-        _context.Add(user);
-    }
-
-    public void Update(UserDTO entity)
-    {
-        throw new NotImplementedException();
+        var userDTO = _mapperBackward.Map<User>(entity);
+        _context.Add(userDTO);
     }
 
     public void Delete(UserDTO entity)
@@ -42,13 +31,26 @@ public class UserRepository : IRepository<UserDTO>
         throw new NotImplementedException();
     }
 
+    public UserDTO Find(params object[] keys)
+    {
+        var userDTO = _mapperForward.Map<UserDTO>(_context.Users.Find(keys));
+        return userDTO;
+    }
+
+    public IEnumerable<UserDTO> GetAll()
+    {
+        var userDTO = _mapperForward.Map<IEnumerable<UserDTO>>(_context.Users);
+        return userDTO;
+    }
+
     public void SaveChanges()
     {
         _context.SaveChanges();
     }
 
-    public Task<UserDTO> FindAsync(int? id)
+    public void Update(UserDTO entity)
     {
         throw new NotImplementedException();
     }
+
 }

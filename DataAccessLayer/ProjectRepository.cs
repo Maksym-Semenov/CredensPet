@@ -10,31 +10,20 @@ namespace DataAccessLayer.Repository;
 public class ProjectRepository : IRepository<ProjectDTO>
 {
     private readonly CredensContext _context;
-    private readonly IMapper _mapper1;
-    private readonly IMapper _mapper2;
+    private readonly IMapper _mapperForward;
+    private readonly IMapper _mapperBackward;
 
     public ProjectRepository(CredensContext context)
     {
         _context = context;
-        _mapper1 = GenericMapperConfiguration<Project, ProjectDTO>.MapTo();
-        _mapper2 = GenericMapperConfiguration<ProjectDTO, Project>.MapTo();
-    }
-
-    public IEnumerable<ProjectDTO> GetAll()
-    {
-        var project = _mapper1.Map<IEnumerable<ProjectDTO>>(_context.Projects);
-        return project;
+        _mapperForward = GenericMapperConfiguration<Project, ProjectDTO>.MapTo();
+        _mapperBackward = GenericMapperConfiguration<ProjectDTO, Project>.MapTo();
     }
 
     public void Add(ProjectDTO entity)
     {
-        var project = _mapper2.Map<Project>(entity);
-        _context.Projects.Add(project);
-    }
-
-    public void Update(ProjectDTO entity)
-    {
-        throw new NotImplementedException();
+        var projectDTO = _mapperBackward.Map<Project>(entity);
+        _context.Projects.Add(projectDTO);
     }
 
     public void Delete(ProjectDTO entity)
@@ -42,9 +31,16 @@ public class ProjectRepository : IRepository<ProjectDTO>
         throw new NotImplementedException();
     }
 
-    public Task SaveChangesAsync()
+    public ProjectDTO Find(params object[] keys)
     {
-      return _context.SaveChangesAsync();
+        var projectDTO = _mapperForward.Map<ProjectDTO>(_context.Projects.Find(keys));
+        return projectDTO;
+    }
+
+    public IEnumerable<ProjectDTO> GetAll()
+    {
+        var projectDTO = _mapperForward.Map<IEnumerable<ProjectDTO>>(_context.Projects);
+        return projectDTO;
     }
 
     public void SaveChanges()
@@ -52,20 +48,9 @@ public class ProjectRepository : IRepository<ProjectDTO>
         _context.SaveChanges();
     }
 
-    public async Task<ProjectDTO> FindAsync(int? id)
+    public void Update(ProjectDTO entity)
     {
-        if (id == null)
-        {
-            throw new ArgumentNullException(nameof(id));
-        }
-
-        var project = _mapper2.Map<ProjectDTO>(_context.Projects.FindAsync(id));
-
-        if (project == null)
-        {
-            throw new InvalidOperationException();
-        }
-        
-        return project;
+        throw new NotImplementedException();
     }
+
 }

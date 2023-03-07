@@ -12,21 +12,27 @@ public class ContactService : IService<ContactDTO>
         _repository = repository;
     }
 
-    public IEnumerable<ContactDTO> GetAll()
-    {
-        var contactDTO = _repository.GetAll();
-        return contactDTO;
-    }
-
     public void Add(ContactDTO entity)
     {
         _repository.Add(entity);
         _repository.SaveChanges();
     }
-
+  
     public void Delete(ContactDTO entity)
     {
         throw new NotImplementedException();
+    }
+
+    public ContactDTO Find(params object[] keys)
+    {
+        var contactDTO = _repository.Find(keys);
+        return contactDTO;
+    }
+
+    public IEnumerable<ContactDTO> GetAll()
+    {
+        var contactDTO = _repository.GetAll();
+        return contactDTO;
     }
 
     public void SaveChanges()
@@ -34,13 +40,9 @@ public class ContactService : IService<ContactDTO>
         _repository.SaveChanges();
     }
 
-    public Task<ContactDTO> FindAsync(int? id)
-    {
-        throw new NotImplementedException();
-    }
-
     public void Update(ContactDTO entity)
     {
         throw new NotImplementedException();
     }
+
 }

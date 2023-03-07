@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
-using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
 
@@ -11,39 +10,30 @@ namespace Presentation.Controllers
     public class ProjectsController : Controller
     {
         private readonly IService<ProjectDTO> _service;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper1;
+        private readonly IMapper _mapper2;
         public ProjectsController(IService<ProjectDTO> service)
         {
             _service = service;
-            _mapper = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
+            _mapper1 = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
+            _mapper2 = GenericMapperConfiguration<ProjectDTO, ProjectDetailsViewModel>.MapTo();
         }
 
         // GET: Projects
         public IActionResult Index()
         {
-            var project = _mapper.Map<IEnumerable<ProjectViewModel>>(_service.GetAll());
-            return project != null ? 
-                View(project) : 
+            var projectDTO = _mapper1.Map<IEnumerable<ProjectViewModel>>(_service.GetAll());
+            return projectDTO != null ? 
+                View(projectDTO) : 
                 Problem("Entity set 'CredensTestContext.Projects'  is null.");
         }
 
         // GET: Projects/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.Projects == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var project = await _context.Projects
-        //        .FirstOrDefaultAsync(m => m.ProjectId == id);
-        //    if (project == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(project);
-        //}
+        public async Task<IActionResult> Details(int id)
+        {
+            var projectDTO = _mapper2.Map<ProjectDetailsViewModel>(_service.Find(id));
+            return View(projectDTO);
+        }
 
         // GET: Projects/Create
         public IActionResult Create()
@@ -65,21 +55,21 @@ namespace Presentation.Controllers
             return View(projectDTO);
         }
 
-        // GET: Projects/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _service == null)
-            {
-                return NotFound();
-            }
+        //// GET: Projects/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null || _service == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var project = await _service.FindAsync(id);
-            if (project == null)
-            {
-                return NotFound();
-            }
-            return View(project);
-        }
+        //    var project = await _service.Find(id);
+        //    if (project == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(project);
+        //}
 
         // POST: Projects/Edit/5
         //[HttpPost]

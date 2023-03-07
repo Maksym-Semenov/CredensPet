@@ -2,9 +2,6 @@
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DataAccessLayer.EF;
-using DataAccessLayer.Models;
 using Presentation.Profiles;
 using Presentation.ViewModels;
 
@@ -13,39 +10,30 @@ namespace Presentation.Controllers
     public class UsersController : Controller
     {
         private readonly IService<UserDTO> _service;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper1;
+        private readonly IMapper _mapper2;
         public UsersController(IService<UserDTO> service)
         {
             _service = service;
-            _mapper = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
+            _mapper1 = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
+            _mapper2 = GenericMapperConfiguration<UserDTO, UserDetailViewModel>.MapTo();
         }
 
         // GET: Users
         public IActionResult Index()
         {
-            var user = _mapper.Map<IEnumerable<UserViewModel>>(_service.GetAll());
-              return user != null ? 
-                          View( user) :
+            var userDTO = _mapper1.Map<IEnumerable<UserViewModel>>(_service.GetAll());
+              return userDTO != null ? 
+                          View( userDTO) :
                           Problem("Entity set 'CredensContext.Users'  is null.");
         }
 
-        //// GET: Users/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.Users == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var user = await _context.Users
-        //        .FirstOrDefaultAsync(m => m.UserId == id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(user);
-        //}
+        // GET: Users/Details/5
+        public async Task<IActionResult> Details(int id)
+        {
+            var userDTO =  _mapper2.Map<UserDetailViewModel>(_service.Find(id));
+            return View(userDTO);
+        }
 
         // GET: Users/Create
         public IActionResult Create()
@@ -54,8 +42,6 @@ namespace Presentation.Controllers
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("UserId,FirstName,MiddleName,LastName,UserRoleId")] UserDTO userDTO)

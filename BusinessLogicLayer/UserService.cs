@@ -12,21 +12,27 @@ public class UserService : IService<UserDTO>
         _repository = repository;
     }
 
-    public IEnumerable<UserDTO> GetAll()
-    {
-        var user = _repository.GetAll();
-        return user;
-    }
-
     public void Add(UserDTO entity)
     {
         _repository.Add(entity);
         _repository.SaveChanges();
     }
-
+   
     public void Delete(UserDTO entity)
     {
         throw new NotImplementedException();
+    }
+
+    public UserDTO Find(params object[] keys)
+    {
+        var userDTO = _repository.Find(keys);
+        return userDTO;
+    }
+
+    public IEnumerable<UserDTO> GetAll()
+    {
+        var userDTO = _repository.GetAll();
+        return userDTO;
     }
 
     public void SaveChanges()
@@ -34,13 +40,9 @@ public class UserService : IService<UserDTO>
         _repository.SaveChanges();
     }
 
-    public Task<UserDTO> FindAsync(int? id)
-    {
-        throw new NotImplementedException();
-    }
-
     public void Update(UserDTO entity)
     {
         throw new NotImplementedException();
     }
+
 }

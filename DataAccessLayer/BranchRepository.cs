@@ -3,6 +3,7 @@ using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using DataAccessLayer.EF;
 using DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 
 namespace DataAccessLayer.Repository;
@@ -12,6 +13,7 @@ public class BranchRepository : IRepository<BranchDTO>
     private readonly CredensContext _context;
     private readonly IMapper _mapper1;
     private readonly IMapper _mapper2;
+
     public BranchRepository(CredensContext context)
     {
         _context = context;
@@ -19,26 +21,10 @@ public class BranchRepository : IRepository<BranchDTO>
         _mapper2 = GenericMapperConfiguration<BranchDTO, Branch>.MapTo();
     }
 
-    public IQueryable<BranchDTO> GetAllQ()
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<BranchDTO> GetAll()
-    {
-        var branch = _mapper1.Map<IEnumerable<BranchDTO>>(_context.Branches);
-        return branch;
-    }
-
     public void Add(BranchDTO entity)
     {
-        var branch = _mapper2.Map<Branch>(entity);
-        _context.Branches.Add(branch);
-    }
-
-    public void Update(BranchDTO entity)
-    {
-        throw new NotImplementedException();
+        var branchDTO = _mapper2.Map<Branch>(entity);
+        _context.Branches.Add(branchDTO);
     }
 
     public void Delete(BranchDTO entity)
@@ -46,9 +32,16 @@ public class BranchRepository : IRepository<BranchDTO>
         throw new NotImplementedException();
     }
 
-    public  Task SaveChangesAsync()
+    public BranchDTO Find(params object[] keys)
     {
-        return _context.SaveChangesAsync();
+        var branchDTO = _mapper1.Map<BranchDTO>(_context.Branches.Find(keys));
+        return branchDTO;
+    }
+
+    public IEnumerable<BranchDTO> GetAll()
+    {
+        var branchDTO = _mapper1.Map<IEnumerable<BranchDTO>>(_context.Branches);
+        return branchDTO;
     }
 
     public void SaveChanges()
@@ -56,8 +49,9 @@ public class BranchRepository : IRepository<BranchDTO>
         _context.SaveChanges();
     }
 
-    public Task<BranchDTO> FindAsync(int? id)
+    public void Update(BranchDTO entity)
     {
-        throw new NotImplementedException();
+         _mapper2.Map<Branch>(_context.Entry(entity).State = EntityState.Modified);
     }
+    
 }
