@@ -53,12 +53,11 @@ namespace Presentation.Controllers
         // POST: Branches/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BranchId,Name")] BranchDTO branchDTO)
+        public IActionResult Create([Bind("BranchId,Name")] BranchDTO branchDTO)
         {
             if (ModelState.IsValid)
             {
                 _service.Add(branchDTO);
-                _service.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(branchDTO);

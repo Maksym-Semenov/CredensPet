@@ -12,17 +12,16 @@ public class UserService : IService<UserDTO>
         _repository = repository;
     }
 
-
     public IEnumerable<UserDTO> GetAll()
     {
         var user = _repository.GetAll();
         return user;
     }
 
-    public async Task Add(UserDTO entity)
+    public void Add(UserDTO entity)
     {
-        var user = _repository.Add(entity);
-        await _repository.SaveChangesAsync();
+        _repository.Add(entity);
+        _repository.SaveChanges();
     }
 
     public void Delete(UserDTO entity)
@@ -30,9 +29,14 @@ public class UserService : IService<UserDTO>
         throw new NotImplementedException();
     }
 
-    public Task SaveChangesAsync()
+    public void SaveChanges()
     {
-        return _repository.SaveChangesAsync();
+        _repository.SaveChanges();
+    }
+
+    public Task<UserDTO> FindAsync(int? id)
+    {
+        throw new NotImplementedException();
     }
 
     public void Update(UserDTO entity)

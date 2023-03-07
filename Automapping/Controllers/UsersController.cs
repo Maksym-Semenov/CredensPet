@@ -58,12 +58,11 @@ namespace Presentation.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FirstName,MiddleName,LastName,UserRoleId")] UserDTO userDTO)
+        public IActionResult Create([Bind("UserId,FirstName,MiddleName,LastName,UserRoleId")] UserDTO userDTO)
         {
             if (ModelState.IsValid)
             {
                 _service.Add(userDTO);
-                _service.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(userDTO);

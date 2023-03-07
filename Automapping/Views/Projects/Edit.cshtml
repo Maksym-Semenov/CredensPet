@@ -1,4 +1,4 @@
-﻿@model DataAccessLayer.Models.Project
+﻿@model CredensPet.Infrastructure.DTO.ProjectDTO
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,8 +12,8 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProjectId" />
-            <div class="form-group">
+@*            <input type="hidden" asp-for="ProjectId" />
+*@            <div class="form-group">
                 <label asp-for="OrderValue" class="control-label"></label>
                 <input asp-for="OrderValue" class="form-control" />
                 <span asp-validation-for="OrderValue" class="text-danger"></span>
@@ -29,9 +29,9 @@
                 <span asp-validation-for="OrderYear" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <input asp-for="CustomerId" class="form-control" />
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
+                <label asp-for="ProjectId" class="control-label"></label>
+                <input asp-for="ProjectId" class="form-control" />
+                <span asp-validation-for="ProjectId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="OrderName" class="control-label"></label>
@@ -48,61 +48,7 @@
                 <input asp-for="City" class="form-control" />
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ResidentialComplex" class="control-label"></label>
-                <input asp-for="ResidentialComplex" class="form-control" />
-                <span asp-validation-for="ResidentialComplex" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TypeStreet" class="control-label"></label>
-                <input asp-for="TypeStreet" class="form-control" />
-                <span asp-validation-for="TypeStreet" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" />
-                <span asp-validation-for="Street" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BuildingNumber" class="control-label"></label>
-                <input asp-for="BuildingNumber" class="form-control" />
-                <span asp-validation-for="BuildingNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Litera" class="control-label"></label>
-                <input asp-for="Litera" class="form-control" />
-                <span asp-validation-for="Litera" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BuildingPart" class="control-label"></label>
-                <input asp-for="BuildingPart" class="form-control" />
-                <span asp-validation-for="BuildingPart" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Apartment" class="control-label"></label>
-                <input asp-for="Apartment" class="form-control" />
-                <span asp-validation-for="Apartment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Floor" class="control-label"></label>
-                <input asp-for="Floor" class="form-control" />
-                <span asp-validation-for="Floor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ManagerId" class="control-label"></label>
-                <input asp-for="ManagerId" class="form-control" />
-                <span asp-validation-for="ManagerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MakerId" class="control-label"></label>
-                <input asp-for="MakerId" class="form-control" />
-                <span asp-validation-for="MakerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BranchId" class="control-label"></label>
-                <input asp-for="BranchId" class="form-control" />
-                <span asp-validation-for="BranchId" class="text-danger"></span>
-            </div>
+           
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

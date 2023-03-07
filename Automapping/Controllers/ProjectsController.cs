@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
 
@@ -51,44 +52,39 @@ namespace Presentation.Controllers
         }
 
         //POST: Projects/Create
-        //To protect from overposting attacks, enable the specific properties you want to bind to.
-        //For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-
-       [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderValue,OrderMonth,OrderYear,OrderName,Price,City")] ProjectDTO projectDTO)
+        public IActionResult Create([Bind("ProjectId,OrderValue,OrderMonth,OrderYear,OrderName,Price,City")] ProjectDTO projectDTO)
         {
+            
             if (ModelState.IsValid)
             {
                 _service.Add(projectDTO);
-                _service.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(projectDTO);
         }
 
         // GET: Projects/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Projects == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _service == null)
+            {
+                return NotFound();
+            }
 
-        //    var project = await _context.Projects.FindAsync(id);
-        //    if (project == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(project);
-        //}
+            var project = await _service.FindAsync(id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            return View(project);
+        }
 
         // POST: Projects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("ProjectId,OrderValue,OrderMonth,OrderYear,CustomerId,OrderName,Price,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Litera,BuildingPart,Apartment,Floor,ManagerId,MakerId,BranchId")] Project project)
+        //public async Task<IActionResult> Edit(int id, [Bind("ProjectId,OrderValue,OrderMonth,OrderYear,CustomerId,OrderName,Price,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Litera,BuildingPart,Apartment,Floor,ManagerId,MakerId,BranchId")] ProjectDTO project)
         //{
         //    if (id != project.ProjectId)
         //    {
@@ -99,8 +95,8 @@ namespace Presentation.Controllers
         //    {
         //        try
         //        {
-        //            _context.Update(project);
-        //            await _context.SaveChangesAsync();
+        //            _service.Update(project);
+        //            await _service.SaveChangesAsync();
         //        }
         //        catch (DbUpdateConcurrencyException)
         //        {
@@ -157,7 +153,7 @@ namespace Presentation.Controllers
 
         //private bool ProjectExists(int id)
         //{
-        //  return (_context.Projects?.Any(e => e.ProjectId == id)).GetValueOrDefault();
+        //    return (_service?.GetAll().Where(e => e.ProjectId == id);
         //}
     }
 }

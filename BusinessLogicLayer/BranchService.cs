@@ -1,12 +1,12 @@
 ﻿using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
-using DataAccessLayer.Models;
 
 namespace BusinessLogicLayer;
 
 public class BranchService : IService<BranchDTO>
 {
     private readonly IRepository<BranchDTO> _repository;
+
     public BranchService(IRepository<BranchDTO> repository)
     {
         _repository = repository;
@@ -18,10 +18,10 @@ public class BranchService : IService<BranchDTO>
         return branchDTO;
     }
 
-    public async Task Add(BranchDTO entity)
+    public void Add(BranchDTO entity)
     {
-        await _repository.Add(entity);
-        await _repository.SaveChangesAsync();
+        _repository.Add(entity);
+        _repository.SaveChanges();
     }
 
     public void Delete(BranchDTO entity)
@@ -29,11 +29,15 @@ public class BranchService : IService<BranchDTO>
         throw new NotImplementedException();
     }
 
-    public async Task SaveChangesAsync()
+    public void SaveChanges()
     {
-        await _repository.SaveChangesAsync();
+        _repository.SaveChanges();
     }
 
+    public Task<BranchDTO> FindAsync(int? id)
+    {
+        throw new NotImplementedException();
+    }
 
     public void Update(BranchDTO entity)
     {

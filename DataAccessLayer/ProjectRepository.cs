@@ -2,7 +2,6 @@
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using DataAccessLayer.EF;
-using DataAccessLayer.MappingProfiles;
 using DataAccessLayer.Models;
 using Presentation.Profiles;
 
@@ -13,6 +12,7 @@ public class ProjectRepository : IRepository<ProjectDTO>
     private readonly CredensContext _context;
     private readonly IMapper _mapper1;
     private readonly IMapper _mapper2;
+
     public ProjectRepository(CredensContext context)
     {
         _context = context;
@@ -26,15 +26,10 @@ public class ProjectRepository : IRepository<ProjectDTO>
         return project;
     }
 
-    //public IQueryable<Project> GetAll()
-    //{
-    //    return _context.Projects.AsQueryable();
-    //}
-
-    public async Task Add(ProjectDTO entity)
+    public void Add(ProjectDTO entity)
     {
         var project = _mapper2.Map<Project>(entity);
-        await _context.Projects.AddAsync(project);
+        _context.Projects.Add(project);
     }
 
     public void Update(ProjectDTO entity)
@@ -50,5 +45,27 @@ public class ProjectRepository : IRepository<ProjectDTO>
     public Task SaveChangesAsync()
     {
       return _context.SaveChangesAsync();
+    }
+
+    public void SaveChanges()
+    {
+        _context.SaveChanges();
+    }
+
+    public async Task<ProjectDTO> FindAsync(int? id)
+    {
+        if (id == null)
+        {
+            throw new ArgumentNullException(nameof(id));
+        }
+
+        var project = _mapper2.Map<ProjectDTO>(_context.Projects.FindAsync(id));
+
+        if (project == null)
+        {
+            throw new InvalidOperationException();
+        }
+        
+        return project;
     }
 }

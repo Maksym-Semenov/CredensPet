@@ -12,6 +12,7 @@ public class ContactRepository : IRepository<ContactDTO>
     private readonly CredensContext _context;
     private readonly IMapper _mapper1;
     private readonly IMapper _mapper2;
+
     public ContactRepository(CredensContext context)
     {
         _context = context;
@@ -25,15 +26,10 @@ public class ContactRepository : IRepository<ContactDTO>
         return contact;
     }
 
-    //public IQueryable<Project> GetAll()
-    //{
-    //    return _context.Projects.AsQueryable();
-    //}
-
-    public async Task Add(ContactDTO entity)
+    public void Add(ContactDTO entity)
     {
         var contact = _mapper2.Map<Contact>(entity);
-        await _context.Contacts.AddAsync(contact);
+        _context.Contacts.Add(contact);
     }
 
     public void Update(ContactDTO entity)
@@ -46,8 +42,13 @@ public class ContactRepository : IRepository<ContactDTO>
         throw new NotImplementedException();
     }
 
-    public Task SaveChangesAsync()
+    public void SaveChanges()
     {
-        return _context.SaveChangesAsync();
+        _context.SaveChanges();
+    }
+
+    public Task<ContactDTO> FindAsync(int? id)
+    {
+        throw new NotImplementedException();
     }
 }

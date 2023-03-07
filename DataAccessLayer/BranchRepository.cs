@@ -30,15 +30,10 @@ public class BranchRepository : IRepository<BranchDTO>
         return branch;
     }
 
-    //public IQueryable<Project> GetAll()
-    //{
-    //    return _context.Projects.AsQueryable();
-    //}
-
-    public async Task Add(BranchDTO entity)
+    public void Add(BranchDTO entity)
     {
         var branch = _mapper2.Map<Branch>(entity);
-        await _context.Branches.AddAsync(branch);
+        _context.Branches.Add(branch);
     }
 
     public void Update(BranchDTO entity)
@@ -54,5 +49,15 @@ public class BranchRepository : IRepository<BranchDTO>
     public  Task SaveChangesAsync()
     {
         return _context.SaveChangesAsync();
+    }
+
+    public void SaveChanges()
+    {
+        _context.SaveChanges();
+    }
+
+    public Task<BranchDTO> FindAsync(int? id)
+    {
+        throw new NotImplementedException();
     }
 }

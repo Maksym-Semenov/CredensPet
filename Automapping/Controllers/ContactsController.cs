@@ -55,16 +55,13 @@ namespace Presentation.Controllers
         }
 
         // POST: Contacts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactDTO contactDTO)
+        public IActionResult Create([Bind("ContactId,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactDTO contactDTO)
         {
             if (ModelState.IsValid)
             {
                 _service.Add(contactDTO);
-                _service.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(contactDTO);

@@ -12,10 +12,10 @@ public class ProjectService : IService<ProjectDTO>
         _repository = repository;
     }
 
-    public async Task Add(ProjectDTO entity)
+    public void Add(ProjectDTO entity)
     {
-        await _repository.Add(entity);
-        await _repository.SaveChangesAsync();
+        _repository.Add(entity);
+        _repository.SaveChanges();
     }
 
     public void Delete(ProjectDTO entity)
@@ -23,9 +23,15 @@ public class ProjectService : IService<ProjectDTO>
         throw new NotImplementedException();
     }
 
-    public Task SaveChangesAsync()
+    public void SaveChanges()
     {
-        return _repository.SaveChangesAsync();
+        _repository.SaveChanges();
+    }
+
+    public async Task<ProjectDTO> FindAsync(int? id)
+    {
+        var project = _repository.FindAsync(id);
+        return await project;
     }
 
     public IEnumerable<ProjectDTO> GetAll()
