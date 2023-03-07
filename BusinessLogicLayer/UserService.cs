@@ -25,8 +25,26 @@ public class UserService : IService<UserDTO>
 
     public UserDTO Find(params object[] keys)
     {
-        var userDTO = _repository.Find(keys);
-        return userDTO;
+        if (keys == null)
+        {
+            throw new ArgumentNullException(nameof(keys));
+        }
+        return _repository.Find(keys);
+    }
+
+    public IQueryable<UserDTO> FindAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual Task<UserDTO> FindAsync(params object[] keys)
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual Task<UserDTO> FirstOrDefault(params object[] keys)
+    {
+        throw new NotImplementedException();
     }
 
     public IEnumerable<UserDTO> GetAll()
@@ -38,6 +56,11 @@ public class UserService : IService<UserDTO>
     public void SaveChanges()
     {
         _repository.SaveChanges();
+    }
+
+    public Task SaveChangesAsync()
+    {
+        throw new NotImplementedException();
     }
 
     public void Update(UserDTO entity)

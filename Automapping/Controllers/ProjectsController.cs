@@ -10,19 +10,19 @@ namespace Presentation.Controllers
     public class ProjectsController : Controller
     {
         private readonly IService<ProjectDTO> _service;
-        private readonly IMapper _mapper1;
-        private readonly IMapper _mapper2;
+        private readonly IMapper _mapperForward;
+        private readonly IMapper _mapperBackward;
         public ProjectsController(IService<ProjectDTO> service)
         {
             _service = service;
-            _mapper1 = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
-            _mapper2 = GenericMapperConfiguration<ProjectDTO, ProjectDetailsViewModel>.MapTo();
+            _mapperForward = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
+            _mapperBackward = GenericMapperConfiguration<ProjectDTO, ProjectDetailsViewModel>.MapTo();
         }
 
         // GET: Projects
         public IActionResult Index()
         {
-            var projectDTO = _mapper1.Map<IEnumerable<ProjectViewModel>>(_service.GetAll());
+            var projectDTO = _mapperForward.Map<IEnumerable<ProjectViewModel>>(_service.GetAll());
             return projectDTO != null ? 
                 View(projectDTO) : 
                 Problem("Entity set 'CredensTestContext.Projects'  is null.");
@@ -31,7 +31,7 @@ namespace Presentation.Controllers
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var projectDTO = _mapper2.Map<ProjectDetailsViewModel>(_service.Find(id));
+            var projectDTO = _mapperBackward.Map<ProjectDetailsViewModel>(_service.Find(id));
             return View(projectDTO);
         }
 

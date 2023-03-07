@@ -10,20 +10,20 @@ namespace Presentation.Controllers
     public class ContactsController : Controller
     {
         private readonly IService<ContactDTO> _service;
-        private readonly IMapper _mapper1;
-        private readonly IMapper _mapper2;
+        private readonly IMapper _mapperForward;
+        private readonly IMapper _mapperBackward;
 
         public ContactsController(IService<ContactDTO> service)
         {
             _service = service;
-            _mapper1 = GenericMapperConfiguration<ContactDTO, ContactViewModel>.MapTo();
-            _mapper2 = GenericMapperConfiguration<ContactDTO, ContactDetailsViewModel>.MapTo();
+            _mapperForward = GenericMapperConfiguration<ContactDTO, ContactViewModel>.MapTo();
+            _mapperBackward = GenericMapperConfiguration<ContactDTO, ContactDetailsViewModel>.MapTo();
         }
 
         // GET: Contacts
         public IActionResult Index()
         {
-            var contactDTO = _mapper1.Map<IEnumerable<ContactViewModel>>(_service.GetAll());
+            var contactDTO = _mapperForward.Map<IEnumerable<ContactViewModel>>(_service.GetAll());
               return contactDTO != null ? 
                           View(contactDTO) :
                           Problem("Entity set 'CredensTestContext.Contacts'  is null.");
@@ -32,7 +32,7 @@ namespace Presentation.Controllers
         // GET: Contacts/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var contactDTO = _mapper2.Map<ContactDetailsViewModel>(_service.Find(id));
+            var contactDTO = _mapperBackward.Map<ContactDetailsViewModel>(_service.Find(id));
             return View(contactDTO);
         }
 

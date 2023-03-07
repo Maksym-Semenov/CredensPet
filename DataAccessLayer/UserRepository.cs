@@ -10,19 +10,19 @@ namespace DataAccessLayer.Repository;
 public class UserRepository : IRepository<UserDTO>
 {
     private readonly CredensContext _context;
-    private readonly IMapper _mapperForward;
-    private readonly IMapper _mapperBackward;
+    private readonly IMapper _mapperToDTO;
+    private readonly IMapper _mapperToUser;
 
     public UserRepository(CredensContext context)
     {
         _context = context;
-        _mapperForward = GenericMapperConfiguration<User, UserDTO>.MapTo();
-        _mapperBackward = GenericMapperConfiguration<UserDTO, User>.MapTo();
+        _mapperToDTO = GenericMapperConfiguration<User, UserDTO>.MapTo();
+        _mapperToUser = GenericMapperConfiguration<UserDTO, User>.MapTo();
     }
 
     public void Add(UserDTO entity)
     {
-        var userDTO = _mapperBackward.Map<User>(entity);
+        var userDTO = _mapperToUser.Map<User>(entity);
         _context.Add(userDTO);
     }
 
@@ -33,19 +33,38 @@ public class UserRepository : IRepository<UserDTO>
 
     public UserDTO Find(params object[] keys)
     {
-        var userDTO = _mapperForward.Map<UserDTO>(_context.Users.Find(keys));
-        return userDTO;
+        return _mapperToDTO.Map<UserDTO>(_context.Users.Find(keys));
+    }
+
+    public IQueryable<UserDTO> FindAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual Task<UserDTO> FindAsync(params object[] keys)
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual Task<UserDTO> FirstOrDefault(params object[] keys)
+    {
+        throw new NotImplementedException();
     }
 
     public IEnumerable<UserDTO> GetAll()
     {
-        var userDTO = _mapperForward.Map<IEnumerable<UserDTO>>(_context.Users);
+        var userDTO = _mapperToDTO.Map<IEnumerable<UserDTO>>(_context.Users);
         return userDTO;
     }
 
     public void SaveChanges()
     {
         _context.SaveChanges();
+    }
+
+    public Task SaveChangesAsync()
+    {
+        throw new NotImplementedException();
     }
 
     public void Update(UserDTO entity)

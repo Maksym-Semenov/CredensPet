@@ -10,19 +10,19 @@ namespace Presentation.Controllers
     public class UsersController : Controller
     {
         private readonly IService<UserDTO> _service;
-        private readonly IMapper _mapper1;
-        private readonly IMapper _mapper2;
+        private readonly IMapper _mapperForward;
+        private readonly IMapper _mapperBackward;
         public UsersController(IService<UserDTO> service)
         {
             _service = service;
-            _mapper1 = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
-            _mapper2 = GenericMapperConfiguration<UserDTO, UserDetailViewModel>.MapTo();
+            _mapperForward = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
+            _mapperBackward = GenericMapperConfiguration<UserDTO, UserDetailViewModel>.MapTo();
         }
 
         // GET: Users
         public IActionResult Index()
         {
-            var userDTO = _mapper1.Map<IEnumerable<UserViewModel>>(_service.GetAll());
+            var userDTO = _mapperForward.Map<IEnumerable<UserViewModel>>(_service.GetAll());
               return userDTO != null ? 
                           View( userDTO) :
                           Problem("Entity set 'CredensContext.Users'  is null.");
@@ -31,7 +31,7 @@ namespace Presentation.Controllers
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var userDTO =  _mapper2.Map<UserDetailViewModel>(_service.Find(id));
+            var userDTO =  _mapperBackward.Map<UserDetailViewModel>(_service.Find(id));
             return View(userDTO);
         }
 

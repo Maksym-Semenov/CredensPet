@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using DataAccessLayer.EF;
@@ -11,36 +12,53 @@ namespace DataAccessLayer.Repository;
 public class BranchRepository : IRepository<BranchDTO>
 {
     private readonly CredensContext _context;
-    private readonly IMapper _mapper1;
-    private readonly IMapper _mapper2;
+    private readonly DbSet<Branch> _dbSet;
+    private readonly IMapper _mapperToDTO;
+    private readonly IMapper _mapperToBranch;
 
     public BranchRepository(CredensContext context)
     {
         _context = context;
-        _mapper1 = GenericMapperConfiguration<Branch, BranchDTO>.MapTo();
-        _mapper2 = GenericMapperConfiguration<BranchDTO, Branch>.MapTo();
+        _mapperToDTO = GenericMapperConfiguration<Branch, BranchDTO>.MapTo();
+        _mapperToBranch = GenericMapperConfiguration<BranchDTO, Branch>.MapTo();
+        _dbSet = context.Set<Branch>();
     }
 
     public void Add(BranchDTO entity)
     {
-        var branchDTO = _mapper2.Map<Branch>(entity);
+        var branchDTO = _mapperToBranch.Map<Branch>(entity);
         _context.Branches.Add(branchDTO);
     }
 
     public void Delete(BranchDTO entity)
     {
-        throw new NotImplementedException();
+        _dbSet.Remove(_mapperToBranch.Map<Branch>(entity));
     }
 
     public BranchDTO Find(params object[] keys)
     {
-        var branchDTO = _mapper1.Map<BranchDTO>(_context.Branches.Find(keys));
-        return branchDTO;
+        return _mapperToDTO.Map<BranchDTO>(_context.Branches.Find(keys));
+    }
+
+    public IQueryable<BranchDTO> FindAll()
+    {
+        return _dbSet.ProjectTo<BranchDTO>(_mapperToDTO.ConfigurationProvider);
+    }
+
+    public virtual async Task<BranchDTO> FindAsync(params object[] keys)
+    {
+        return _mapperToDTO.Map<BranchDTO>(_context.Branches.FindAsync(keys));
+    }
+
+    public virtual async Task<BranchDTO> FirstOrDefault(params object[] keys)
+    {
+        return _mapperToDTO.Map<BranchDTO>(_context.Branches.FindAsync(keys));
+        //return branchDTO;
     }
 
     public IEnumerable<BranchDTO> GetAll()
     {
-        var branchDTO = _mapper1.Map<IEnumerable<BranchDTO>>(_context.Branches);
+        var branchDTO = _mapperToDTO.Map<IEnumerable<BranchDTO>>(_context.Branches);
         return branchDTO;
     }
 
@@ -49,9 +67,15 @@ public class BranchRepository : IRepository<BranchDTO>
         _context.SaveChanges();
     }
 
+    public Task SaveChangesAsync()
+    {
+        return _context.SaveChangesAsync();
+    }
+
     public void Update(BranchDTO entity)
     {
-         _mapper2.Map<Branch>(_context.Entry(entity).State = EntityState.Modified);
+        var branch = _mapperToBranch.Map<Branch>(entity);
+         _context.Entry(branch).State = EntityState.Modified;
     }
-    
+   
 }

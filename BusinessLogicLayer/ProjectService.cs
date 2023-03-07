@@ -25,8 +25,26 @@ public class ProjectService : IService<ProjectDTO>
 
     public ProjectDTO Find(params object[] keys)
     {
-        var projectDTO = _repository.Find(keys);
-        return projectDTO;
+        if (keys == null)
+        {
+            throw new ArgumentNullException(nameof(keys));
+        }
+        return _repository.Find(keys);
+    }
+
+    public IQueryable<ProjectDTO> FindAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual Task<ProjectDTO> FindAsync(params object[] keys)
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual Task<ProjectDTO> FirstOrDefault(params object[] keys)
+    {
+        throw new NotImplementedException();
     }
 
     public IEnumerable<ProjectDTO> GetAll()
@@ -38,6 +56,11 @@ public class ProjectService : IService<ProjectDTO>
     public void SaveChanges()
     {
         _repository.SaveChanges();
+    }
+
+    public Task SaveChangesAsync()
+    {
+        throw new NotImplementedException();
     }
 
     public void Update(ProjectDTO entity)

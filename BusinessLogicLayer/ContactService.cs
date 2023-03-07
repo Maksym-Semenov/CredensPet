@@ -25,8 +25,26 @@ public class ContactService : IService<ContactDTO>
 
     public ContactDTO Find(params object[] keys)
     {
-        var contactDTO = _repository.Find(keys);
-        return contactDTO;
+        if (keys == null)
+        {
+            throw new ArgumentNullException(nameof(keys));
+        }
+        return _repository.Find(keys);
+    }
+
+    public IQueryable<ContactDTO> FindAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual Task<ContactDTO> FindAsync(params object[] keys)
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual Task<ContactDTO> FirstOrDefault(params object[] keys)
+    {
+        throw new NotImplementedException();
     }
 
     public IEnumerable<ContactDTO> GetAll()
@@ -38,6 +56,11 @@ public class ContactService : IService<ContactDTO>
     public void SaveChanges()
     {
         _repository.SaveChanges();
+    }
+
+    public Task SaveChangesAsync()
+    {
+        throw new NotImplementedException();
     }
 
     public void Update(ContactDTO entity)
