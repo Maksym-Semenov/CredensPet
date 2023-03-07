@@ -1,4 +1,5 @@
-﻿@model DataAccessLayer.Models.Branch
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CredensPet.Infrastructure.DTO.BranchDTO
 
 @{
     ViewData["Title"] = "Create";
@@ -12,11 +13,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="BranchId" class="control-label"></label>
-                <input asp-for="BranchId" class="form-control" />
-                <span asp-validation-for="BranchId" class="text-danger"></span>
-            </div>
+           
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />

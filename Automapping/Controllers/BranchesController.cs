@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Profiles;
 using Presentation.ViewModels;
@@ -10,153 +11,146 @@ namespace Presentation.Controllers
     public class BranchesController : Controller
     {
         private readonly IService<BranchDTO> _service;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapperToView;
+        private readonly IMapper _mapperToDetails;
         public BranchesController(IService<BranchDTO> service)
         {
             _service = service;
-            _mapper = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
+            _mapperToView = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
+            _mapperToDetails = GenericMapperConfiguration<BranchDTO, BranchDetailsViewModel>.MapTo();
         }
 
         // GET: Branches
         public IActionResult Index()
         {
-            var branch = _mapper.Map<IEnumerable<BranchViewModel>>(_service.GetAll());
+            var branch = _mapperToView.ProjectTo<BranchViewModel>(_service.FindAll());
             return branch != null ?
                         View(branch) :
                         Problem("Entity set 'CredensTestContext.Branches'  is null.");
         }
 
-        //// GET: Branches/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.Branches == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Branches/Details/5
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var branchDTO = _mapperToDetails.Map<BranchDetailsViewModel>
+                        (_service.Find(id));
+                    return View(branchDTO);
+                }
+            }
+            catch
+            {
+                Console.WriteLine("What's going wrong...");
+            }
+            finally
+            {
+                RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
 
-        //    var branch = await _context.Branches
-        //        .FirstOrDefaultAsync(m => m.BranchId == id);
-        //    if (branch == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Branches/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //    return View(branch);
-        //}
+        // POST: Branches/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("Name, Phone, IsOpen")] BranchDTO branchDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.Add(branchDTO);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(branchDTO);
+        }
 
-        //// GET: Branches/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Branches/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
 
-        //// POST: Branches/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("BranchId,Name,Phone,IsOpen")] Branch branch)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(branch);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(branch);
-        //}
+            var branchDTO = _mapperToDetails.Map<BranchDTO>(_service.FindAll().FirstOrDefault(x => x.BranchId == id));
 
-        //// GET: Branches/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Branches == null)
-        //    {
-        //        return NotFound();
-        //    }
+            //if (branch == null)
+            //{
+            //    return NotFound();
+            //}
+            return View(branchDTO);
+        }
 
-        //    var branch = await _context.Branches.FindAsync(id);
-        //    if (branch == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(branch);
-        //}
+        // POST: Branches/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, [Bind("BranchId, Name, Phone, IsOpen")] BranchDTO branchDTO)
+        {
+            //if (id != branchDTO.BranchId)
+            //{
+            //    return NotFound();
+            //}
 
-        //// POST: Branches/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("BranchId,Name,Phone,IsOpen")] Branch branch)
-        //{
-        //    if (id != branch.BranchId)
-        //    {
-        //        return NotFound();
-        //    }
+            if (ModelState.IsValid)
+            {
+                _service.Update(branchDTO);
+                _service.SaveChanges();
+            }
+            
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        _service.Update(branchDTO);
+            //        await _S.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!BranchExists(branchDTO.BranchId))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+                return RedirectToAction(nameof(Index));
+                return View();
+        }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(branch);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!BranchExists(branch.BranchId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(branch);
-        //}
+        // GET: Branches/Delete/5
+        public IActionResult Delete(int id)
+        {
+            var branchDTO = _service.FindAll().FirstOrDefault(x => x.BranchId == id);
+            return View(branchDTO);
+        }
 
-        //// GET: Branches/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.Branches == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // POST: Branches/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            if (_service == null)
+            {
+                return Problem("Entity set 'CredensTestContext.Branches'  is null.");
+            }
+            var branchDTO = _service.FindAll().FirstOrDefault(x => x.BranchId == id);
+            if (branchDTO != null)
+            {
+                _service.Delete(branchDTO);
+            }
 
-        //    var branch = await _context.Branches
-        //        .FirstOrDefaultAsync(m => m.BranchId == id);
-        //    if (branch == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(branch);
-        //}
-
-        //// POST: Branches/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    if (_context.Branches == null)
-        //    {
-        //        return Problem("Entity set 'CredensTestContext.Branches'  is null.");
-        //    }
-        //    var branch = await _context.Branches.FindAsync(id);
-        //    if (branch != null)
-        //    {
-        //        _context.Branches.Remove(branch);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+            //_service.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
 
         //private bool BranchExists(int id)
         //{
-        //  return (_context.Branches?.Any(e => e.BranchId == id)).GetValueOrDefault();
+        //    return (_service.Any(e => e.BranchId == id)).GetValueOrDefault();
         //}
     }
 }

@@ -1,11 +1,28 @@
-﻿namespace CredensPet.Infrastructure;
+﻿using CredensPet.Infrastructure.DTO;
+using Microsoft.EntityFrameworkCore;
+
+namespace CredensPet.Infrastructure;
 
 public interface IRepository<T> where T : class
 {
-    //IQueryable<T> GetAll();
-    IEnumerable<T> GetAll();
     void Add(T entity);
-    void Update(T entity);
+
     void Delete(T entity);
+
+    T Find(params object[] keys);
+
+    IQueryable<T> FindAll();
+
+    Task<T> FindAsync(params object[] keys);
+
+    Task<T> FirstOrDefault(params object[] keys);
+
+    IEnumerable<T> GetAll();
+
+    void SaveChanges();
+
+    Task SaveChangesAsync();
+
+    void Update(T entity);
 
 }

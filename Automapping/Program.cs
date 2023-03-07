@@ -1,17 +1,16 @@
-using AutoMapper;
 using DataAccessLayer.EF;
 using Microsoft.EntityFrameworkCore;
 using CredensPet.Infrastructure;
 using DataAccessLayer.Repository;
 using BusinessLogicLayer;
 using CredensPet.Infrastructure.DTO;
-using DataAccessLayer.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<CredensContext>(options =>
     options.UseSqlServer(connectionString));
+    //options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -22,6 +21,11 @@ builder.Services.AddScoped(typeof(IService<ProjectDTO>), typeof(ProjectService))
 builder.Services.AddScoped(typeof(IRepository<BranchDTO>), typeof(BranchRepository));
 builder.Services.AddScoped(typeof(IService<BranchDTO>), typeof(BranchService));
 
+builder.Services.AddScoped(typeof(IRepository<ContactDTO>), typeof(ContactRepository));
+builder.Services.AddScoped(typeof(IService<ContactDTO>), typeof(ContactService));
+
+builder.Services.AddScoped(typeof(IRepository<UserDTO>), typeof(UserRepository));
+builder.Services.AddScoped(typeof(IService<UserDTO>), typeof(UserService));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

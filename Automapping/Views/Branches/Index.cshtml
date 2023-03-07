@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Presentation.ViewModels.BranchViewModel>
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IQueryable<Presentation.ViewModels.BranchViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,11 +14,11 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @(Html.DisplayNameFor(model => model.FirstOrDefault().Name))
             </th>
-           @* <th>
-                @Html.DisplayNameFor(model => model.BranchId)
-            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
+            </th>
            
             <th></th>
         </tr>
@@ -28,9 +29,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-           @* <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.BranchId)
-            </td>*@
+            </td>
             
             <td>
                 <a asp-action="Edit" asp-route-id="@item.BranchId">Edit</a> |

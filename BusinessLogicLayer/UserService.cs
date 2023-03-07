@@ -3,27 +3,27 @@ using CredensPet.Infrastructure.DTO;
 
 namespace BusinessLogicLayer;
 
-public class ProjectService : IService<ProjectDTO>
+public class UserService : IService<UserDTO>
 {
-    private readonly IRepository<ProjectDTO> _repository;
+    private readonly IRepository<UserDTO> _repository;
 
-    public ProjectService(IRepository<ProjectDTO> repository)
+    public UserService(IRepository<UserDTO> repository)
     {
         _repository = repository;
     }
 
-    public void Add(ProjectDTO entity)
+    public void Add(UserDTO entity)
     {
         _repository.Add(entity);
         _repository.SaveChanges();
     }
-
-    public void Delete(ProjectDTO entity)
+   
+    public void Delete(UserDTO entity)
     {
         throw new NotImplementedException();
     }
 
-    public ProjectDTO Find(params object[] keys)
+    public UserDTO Find(params object[] keys)
     {
         if (keys == null)
         {
@@ -32,25 +32,25 @@ public class ProjectService : IService<ProjectDTO>
         return _repository.Find(keys);
     }
 
-    public IQueryable<ProjectDTO> FindAll()
+    public IQueryable<UserDTO> FindAll()
     {
         throw new NotImplementedException();
     }
 
-    public virtual Task<ProjectDTO> FindAsync(params object[] keys)
+    public virtual Task<UserDTO> FindAsync(params object[] keys)
     {
         throw new NotImplementedException();
     }
 
-    public virtual Task<ProjectDTO> FirstOrDefault(params object[] keys)
+    public virtual Task<UserDTO> FirstOrDefault(params object[] keys)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<ProjectDTO> GetAll()
+    public IEnumerable<UserDTO> GetAll()
     {
-        var projectDTO = _repository.GetAll();
-        return projectDTO;
+        var userDTO = _repository.GetAll();
+        return userDTO;
     }
 
     public void SaveChanges()
@@ -63,7 +63,7 @@ public class ProjectService : IService<ProjectDTO>
         throw new NotImplementedException();
     }
 
-    public void Update(ProjectDTO entity)
+    public void Update(UserDTO entity)
     {
         throw new NotImplementedException();
     }

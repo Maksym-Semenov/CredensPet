@@ -2,7 +2,6 @@
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using DataAccessLayer.EF;
-using DataAccessLayer.MappingProfiles;
 using DataAccessLayer.Models;
 using Presentation.Profiles;
 
@@ -11,25 +10,59 @@ namespace DataAccessLayer.Repository;
 public class ProjectRepository : IRepository<ProjectDTO>
 {
     private readonly CredensContext _context;
-    private readonly IMapper _mapper;
+    private readonly IMapper _mapperToDTO;
+    private readonly IMapper _mapperToProject;
+
     public ProjectRepository(CredensContext context)
     {
         _context = context;
-        _mapper = GenericMapperConfiguration<Project, ProjectDTO>.MapTo();
+        _mapperToDTO = GenericMapperConfiguration<Project, ProjectDTO>.MapTo();
+        _mapperToProject = GenericMapperConfiguration<ProjectDTO, Project>.MapTo();
+    }
+
+    public void Add(ProjectDTO entity)
+    {
+        var projectDTO = _mapperToProject.Map<Project>(entity);
+        _context.Projects.Add(projectDTO);
+    }
+
+    public void Delete(ProjectDTO entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ProjectDTO Find(params object[] keys)
+    {
+         return _mapperToDTO.Map<ProjectDTO>(_context.Projects.Find(keys));
+    }
+
+    public IQueryable<ProjectDTO> FindAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual Task<ProjectDTO> FindAsync(params object[] keys)
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual Task<ProjectDTO> FirstOrDefault(params object[] keys)
+    {
+        throw new NotImplementedException();
     }
 
     public IEnumerable<ProjectDTO> GetAll()
     {
-        var project = _mapper.Map<IEnumerable<ProjectDTO>>(_context.Projects);
-        return project;
+        var projectDTO = _mapperToDTO.Map<IEnumerable<ProjectDTO>>(_context.Projects);
+        return projectDTO;
     }
 
-    //public IQueryable<Project> GetAll()
-    //{
-    //    return _context.Projects.AsQueryable();
-    //}
+    public void SaveChanges()
+    {
+        _context.SaveChanges();
+    }
 
-    public void Add(ProjectDTO entity)
+    public Task SaveChangesAsync()
     {
         throw new NotImplementedException();
     }
@@ -39,9 +72,4 @@ public class ProjectRepository : IRepository<ProjectDTO>
         throw new NotImplementedException();
     }
 
-    public void Delete(ProjectDTO entity)
-    {
-        throw new NotImplementedException();
-    }
-   
 }

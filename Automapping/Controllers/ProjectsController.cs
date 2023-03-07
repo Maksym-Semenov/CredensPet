@@ -10,39 +10,30 @@ namespace Presentation.Controllers
     public class ProjectsController : Controller
     {
         private readonly IService<ProjectDTO> _service;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapperForward;
+        private readonly IMapper _mapperBackward;
         public ProjectsController(IService<ProjectDTO> service)
         {
             _service = service;
-            _mapper = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
+            _mapperForward = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
+            _mapperBackward = GenericMapperConfiguration<ProjectDTO, ProjectDetailsViewModel>.MapTo();
         }
 
         // GET: Projects
         public IActionResult Index()
         {
-            var project = _mapper.Map<IEnumerable<ProjectViewModel>>(_service.GetAll());
-            return project != null ? 
-                View(project) : 
+            var projectDTO = _mapperForward.Map<IEnumerable<ProjectViewModel>>(_service.GetAll());
+            return projectDTO != null ? 
+                View(projectDTO) : 
                 Problem("Entity set 'CredensTestContext.Projects'  is null.");
         }
 
         // GET: Projects/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.Projects == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var project = await _context.Projects
-        //        .FirstOrDefaultAsync(m => m.ProjectId == id);
-        //    if (project == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(project);
-        //}
+        public async Task<IActionResult> Details(int id)
+        {
+            var projectDTO = _mapperBackward.Map<ProjectDetailsViewModel>(_service.Find(id));
+            return View(projectDTO);
+        }
 
         // GET: Projects/Create
         public IActionResult Create()
@@ -50,31 +41,29 @@ namespace Presentation.Controllers
             return View();
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("ProjectId,OrderValue,OrderMonth,OrderYear,CustomerId,OrderName,Price,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Litera,BuildingPart,Apartment,Floor,ManagerId,MakerId,BranchId")] Project project)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(project);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(project);
-        //}
+        //POST: Projects/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("ProjectId,OrderValue,OrderMonth,OrderYear,OrderName,Price,City")] ProjectDTO projectDTO)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                _service.Add(projectDTO);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(projectDTO);
+        }
 
-        // GET: Projects/Edit/5
+        //// GET: Projects/Edit/5
         //public async Task<IActionResult> Edit(int? id)
         //{
-        //    if (id == null || _context.Projects == null)
+        //    if (id == null || _service == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    var project = await _context.Projects.FindAsync(id);
+        //    var project = await _service.Find(id);
         //    if (project == null)
         //    {
         //        return NotFound();
@@ -83,11 +72,9 @@ namespace Presentation.Controllers
         //}
 
         // POST: Projects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("ProjectId,OrderValue,OrderMonth,OrderYear,CustomerId,OrderName,Price,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Litera,BuildingPart,Apartment,Floor,ManagerId,MakerId,BranchId")] Project project)
+        //public async Task<IActionResult> Edit(int id, [Bind("ProjectId,OrderValue,OrderMonth,OrderYear,CustomerId,OrderName,Price,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Litera,BuildingPart,Apartment,Floor,ManagerId,MakerId,BranchId")] ProjectDTO project)
         //{
         //    if (id != project.ProjectId)
         //    {
@@ -98,8 +85,8 @@ namespace Presentation.Controllers
         //    {
         //        try
         //        {
-        //            _context.Update(project);
-        //            await _context.SaveChangesAsync();
+        //            _service.Update(project);
+        //            await _service.SaveChangesAsync();
         //        }
         //        catch (DbUpdateConcurrencyException)
         //        {
@@ -149,14 +136,14 @@ namespace Presentation.Controllers
         //    {
         //        _context.Projects.Remove(project);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}
 
         //private bool ProjectExists(int id)
         //{
-        //  return (_context.Projects?.Any(e => e.ProjectId == id)).GetValueOrDefault();
+        //    return (_service?.GetAll().Where(e => e.ProjectId == id);
         //}
     }
 }

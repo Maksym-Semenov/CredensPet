@@ -1,5 +1,6 @@
-﻿@model DataAccessLayer.Models.Branch
-
+﻿@*@model Presentation.ViewModels.BranchDetailsViewModel
+*@
+@model CredensPet.Infrastructure.DTO.BranchDTO
 @{
     ViewData["Title"] = "Edit";
 }
@@ -12,8 +13,8 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="BranchId" />
-            <div class="form-group">
+@*            <input type="hidden" asp-for="BranchId" />
+*@            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>

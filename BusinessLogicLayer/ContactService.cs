@@ -3,27 +3,27 @@ using CredensPet.Infrastructure.DTO;
 
 namespace BusinessLogicLayer;
 
-public class ProjectService : IService<ProjectDTO>
+public class ContactService : IService<ContactDTO>
 {
-    private readonly IRepository<ProjectDTO> _repository;
+    private readonly IRepository<ContactDTO> _repository;
 
-    public ProjectService(IRepository<ProjectDTO> repository)
+    public ContactService(IRepository<ContactDTO> repository)
     {
         _repository = repository;
     }
 
-    public void Add(ProjectDTO entity)
+    public void Add(ContactDTO entity)
     {
         _repository.Add(entity);
         _repository.SaveChanges();
     }
-
-    public void Delete(ProjectDTO entity)
+  
+    public void Delete(ContactDTO entity)
     {
         throw new NotImplementedException();
     }
 
-    public ProjectDTO Find(params object[] keys)
+    public ContactDTO Find(params object[] keys)
     {
         if (keys == null)
         {
@@ -32,25 +32,25 @@ public class ProjectService : IService<ProjectDTO>
         return _repository.Find(keys);
     }
 
-    public IQueryable<ProjectDTO> FindAll()
+    public IQueryable<ContactDTO> FindAll()
     {
         throw new NotImplementedException();
     }
 
-    public virtual Task<ProjectDTO> FindAsync(params object[] keys)
+    public virtual Task<ContactDTO> FindAsync(params object[] keys)
     {
         throw new NotImplementedException();
     }
 
-    public virtual Task<ProjectDTO> FirstOrDefault(params object[] keys)
+    public virtual Task<ContactDTO> FirstOrDefault(params object[] keys)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<ProjectDTO> GetAll()
+    public IEnumerable<ContactDTO> GetAll()
     {
-        var projectDTO = _repository.GetAll();
-        return projectDTO;
+        var contactDTO = _repository.GetAll();
+        return contactDTO;
     }
 
     public void SaveChanges()
@@ -63,7 +63,7 @@ public class ProjectService : IService<ProjectDTO>
         throw new NotImplementedException();
     }
 
-    public void Update(ProjectDTO entity)
+    public void Update(ContactDTO entity)
     {
         throw new NotImplementedException();
     }
