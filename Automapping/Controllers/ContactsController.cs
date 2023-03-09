@@ -10,21 +10,21 @@ namespace Presentation.Controllers
 {
     public class ContactsController : Controller
     {
-        private readonly IService<ContactDTO> _service;
-        private readonly IMapper _mapperForward;
-        private readonly IMapper _mapperBackward;
+        private readonly IService<ContactProjectDTO> _service;
+        private readonly IMapper _mapperToView;
+        private readonly IMapper _mapperToDTO;
 
-        public ContactsController(IService<ContactDTO> service)
+        public ContactsController(IService<ContactProjectDTO> service)
         {
             _service = service;
-            _mapperForward = GenericMapperConfiguration<ContactDTO, ContactViewModel>.MapTo();
-            _mapperBackward = GenericMapperConfiguration<ContactDTO, ContactDetailsViewModel>.MapTo();
+            _mapperToView = GenericMapperConfiguration<ContactProjectDTO, ContactProjectViewModel>.MapTo();
+            _mapperToDTO = GenericMapperConfiguration<ContactProjectViewModel, ContactProjectDTO>.MapTo();
         }
 
         // GET: Contacts
         public IActionResult Index()
         {
-            var contact = _mapperForward.ProjectTo<ContactViewModel>(_service.FindAll().AsNoTracking());
+            var contact = _mapperToView.ProjectTo<ContactProjectViewModel>(_service.FindAll().AsNoTracking());
               return contact != null ? 
                           View(contact) :
                           Problem("Entity set 'CredensTestContext.Contacts'  is null.");
@@ -33,7 +33,7 @@ namespace Presentation.Controllers
         // GET: Contacts/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var contactDTO = _mapperBackward.Map<ContactDetailsViewModel>(_service.FindAll().FirstOrDefaultAsync(x => x.ContactId == id));
+            var contactDTO = _mapperToDTO.Map<ContactProjectDTO>(_service.FindAll().FirstOrDefaultAsync(x => x.ContactId == id));
             return View(contactDTO);
         }
 
@@ -46,7 +46,7 @@ namespace Presentation.Controllers
         // POST: Contacts/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactDTO contactDTO)
+        public async Task<IActionResult> Create([Bind("City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactProjectDTO contactDTO)
         {
             if (ModelState.IsValid)
             {

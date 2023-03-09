@@ -1,8 +1,9 @@
-﻿namespace Presentation.ViewModels;
+﻿namespace CredensPet.Infrastructure.DTO;
 
-public class ContactViewModel
+public class ContactProjectDTO
 {
     public int ContactId { get; set; }
+
     public string? City { get; set; }
 
     public string? ResidentialComplex { get; set; }

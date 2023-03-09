@@ -1,4 +1,4 @@
-namespace DataAccessLayer.Models
+﻿namespace DataAccessLayer.Models
 {
     public class ErrorViewModel
     {

@@ -16,7 +16,9 @@ public partial class CredensContext : DbContext
 
     public virtual DbSet<Branch> Branches { get; set; }
 
-    public virtual DbSet<Contact> Contacts { get; set; }
+    public virtual DbSet<ContactProject> ContactProjects { get; set; }
+
+    public virtual DbSet<ContactsUser> ContactsUsers { get; set; }
 
     public virtual DbSet<Project> Projects { get; set; }
 

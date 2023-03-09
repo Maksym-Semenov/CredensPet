@@ -1,7 +1,12 @@
-﻿namespace DataAccessLayer.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace DataAccessLayer.Models;
 
 public partial class Project
 {
+    [Key]
     public int ProjectId { get; set; }
 
     public string? OrderValue { get; set; }
@@ -34,9 +39,21 @@ public partial class Project
 
     public string? Floor { get; set; }
 
-    public string? ManagerId { get; set; }
+    public int? ManagerId { get; set; }
 
     public int? MakerId { get; set; }
 
     public string? BranchId { get; set; }
+
+    public int UserId { get; set; }
+
+    public int? MediatorId { get; set; }
+
+    public DateTime? Created { get; set; }
+
+    public DateTime? LastUpdated { get; set; }
+
+    public virtual ContactProject? ContactProject { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }
