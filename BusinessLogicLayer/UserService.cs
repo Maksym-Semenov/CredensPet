@@ -12,13 +12,13 @@ public class UserService : IService<UserDTO>
         _repository = repository;
     }
 
-    public void Add(UserDTO entity)
+    public async Task AddAsync(UserDTO entity)
     {
-        _repository.Add(entity);
+        _repository.AddAsync(entity);
         _repository.SaveChanges();
     }
    
-    public void Delete(UserDTO entity)
+    public async Task DeleteAsync(UserDTO entity)
     {
         throw new NotImplementedException();
     }
@@ -63,7 +63,7 @@ public class UserService : IService<UserDTO>
         throw new NotImplementedException();
     }
 
-    public void Update(UserDTO entity)
+    public async Task UpdateAsync(UserDTO entity)
     {
         throw new NotImplementedException();
     }

@@ -12,16 +12,14 @@ public class BranchService : IService<BranchDTO>
         _repository = repository;
     }
 
-    public void Add(BranchDTO entity)
+    public async Task AddAsync(BranchDTO entity)
     {
-        _repository.Add(entity);
-        _repository.SaveChanges();
+        await _repository.AddAsync(entity);
     }
 
-    public void Delete(BranchDTO entity)
+    public async Task DeleteAsync(BranchDTO entity)
     {
-        _repository.Delete(entity);
-        _repository.SaveChanges();
+        await _repository.DeleteAsync(entity);
     }
 
     public BranchDTO Find(params object[] keys)
@@ -31,6 +29,11 @@ public class BranchService : IService<BranchDTO>
             throw new ArgumentNullException(nameof(keys));
         }
         return _repository.Find(keys);
+    }
+
+    public IQueryable<BranchDTO> FindAll()
+    {
+        return _repository.FindAll();
     }
 
     public virtual Task<BranchDTO> FindAsync(params object[] keys)
@@ -53,10 +56,6 @@ public class BranchService : IService<BranchDTO>
         return branchDTO;
     }
 
-    public IQueryable<BranchDTO> FindAll()
-    {
-        return _repository.FindAll();
-    }
 
     public void SaveChanges()
     {
@@ -68,9 +67,9 @@ public class BranchService : IService<BranchDTO>
         return _repository.SaveChangesAsync();
     }
 
-    public void Update(BranchDTO entity)
+    public async Task UpdateAsync(BranchDTO entity)
     {
-        _repository.Update(entity);
+        await _repository.UpdateAsync(entity);
     }
    
 }

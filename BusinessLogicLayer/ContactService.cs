@@ -12,13 +12,12 @@ public class ContactService : IService<ContactDTO>
         _repository = repository;
     }
 
-    public void Add(ContactDTO entity)
+    public async Task AddAsync(ContactDTO entity)
     {
-        _repository.Add(entity);
-        _repository.SaveChanges();
+        await _repository.AddAsync(entity);
     }
   
-    public void Delete(ContactDTO entity)
+    public async Task DeleteAsync(ContactDTO entity)
     {
         throw new NotImplementedException();
     }
@@ -63,7 +62,7 @@ public class ContactService : IService<ContactDTO>
         throw new NotImplementedException();
     }
 
-    public void Update(ContactDTO entity)
+    public async Task UpdateAsync(ContactDTO entity)
     {
         throw new NotImplementedException();
     }

@@ -48,7 +48,7 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.Add(userDTO);
+                _service.AddAsync(userDTO);
                 return RedirectToAction(nameof(Index));
             }
             return View(userDTO);

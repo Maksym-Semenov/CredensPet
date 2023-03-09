@@ -12,13 +12,13 @@ public class ProjectService : IService<ProjectDTO>
         _repository = repository;
     }
 
-    public void Add(ProjectDTO entity)
+    public async Task AddAsync(ProjectDTO entity)
     {
-        _repository.Add(entity);
+        _repository.AddAsync(entity);
         _repository.SaveChanges();
     }
 
-    public void Delete(ProjectDTO entity)
+    public async Task DeleteAsync(ProjectDTO entity)
     {
         throw new NotImplementedException();
     }
@@ -63,7 +63,7 @@ public class ProjectService : IService<ProjectDTO>
         throw new NotImplementedException();
     }
 
-    public void Update(ProjectDTO entity)
+    public async Task UpdateAsync(ProjectDTO entity)
     {
         throw new NotImplementedException();
     }

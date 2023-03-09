@@ -2,6 +2,7 @@
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
 
@@ -23,16 +24,16 @@ namespace Presentation.Controllers
         // GET: Contacts
         public IActionResult Index()
         {
-            var contactDTO = _mapperForward.Map<IEnumerable<ContactViewModel>>(_service.GetAll());
-              return contactDTO != null ? 
-                          View(contactDTO) :
+            var contact = _mapperForward.ProjectTo<ContactViewModel>(_service.FindAll().AsNoTracking());
+              return contact != null ? 
+                          View(contact) :
                           Problem("Entity set 'CredensTestContext.Contacts'  is null.");
         }
 
         // GET: Contacts/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var contactDTO = _mapperBackward.Map<ContactDetailsViewModel>(_service.Find(id));
+            var contactDTO = _mapperBackward.Map<ContactDetailsViewModel>(_service.FindAll().FirstOrDefaultAsync(x => x.ContactId == id));
             return View(contactDTO);
         }
 
@@ -45,11 +46,12 @@ namespace Presentation.Controllers
         // POST: Contacts/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ContactId,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactDTO contactDTO)
+        public async Task<IActionResult> Create([Bind("City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactDTO contactDTO)
         {
             if (ModelState.IsValid)
             {
-                _service.Add(contactDTO);
+                await _service.AddAsync(contactDTO);
+                await _service.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(contactDTO);
