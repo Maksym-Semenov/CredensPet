@@ -27,7 +27,7 @@ public class BranchRepository : IRepository<BranchDTO>
     public async Task AddAsync(BranchDTO entity)
     {
         var branchDTO = _mapperToBranch.Map<Branch>(entity);
-        _context.Branches.Add(branchDTO);
+        await _context.Branches.AddAsync(branchDTO);
     }
 
     public async Task DeleteAsync(BranchDTO entity)

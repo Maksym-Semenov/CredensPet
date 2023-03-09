@@ -14,8 +14,7 @@ public class ContactService : IService<ContactDTO>
 
     public async Task AddAsync(ContactDTO entity)
     {
-        _repository.AddAsync(entity);
-        _repository.SaveChanges();
+        await _repository.AddAsync(entity);
     }
   
     public async Task DeleteAsync(ContactDTO entity)

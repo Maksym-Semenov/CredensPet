@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Presentation.ViewModels.ContactViewModel>
+﻿@model IQueryable<Presentation.ViewModels.ContactViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,13 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ContactId)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ContactId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.City)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().City)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Street)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Street)
         </th>
 
         <th></th>

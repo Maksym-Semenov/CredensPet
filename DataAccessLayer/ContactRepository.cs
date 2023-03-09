@@ -23,7 +23,7 @@ public class ContactRepository : IRepository<ContactDTO>
     public async Task AddAsync(ContactDTO entity)
     {
         var contactDTO = _mapperToContact.Map<Contact>(entity);
-        _context.Contacts.Add(contactDTO);
+        await _context.Contacts.AddAsync(contactDTO);
     }
 
     public async Task DeleteAsync(ContactDTO entity)

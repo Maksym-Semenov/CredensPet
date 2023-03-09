@@ -14,17 +14,19 @@ namespace Presentation.Controllers
         private readonly IService<BranchDTO> _service;
         private readonly IMapper _mapperToView;
         private readonly IMapper _mapperToDetails;
+        private readonly IMapper _mapperToDTO;
         public BranchesController(IService<BranchDTO> service)
         {
             _service = service;
             _mapperToView = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
             _mapperToDetails = GenericMapperConfiguration<BranchDTO, BranchDetailsViewModel>.MapTo();
+            _mapperToDTO = GenericMapperConfiguration<BranchViewModel, BranchDTO>.MapTo();
         }
 
         // GET: Branches
         public IActionResult Index()
         {
-            var branch = _mapperToView.ProjectTo<BranchViewModel>(_service.FindAll());
+            var branch = _mapperToView.ProjectTo<BranchViewModel>(_service.FindAll().AsNoTracking());
             return branch != null ?
                         View(branch) :
                         Problem("Entity set 'CredensTestContext.Branches'  is null.");
@@ -62,43 +64,46 @@ namespace Presentation.Controllers
         // POST: Branches/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name, Phone, IsOpen")] BranchDTO branchDTO)
+        public async Task<IActionResult> Create([Bind("Name, Phone, IsOpen")] BranchViewModel branchViewModel)
         {
             if (ModelState.IsValid)
             {
-                await _service.AddAsync(branchDTO);
+                var item = _mapperToDTO.Map<BranchDTO>(branchViewModel);
+                await _service.AddAsync(item);
                 await _service.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(branchDTO);
+            return View();
         }
 
         // GET: Branches/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
 
-            var branchDTO = _mapperToDetails.Map<BranchDTO>(await _service.FindAll().FirstOrDefaultAsync(x => x.BranchId == id));
+            var item = _mapperToView.Map<BranchViewModel>(await _service.FindAll().FirstOrDefaultAsync(x => x.BranchId == id));
 
-            if (branchDTO == null)
+            if (item == null)
             {
                 return NotFound();
             }
-            return View(branchDTO);
+            return View(item);
         }
 
         // POST: Branches/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BranchId, Name, Phone, IsOpen")] BranchDTO branchDTO)
+        public async Task<IActionResult> Edit(int id, [Bind("BranchId, Name, Phone, IsOpen")] BranchViewModel branchViewModel)
         {
-            if (id != branchDTO.BranchId)
+            var item = _mapperToDTO.Map<BranchDTO>(_service.FindAll().FirstOrDefaultAsync(x => x.BranchId == id));
+            if (id != branchViewModel.BranchId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                await _service.UpdateAsync(branchDTO);
+                //var item = _mapperToDTO.Map<BranchDTO>(branchViewModel);
+                await _service.UpdateAsync(item);
                 await _service.SaveChangesAsync();
             }
             
