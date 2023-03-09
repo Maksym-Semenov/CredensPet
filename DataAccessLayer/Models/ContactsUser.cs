@@ -1,8 +1,16 @@
-﻿namespace Presentation.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-public class ContactViewModel
+namespace DataAccessLayer.Models;
+
+public partial class ContactsUser
 {
+    [Key]
     public int ContactId { get; set; }
+
+    public string? Country { get; set; }
+
     public string? City { get; set; }
 
     public string? ResidentialComplex { get; set; }
@@ -13,11 +21,15 @@ public class ContactViewModel
 
     public string? BuildingNumber { get; set; }
 
-    public string? Lit { get; set; }
+    public string? Litera { get; set; }
 
     public string? BuildingPart { get; set; }
 
     public int? Apt { get; set; }
 
     public string? Floor { get; set; }
+
+    public int UserId { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }

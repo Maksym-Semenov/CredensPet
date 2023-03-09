@@ -3,26 +3,26 @@ using CredensPet.Infrastructure.DTO;
 
 namespace BusinessLogicLayer;
 
-public class ContactService : IService<ContactDTO>
+public class ContactService : IService<ContactProjectDTO>
 {
-    private readonly IRepository<ContactDTO> _repository;
+    private readonly IRepository<ContactProjectDTO> _repository;
 
-    public ContactService(IRepository<ContactDTO> repository)
+    public ContactService(IRepository<ContactProjectDTO> repository)
     {
         _repository = repository;
     }
 
-    public async Task AddAsync(ContactDTO entity)
+    public async Task AddAsync(ContactProjectDTO entity)
     {
         await _repository.AddAsync(entity);
     }
   
-    public async Task DeleteAsync(ContactDTO entity)
+    public async Task DeleteAsync(ContactProjectDTO entity)
     {
         throw new NotImplementedException();
     }
 
-    public ContactDTO Find(params object[] keys)
+    public ContactProjectDTO Find(params object[] keys)
     {
         if (keys == null)
         {
@@ -31,22 +31,22 @@ public class ContactService : IService<ContactDTO>
         return _repository.Find(keys);
     }
 
-    public IQueryable<ContactDTO> FindAll()
+    public IQueryable<ContactProjectDTO> FindAll()
     {
         throw new NotImplementedException();
     }
 
-    public virtual Task<ContactDTO> FindAsync(params object[] keys)
+    public virtual Task<ContactProjectDTO> FindAsync(params object[] keys)
     {
         throw new NotImplementedException();
     }
 
-    public virtual Task<ContactDTO> FirstOrDefault(params object[] keys)
+    public virtual Task<ContactProjectDTO> FirstOrDefault(params object[] keys)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<ContactDTO> GetAll()
+    public IEnumerable<ContactProjectDTO> GetAll()
     {
         var contactDTO = _repository.GetAll();
         return contactDTO;
@@ -62,7 +62,7 @@ public class ContactService : IService<ContactDTO>
         throw new NotImplementedException();
     }
 
-    public async Task UpdateAsync(ContactDTO entity)
+    public async Task UpdateAsync(ContactProjectDTO entity)
     {
         throw new NotImplementedException();
     }

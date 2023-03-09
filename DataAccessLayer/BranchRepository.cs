@@ -21,7 +21,7 @@ public class BranchRepository : IRepository<BranchDTO>
         _context = context;
         _mapperToDTO = GenericMapperConfiguration<Branch, BranchDTO>.MapTo();
         _mapperToBranch = GenericMapperConfiguration<BranchDTO, Branch>.MapTo();
-        _dbSet = context.Set<Branch>();
+        //_dbSet = context.Set<Branch>();
     }
 
     public async Task AddAsync(BranchDTO entity)
@@ -31,7 +31,7 @@ public class BranchRepository : IRepository<BranchDTO>
 
     public async Task DeleteAsync(BranchDTO entity)
     {
-        _dbSet.Remove(_mapperToBranch.Map<Branch>(entity));
+        _context.Branches.Remove(_mapperToBranch.Map<Branch>(entity));
     }
 
     public BranchDTO Find(params object[] keys)
@@ -41,7 +41,7 @@ public class BranchRepository : IRepository<BranchDTO>
 
     public IQueryable<BranchDTO> FindAll()
     {
-        return _dbSet.ProjectTo<BranchDTO>(_mapperToDTO.ConfigurationProvider);
+        return _context.Branches.ProjectTo<BranchDTO>(_mapperToDTO.ConfigurationProvider);
     }
 
     public virtual async Task<BranchDTO> FindAsync(params object[] keys)
