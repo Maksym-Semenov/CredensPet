@@ -1,6 +1,6 @@
 ﻿namespace Presentation.ViewModels;
 
-public class BranchViewModel
+public class BranchEditViewModel
 {
     public int BranchId { get; set; }
 

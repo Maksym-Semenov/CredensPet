@@ -13,13 +13,13 @@ namespace Presentation.Controllers
     {
         private readonly IService<BranchDTO> _service;
         private readonly IMapper _mapperToView;
+        private readonly IMapper _mapperToEditView;
         private readonly IMapper _mapperToDetails;
         private readonly IMapper _mapperToDTO;
         public BranchesController(IService<BranchDTO> service)
         {
             _service = service;
             _mapperToView = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
-            _mapperToDetails = GenericMapperConfiguration<BranchDTO, BranchDetailsViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<BranchViewModel, BranchDTO>.MapTo();
         }
 
@@ -39,9 +39,9 @@ namespace Presentation.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var branchDTO = _mapperToDetails.Map<BranchDetailsViewModel>
+                    var item = _mapperToView.Map<BranchViewModel>
                         (await _service.FindAll().FirstOrDefaultAsync(x => x.BranchId == id));
-                    return View(branchDTO);
+                    return View(item);
                 }
             }
             catch
@@ -94,7 +94,7 @@ namespace Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("BranchId, Name, Phone, IsOpen")] BranchViewModel branchViewModel)
         {
-            var item = _mapperToDTO.Map<BranchDTO>(_service.FindAll().FirstOrDefaultAsync(x => x.BranchId == id));
+            //var item = _mapperToDTO.Map<BranchDTO>(_service.FindAll().FirstOrDefaultAsync(x => x.BranchId == id));
             if (id != branchViewModel.BranchId)
             {
                 return NotFound();
@@ -102,7 +102,7 @@ namespace Presentation.Controllers
 
             if (ModelState.IsValid)
             {
-                //var item = _mapperToDTO.Map<BranchDTO>(branchViewModel);
+                var item = _mapperToDTO.Map<BranchDTO>(branchViewModel);
                 await _service.UpdateAsync(item);
                 await _service.SaveChangesAsync();
             }
@@ -131,8 +131,8 @@ namespace Presentation.Controllers
         // GET: Branches/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var branchDTO = _service.FindAll().FirstOrDefault(x => x.BranchId == id);
-            return View(branchDTO);
+            var item = _mapperToView.Map<BranchViewModel>(_service.FindAll().FirstOrDefault(x => x.BranchId == id));
+            return View(item);
         }
 
         // POST: Branches/Delete/5
@@ -144,10 +144,10 @@ namespace Presentation.Controllers
             {
                 return Problem("Entity set 'CredensTestContext.Branches'  is null.");
             }
-            var branchDTO = _service.FindAll().FirstOrDefault(x => x.BranchId == id);
-            if (branchDTO != null)
+            var item = _mapperToDTO.Map<BranchDTO>(_service.FindAll().FirstOrDefault(x => x.BranchId == id));
+            if (item != null)
             {
-                await _service.DeleteAsync(branchDTO);
+                await _service.DeleteAsync(item);
             }
 
             await _service.SaveChangesAsync();
