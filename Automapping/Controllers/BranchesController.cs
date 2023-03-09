@@ -3,6 +3,7 @@ using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
 
@@ -30,14 +31,14 @@ namespace Presentation.Controllers
         }
 
         // GET: Branches/Details/5
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     var branchDTO = _mapperToDetails.Map<BranchDetailsViewModel>
-                        (_service.Find(id));
+                        (await _service.FindAll().FirstOrDefaultAsync(x => x.BranchId == id));
                     return View(branchDTO);
                 }
             }
@@ -61,11 +62,12 @@ namespace Presentation.Controllers
         // POST: Branches/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Name, Phone, IsOpen")] BranchDTO branchDTO)
+        public async Task<IActionResult> Create([Bind("Name, Phone, IsOpen")] BranchDTO branchDTO)
         {
             if (ModelState.IsValid)
             {
-                _service.Add(branchDTO);
+                await _service.AddAsync(branchDTO);
+                await _service.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(branchDTO);
@@ -75,29 +77,29 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Edit(int id)
         {
 
-            var branchDTO = _mapperToDetails.Map<BranchDTO>(_service.FindAll().FirstOrDefault(x => x.BranchId == id));
+            var branchDTO = _mapperToDetails.Map<BranchDTO>(await _service.FindAll().FirstOrDefaultAsync(x => x.BranchId == id));
 
-            //if (branch == null)
-            //{
-            //    return NotFound();
-            //}
+            if (branchDTO == null)
+            {
+                return NotFound();
+            }
             return View(branchDTO);
         }
 
         // POST: Branches/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("BranchId, Name, Phone, IsOpen")] BranchDTO branchDTO)
+        public async Task<IActionResult> Edit(int id, [Bind("BranchId, Name, Phone, IsOpen")] BranchDTO branchDTO)
         {
-            //if (id != branchDTO.BranchId)
-            //{
-            //    return NotFound();
-            //}
+            if (id != branchDTO.BranchId)
+            {
+                return NotFound();
+            }
 
             if (ModelState.IsValid)
             {
-                _service.Update(branchDTO);
-                _service.SaveChanges();
+                await _service.UpdateAsync(branchDTO);
+                await _service.SaveChangesAsync();
             }
             
             //if (ModelState.IsValid)
@@ -119,11 +121,10 @@ namespace Presentation.Controllers
             //        }
             //    }
                 return RedirectToAction(nameof(Index));
-                return View();
         }
 
         // GET: Branches/Delete/5
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var branchDTO = _service.FindAll().FirstOrDefault(x => x.BranchId == id);
             return View(branchDTO);
@@ -132,7 +133,7 @@ namespace Presentation.Controllers
         // POST: Branches/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_service == null)
             {
@@ -141,10 +142,11 @@ namespace Presentation.Controllers
             var branchDTO = _service.FindAll().FirstOrDefault(x => x.BranchId == id);
             if (branchDTO != null)
             {
-                _service.Delete(branchDTO);
+                await _service.DeleteAsync(branchDTO);
             }
 
-            //_service.SaveChanges();
+            await _service.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

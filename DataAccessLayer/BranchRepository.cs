@@ -24,13 +24,13 @@ public class BranchRepository : IRepository<BranchDTO>
         _dbSet = context.Set<Branch>();
     }
 
-    public void Add(BranchDTO entity)
+    public async Task AddAsync(BranchDTO entity)
     {
         var branchDTO = _mapperToBranch.Map<Branch>(entity);
         _context.Branches.Add(branchDTO);
     }
 
-    public void Delete(BranchDTO entity)
+    public async Task DeleteAsync(BranchDTO entity)
     {
         _dbSet.Remove(_mapperToBranch.Map<Branch>(entity));
     }
@@ -72,7 +72,7 @@ public class BranchRepository : IRepository<BranchDTO>
         return _context.SaveChangesAsync();
     }
 
-    public void Update(BranchDTO entity)
+    public async Task UpdateAsync(BranchDTO entity)
     {
         var branch = _mapperToBranch.Map<Branch>(entity);
          _context.Entry(branch).State = EntityState.Modified;

@@ -1,13 +1,10 @@
-﻿using CredensPet.Infrastructure.DTO;
-using Microsoft.EntityFrameworkCore;
-
-namespace CredensPet.Infrastructure;
+﻿namespace CredensPet.Infrastructure;
 
 public interface IRepository<T> where T : class
 {
-    void Add(T entity);
+    Task AddAsync(T entity);
 
-    void Delete(T entity);
+    Task DeleteAsync(T entity);
 
     T Find(params object[] keys);
 
@@ -23,6 +20,6 @@ public interface IRepository<T> where T : class
 
     Task SaveChangesAsync();
 
-    void Update(T entity);
+    Task UpdateAsync(T entity);
 
 }

@@ -20,13 +20,13 @@ public class UserRepository : IRepository<UserDTO>
         _mapperToUser = GenericMapperConfiguration<UserDTO, User>.MapTo();
     }
 
-    public void Add(UserDTO entity)
+    public async Task AddAsync(UserDTO entity)
     {
         var userDTO = _mapperToUser.Map<User>(entity);
         _context.Add(userDTO);
     }
 
-    public void Delete(UserDTO entity)
+    public async Task DeleteAsync(UserDTO entity)
     {
         throw new NotImplementedException();
     }
@@ -67,7 +67,7 @@ public class UserRepository : IRepository<UserDTO>
         throw new NotImplementedException();
     }
 
-    public void Update(UserDTO entity)
+    public async Task UpdateAsync(UserDTO entity)
     {
         throw new NotImplementedException();
     }

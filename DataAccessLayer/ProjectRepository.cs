@@ -20,13 +20,13 @@ public class ProjectRepository : IRepository<ProjectDTO>
         _mapperToProject = GenericMapperConfiguration<ProjectDTO, Project>.MapTo();
     }
 
-    public void Add(ProjectDTO entity)
+    public async Task AddAsync(ProjectDTO entity)
     {
         var projectDTO = _mapperToProject.Map<Project>(entity);
         _context.Projects.Add(projectDTO);
     }
 
-    public void Delete(ProjectDTO entity)
+    public async Task DeleteAsync(ProjectDTO entity)
     {
         throw new NotImplementedException();
     }
@@ -67,7 +67,7 @@ public class ProjectRepository : IRepository<ProjectDTO>
         throw new NotImplementedException();
     }
 
-    public void Update(ProjectDTO entity)
+    public async Task UpdateAsync(ProjectDTO entity)
     {
         throw new NotImplementedException();
     }

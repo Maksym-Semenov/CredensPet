@@ -49,7 +49,7 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.Add(contactDTO);
+                _service.AddAsync(contactDTO);
                 return RedirectToAction(nameof(Index));
             }
             return View(contactDTO);

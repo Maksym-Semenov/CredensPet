@@ -20,13 +20,13 @@ public class ContactRepository : IRepository<ContactDTO>
         _mapperToContact = GenericMapperConfiguration<ContactDTO, Contact>.MapTo();
     }
 
-    public void Add(ContactDTO entity)
+    public async Task AddAsync(ContactDTO entity)
     {
         var contactDTO = _mapperToContact.Map<Contact>(entity);
         _context.Contacts.Add(contactDTO);
     }
 
-    public void Delete(ContactDTO entity)
+    public async Task DeleteAsync(ContactDTO entity)
     {
         throw new NotImplementedException();
     }
@@ -67,7 +67,7 @@ public class ContactRepository : IRepository<ContactDTO>
         throw new NotImplementedException();
     }
 
-    public void Update(ContactDTO entity)
+    public async Task UpdateAsync(ContactDTO entity)
     {
         throw new NotImplementedException();
     }
