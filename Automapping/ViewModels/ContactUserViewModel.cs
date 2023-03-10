@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿namespace Presentation.ViewModels;
 
-namespace DataAccessLayer.Models;
-
-public partial class ContactsUser
+public class ContactUserViewModel
 {
-    [Key]
-    public int ContactId { get; set; }
+    public int ContactUserId { get; set; }
 
     public string? Country { get; set; }
 
@@ -28,8 +23,4 @@ public partial class ContactsUser
     public int? Apt { get; set; }
 
     public string? Floor { get; set; }
-
-    public int UserId { get; set; }
-
-    public virtual User User { get; set; } = null!;
 }

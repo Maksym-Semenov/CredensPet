@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using DataAccessLayer.EF;
 using DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 
 namespace DataAccessLayer.Repository;
@@ -20,56 +22,30 @@ public class ProjectRepository : IRepository<ProjectDTO>
         _mapperToProject = GenericMapperConfiguration<ProjectDTO, Project>.MapTo();
     }
 
-    public async Task AddAsync(ProjectDTO entity)
+
+    public virtual async Task AddAsync(ProjectDTO entity)
     {
-        var projectDTO = _mapperToProject.Map<Project>(entity);
-        _context.Projects.Add(projectDTO);
+        await _context.Projects.AddAsync(_mapperToProject.Map<Project>(entity));
     }
 
-    public async Task DeleteAsync(ProjectDTO entity)
+    public virtual async Task DeleteAsync(ProjectDTO entity)
     {
-        throw new NotImplementedException();
-    }
-
-    public ProjectDTO Find(params object[] keys)
-    {
-         return _mapperToDTO.Map<ProjectDTO>(_context.Projects.Find(keys));
+        _context.Projects.Remove(_mapperToProject.Map<Project>(entity));
     }
 
     public IQueryable<ProjectDTO> FindAll()
     {
-        throw new NotImplementedException();
+        return _context.Projects.ProjectTo<ProjectDTO>(_mapperToDTO.ConfigurationProvider);
     }
 
-    public virtual Task<ProjectDTO> FindAsync(params object[] keys)
+    public virtual async Task SaveChangesAsync()
     {
-        throw new NotImplementedException();
+        await _context.SaveChangesAsync();
     }
 
-    public virtual Task<ProjectDTO> FirstOrDefault(params object[] keys)
+    public virtual async Task UpdateAsync(ProjectDTO entity)
     {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<ProjectDTO> GetAll()
-    {
-        var projectDTO = _mapperToDTO.Map<IEnumerable<ProjectDTO>>(_context.Projects);
-        return projectDTO;
-    }
-
-    public void SaveChanges()
-    {
-        _context.SaveChanges();
-    }
-
-    public Task SaveChangesAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task UpdateAsync(ProjectDTO entity)
-    {
-        throw new NotImplementedException();
+        _context.Entry(_mapperToProject.Map<Project>(entity)).State = EntityState.Modified;
     }
 
 }

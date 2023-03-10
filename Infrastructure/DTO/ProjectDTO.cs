@@ -14,7 +14,19 @@ public class ProjectDTO
 
     public double? Price { get; set; }
 
-    public string? City { get; set; } 
+    public int? CustomerId { get; set; }
 
-    
+    public int? ManagerId { get; set; }
+
+    public int? MakerId { get; set; }
+
+    public string? BranchId { get; set; }
+
+    public int? MediatorId { get; set; }
+
+    public DateTime? Created { get; set; } = DateTime.Now;
+
+    public DateTime? LastUpdated { get; set; }
+
+
 }

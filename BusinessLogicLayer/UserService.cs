@@ -12,60 +12,30 @@ public class UserService : IService<UserDTO>
         _repository = repository;
     }
 
-    public async Task AddAsync(UserDTO entity)
+
+    public virtual async Task AddAsync(UserDTO entity)
     {
-        _repository.AddAsync(entity);
-        _repository.SaveChanges();
-    }
-   
-    public async Task DeleteAsync(UserDTO entity)
-    {
-        throw new NotImplementedException();
+        await _repository.AddAsync(entity);
     }
 
-    public UserDTO Find(params object[] keys)
+    public virtual async Task DeleteAsync(UserDTO entity)
     {
-        if (keys == null)
-        {
-            throw new ArgumentNullException(nameof(keys));
-        }
-        return _repository.Find(keys);
+        await _repository.DeleteAsync(entity);
     }
 
     public IQueryable<UserDTO> FindAll()
     {
-        throw new NotImplementedException();
+        return _repository.FindAll();
     }
 
-    public virtual Task<UserDTO> FindAsync(params object[] keys)
+    public virtual async Task SaveChangesAsync()
     {
-        throw new NotImplementedException();
+        await _repository.SaveChangesAsync();
     }
 
-    public virtual Task<UserDTO> FirstOrDefault(params object[] keys)
+    public virtual async Task UpdateAsync(UserDTO entity)
     {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<UserDTO> GetAll()
-    {
-        var userDTO = _repository.GetAll();
-        return userDTO;
-    }
-
-    public void SaveChanges()
-    {
-        _repository.SaveChanges();
-    }
-
-    public Task SaveChangesAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task UpdateAsync(UserDTO entity)
-    {
-        throw new NotImplementedException();
+        await _repository.UpdateAsync(entity);
     }
 
 }

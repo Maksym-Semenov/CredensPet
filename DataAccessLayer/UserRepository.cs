@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using DataAccessLayer.EF;
 using DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 
 namespace DataAccessLayer.Repository;
@@ -20,56 +22,30 @@ public class UserRepository : IRepository<UserDTO>
         _mapperToUser = GenericMapperConfiguration<UserDTO, User>.MapTo();
     }
 
-    public async Task AddAsync(UserDTO entity)
+
+    public virtual async Task AddAsync(UserDTO entity)
     {
-        var userDTO = _mapperToUser.Map<User>(entity);
-        _context.Add(userDTO);
+        await _context.Users.AddAsync(_mapperToUser.Map<User>(entity));
     }
 
-    public async Task DeleteAsync(UserDTO entity)
+    public virtual async Task DeleteAsync(UserDTO entity)
     {
-        throw new NotImplementedException();
-    }
-
-    public UserDTO Find(params object[] keys)
-    {
-        return _mapperToDTO.Map<UserDTO>(_context.Users.Find(keys));
+        _context.Users.Remove(_mapperToUser.Map<User>(entity));
     }
 
     public IQueryable<UserDTO> FindAll()
     {
-        throw new NotImplementedException();
+        return _context.Users.ProjectTo<UserDTO>(_mapperToDTO.ConfigurationProvider);
     }
 
-    public virtual Task<UserDTO> FindAsync(params object[] keys)
+    public virtual async Task SaveChangesAsync()
     {
-        throw new NotImplementedException();
+        await _context.SaveChangesAsync();
     }
 
-    public virtual Task<UserDTO> FirstOrDefault(params object[] keys)
+    public virtual async Task UpdateAsync(UserDTO entity)
     {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<UserDTO> GetAll()
-    {
-        var userDTO = _mapperToDTO.Map<IEnumerable<UserDTO>>(_context.Users);
-        return userDTO;
-    }
-
-    public void SaveChanges()
-    {
-        _context.SaveChanges();
-    }
-
-    public Task SaveChangesAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task UpdateAsync(UserDTO entity)
-    {
-        throw new NotImplementedException();
+        _context.Entry(_mapperToUser.Map<User>(entity)).State = EntityState.Modified;
     }
 
 }

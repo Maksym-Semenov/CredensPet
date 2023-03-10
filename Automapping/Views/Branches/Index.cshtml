@@ -13,11 +13,18 @@
 <table class="table">
     <thead>
         <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
+            </th>
             <th>
                 @(Html.DisplayNameFor(model => model.FirstOrDefault().Name))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
+                @(Html.DisplayNameFor(model => model.FirstOrDefault().Phone))
+            </th>
+            <th>
+                @(Html.DisplayNameFor(model => model.FirstOrDefault().IsOpen))
             </th>
            
             <th></th>
@@ -27,14 +34,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.BranchId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BranchId)
+                @Html.DisplayFor(modelItem => item.Phone)
             </td>
-            
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BranchId">Edit</a> |
+                @Html.DisplayFor(modelItem => item.IsOpen)
+            </td>
+            <td>
+                <a asp-action="Update" asp-route-id="@item.BranchId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.BranchId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.BranchId">Delete</a>
             </td>

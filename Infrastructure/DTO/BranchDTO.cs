@@ -8,5 +8,5 @@ public class BranchDTO
 
     public string? Phone { get; set; }
 
-    public string? IsOpen { get; set; }
+    public bool? IsOpen { get; set; }
 }
