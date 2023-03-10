@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Presentation.ViewModels.ProjectViewModel>
+﻿@model IQueryable<Presentation.ViewModels.ProjectViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -11,56 +11,67 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderValue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderMonth)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderYear)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-           
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ProjectId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().OrderValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().OrderMonth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().OrderYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().OrderName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderMonth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderMonth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastUpdated)
+        </td>
+        <td>
+            <a asp-action="Update" asp-route-id="@item.">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
+        </td>
+    </tr>
 }
     </tbody>
 </table>

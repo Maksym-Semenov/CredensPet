@@ -1,8 +1,13 @@
-﻿namespace CredensPet.Infrastructure.DTO;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-public class ContactProjectDTO
+namespace DataAccessLayer.Models;
+
+public partial class ContactUser
 {
-    public int ContactProjectId { get; set; }
+    [Key]
+    public int ContactUserId { get; set; }
 
     public string? Country { get; set; }
 
@@ -23,4 +28,8 @@ public class ContactProjectDTO
     public int? Apt { get; set; }
 
     public string? Floor { get; set; }
+
+    public int UserId { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }

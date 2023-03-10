@@ -22,7 +22,10 @@ builder.Services.AddScoped(typeof(IRepository<BranchDTO>), typeof(BranchReposito
 builder.Services.AddScoped(typeof(IService<BranchDTO>), typeof(BranchService));
 
 builder.Services.AddScoped(typeof(IRepository<ContactProjectDTO>), typeof(ContactProjectRepository));
-builder.Services.AddScoped(typeof(IService<ContactProjectDTO>), typeof(ContactService));
+builder.Services.AddScoped(typeof(IService<ContactProjectDTO>), typeof(ContactProjectService));
+
+builder.Services.AddScoped(typeof(IRepository<ContactUserDTO>), typeof(ContactUserRepository));
+builder.Services.AddScoped(typeof(IService<ContactUserDTO>), typeof(ContactUserService));
 
 builder.Services.AddScoped(typeof(IRepository<UserDTO>), typeof(UserRepository));
 builder.Services.AddScoped(typeof(IService<UserDTO>), typeof(UserService));

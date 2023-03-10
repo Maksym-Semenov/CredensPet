@@ -6,17 +6,7 @@ public interface IRepository<T> where T : class
 
     Task DeleteAsync(T entity);
 
-    T Find(params object[] keys);
-
     IQueryable<T> FindAll();
-
-    Task<T> FindAsync(params object[] keys);
-
-    Task<T> FirstOrDefault(params object[] keys);
-
-    IEnumerable<T> GetAll();
-
-    void SaveChanges();
 
     Task SaveChangesAsync();
 

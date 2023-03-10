@@ -15,29 +15,11 @@ public partial class Project
 
     public int? OrderYear { get; set; }
 
-    public int? CustomerId { get; set; }
-
     public string? OrderName { get; set; }
 
     public double? Price { get; set; }
 
-    public string? City { get; set; }
-
-    public string? ResidentialComplex { get; set; }
-
-    public string? TypeStreet { get; set; }
-
-    public string? Street { get; set; }
-
-    public string? BuildingNumber { get; set; }
-
-    public string? Litera { get; set; }
-
-    public string? BuildingPart { get; set; }
-
-    public int? Apartment { get; set; }
-
-    public string? Floor { get; set; }
+    public int? CustomerId { get; set; }
 
     public int? ManagerId { get; set; }
 
@@ -45,15 +27,16 @@ public partial class Project
 
     public string? BranchId { get; set; }
 
-    public int UserId { get; set; }
-
     public int? MediatorId { get; set; }
 
-    public DateTime? Created { get; set; }
+    public DateTime? Created { get; set; } = DateTime.Now;
 
     public DateTime? LastUpdated { get; set; }
 
+
     public virtual ContactProject? ContactProject { get; set; }
+
+    public int UserId { get; set; }
 
     public virtual User User { get; set; } = null!;
 }

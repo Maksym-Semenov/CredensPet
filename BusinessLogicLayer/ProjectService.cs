@@ -12,60 +12,30 @@ public class ProjectService : IService<ProjectDTO>
         _repository = repository;
     }
 
-    public async Task AddAsync(ProjectDTO entity)
+
+    public virtual async Task AddAsync(ProjectDTO entity)
     {
-        _repository.AddAsync(entity);
-        _repository.SaveChanges();
+        await _repository.AddAsync(entity);
     }
 
-    public async Task DeleteAsync(ProjectDTO entity)
+    public virtual async Task DeleteAsync(ProjectDTO entity)
     {
-        throw new NotImplementedException();
-    }
-
-    public ProjectDTO Find(params object[] keys)
-    {
-        if (keys == null)
-        {
-            throw new ArgumentNullException(nameof(keys));
-        }
-        return _repository.Find(keys);
+        await _repository.DeleteAsync(entity);
     }
 
     public IQueryable<ProjectDTO> FindAll()
     {
-        throw new NotImplementedException();
+        return _repository.FindAll();
     }
 
-    public virtual Task<ProjectDTO> FindAsync(params object[] keys)
+    public virtual async Task SaveChangesAsync()
     {
-        throw new NotImplementedException();
+        await _repository.SaveChangesAsync();
     }
 
-    public virtual Task<ProjectDTO> FirstOrDefault(params object[] keys)
+    public virtual async Task UpdateAsync(ProjectDTO entity)
     {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<ProjectDTO> GetAll()
-    {
-        var projectDTO = _repository.GetAll();
-        return projectDTO;
-    }
-
-    public void SaveChanges()
-    {
-        _repository.SaveChanges();
-    }
-
-    public Task SaveChangesAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task UpdateAsync(ProjectDTO entity)
-    {
-        throw new NotImplementedException();
+        await _repository.UpdateAsync(entity);
     }
 
 }

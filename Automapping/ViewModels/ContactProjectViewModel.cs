@@ -2,7 +2,10 @@
 
 public class ContactProjectViewModel
 {
-    public int ContactId { get; set; }
+    public int ContactProjectId { get; set; }
+
+    public string? Country { get; set; }
+
     public string? City { get; set; }
 
     public string? ResidentialComplex { get; set; }
@@ -13,7 +16,7 @@ public class ContactProjectViewModel
 
     public string? BuildingNumber { get; set; }
 
-    public string? Lit { get; set; }
+    public string? Litera { get; set; }
 
     public string? BuildingPart { get; set; }
 

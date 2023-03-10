@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Presentation.ViewModels.UserViewModel>
+﻿@model IQueryable<Presentation.ViewModels.UserViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,10 +13,22 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().UserId))
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MiddleName)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MiddleName))
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().UserRoleId))
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RoleId)
         </th>
         <th></th>
     </tr>
@@ -24,6 +36,10 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -31,7 +47,16 @@
                 @Html.DisplayFor(modelItem => item.MiddleName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserRoleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleId)
+            </td>
+            <td>
+                <a asp-action="Update" asp-route-id="@item.UserId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
             </td>

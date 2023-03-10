@@ -2,7 +2,9 @@
 
 public class ContactUserDTO
 {
-    public int ContactId { get; set; }
+    public int ContactUserId { get; set; }
+
+    public string? Country { get; set; }
 
     public string? City { get; set; }
 
@@ -14,7 +16,7 @@ public class ContactUserDTO
 
     public string? BuildingNumber { get; set; }
 
-    public string? Lit { get; set; }
+    public string? Litera { get; set; }
 
     public string? BuildingPart { get; set; }
 

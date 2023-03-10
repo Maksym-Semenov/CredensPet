@@ -33,7 +33,7 @@ public partial class User
 
     public virtual Branch Branch { get; set; } = null!;
 
-    public virtual ContactsUser? ContactsUser { get; set; }
+    public virtual ContactUser? ContactsUser { get; set; }
 
     public virtual ICollection<Project> Projects { get; } = new List<Project>();
 }
