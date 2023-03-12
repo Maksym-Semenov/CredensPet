@@ -40,6 +40,23 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.RoleId)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        
+        <dt class="col-sm-2">
+          
+        </dt>
+        <dd class="col-sm-10">
+           
+        </dd>
+        @await Html.PartialAsync("_Contact")
+
+        <dd>;
+        </dd>
     </dl>
 </div>
 <div>

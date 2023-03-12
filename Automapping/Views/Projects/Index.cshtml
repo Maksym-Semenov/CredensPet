@@ -1,10 +1,10 @@
 ﻿@model IQueryable<Presentation.ViewModels.ProjectViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All projects";
 }
 
-<h1>Index</h1>
+<h1>All projects</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -67,9 +67,10 @@
             @Html.DisplayFor(modelItem => item.LastUpdated)
         </td>
         <td>
-            <a asp-action="Update" asp-route-id="@item.">Edit</a> |
+            <a asp-action="Update" asp-route-id="@item.ProjectId">Edit</a> |
             <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a> |
+                    <a asp-action="AddContact" asp-route-id="@item.ProjectId">Add contact</a> 
         </td>
     </tr>
 }

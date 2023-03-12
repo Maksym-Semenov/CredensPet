@@ -1,10 +1,11 @@
 ﻿@model Presentation.ViewModels.ContactProjectViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create new project's contact";
+    var ProjectId = ViewData["ProjectId"];
 }
 
-<h1>Create</h1>
+<h1>Create new project's contact</h1>
 
 <h4>Contact</h4>
 <hr />
@@ -12,6 +13,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@ProjectId"/>
             <div class="form-group">
                 <label asp-for="Country" class="control-label"></label>
                 <input asp-for="Country" class="form-control" />

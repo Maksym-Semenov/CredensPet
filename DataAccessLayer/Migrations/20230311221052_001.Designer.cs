@@ -4,6 +4,7 @@ using DataAccessLayer.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(CredensContext))]
-    partial class CredensContextModelSnapshot : ModelSnapshot
+    [Migration("20230311221052_001")]
+    partial class _001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace DataAccessLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BranchBranch", b =>
-                {
-                    b.Property<string>("BranchesListName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ListBranchesName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("BranchesListName", "ListBranchesName");
-
-                    b.HasIndex("ListBranchesName");
-
-                    b.ToTable("BranchBranch");
-                });
 
             modelBuilder.Entity("DataAccessLayer.Models.Branch", b =>
                 {
@@ -192,8 +180,8 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("OrderValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OrderYear")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("OrderYear")
+                        .HasColumnType("int");
 
                     b.Property<double?>("Price")
                         .HasColumnType("float");
@@ -255,21 +243,6 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("Name");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("BranchBranch", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Branch", null)
-                        .WithMany()
-                        .HasForeignKey("BranchesListName")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Models.Branch", null)
-                        .WithMany()
-                        .HasForeignKey("ListBranchesName")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.ContactProject", b =>

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLayer.Models;
 
@@ -29,7 +28,10 @@ public partial class User
 
     public int? MakerId { get; set; }
 
-    public int BranchId { get; set; }
+    [ForeignKey("Branch")]
+    public string Name { get; set; }
+
+    //public int BranchId { get; set; }
 
     public virtual Branch Branch { get; set; } = null!;
 

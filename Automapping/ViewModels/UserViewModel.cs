@@ -1,4 +1,6 @@
-﻿namespace Presentation.ViewModels;
+﻿using CredensPet.Infrastructure.DTO;
+
+namespace Presentation.ViewModels;
 
 public class UserViewModel
 {
@@ -13,4 +15,9 @@ public class UserViewModel
     public string? UserRoleId { get; set; }
 
     public int? RoleId { get; set; }
+
+
+    public string Name { get; set; }
+    public int ContactUserId { get; set; }
+    //public ContactUserDTO ContactUserDto { get; set; }
 }

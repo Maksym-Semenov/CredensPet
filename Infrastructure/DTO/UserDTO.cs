@@ -24,6 +24,12 @@ public class UserDTO
 
     public int? MakerId { get; set; }
 
-    public int BranchId { get; set; }
+
+
+    public string Name { get; set; }
+
+    public int ContactUserId { get; set; }
+
+    //public ContactUserDTO ContactUserDto { get; set; }
 
 }

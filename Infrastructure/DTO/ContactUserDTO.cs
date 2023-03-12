@@ -23,4 +23,8 @@ public class ContactUserDTO
     public int? Apt { get; set; }
 
     public string? Floor { get; set; }
+
+
+    public int UserId { get; set; }
+
 }

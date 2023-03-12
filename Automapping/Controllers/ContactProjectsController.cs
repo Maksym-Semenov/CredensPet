@@ -39,15 +39,16 @@ namespace Presentation.Controllers
         }
 
         // GET: ContactProjects/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
+            ViewData["ProjectId"] = id;
             return View();
         }
 
         // POST: ContactProjects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactProjectId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactProjectViewModel contactProjectViewModel)
+        public async Task<IActionResult> Create([Bind("ContactProjectId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor, ProjectId")] ContactProjectViewModel contactProjectViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +61,7 @@ namespace Presentation.Controllers
         // GET: ContactProjects/Update/5
         public async Task<IActionResult> Update(int? id)
         {
-            var item = _mapperToView.Map<ContactProjectViewModel>(_service.FindAll()
+            var item = _mapperToView.Map<ContactProjectViewModel>(await _service.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactProjectId == id));
             if (item == null)
             {
@@ -72,7 +73,7 @@ namespace Presentation.Controllers
         // POST: ContactProjects/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("ContactProjectId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactProjectViewModel contactProjectViewModel)
+        public async Task<IActionResult> Update(int? id, [Bind("ContactProjectId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor, ProjectId")] ContactProjectViewModel contactProjectViewModel)
         {
             if (id != contactProjectViewModel.ContactProjectId)
             {

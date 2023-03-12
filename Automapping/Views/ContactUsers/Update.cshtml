@@ -13,6 +13,7 @@
         <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ContactUserId" />
+            <input type="hidden" asp-for="UserId" />
             <div class="form-group">
                 <label asp-for="Country" class="control-label"></label>
                 <input asp-for="Country" class="form-control" />

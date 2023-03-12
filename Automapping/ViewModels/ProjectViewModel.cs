@@ -8,7 +8,7 @@ public class ProjectViewModel
 
     public string? OrderMonth { get; set; }
 
-    public int? OrderYear { get; set; }
+    public string? OrderYear { get; set; }
 
     public int? CustomerId { get; set; }
 

@@ -1,10 +1,10 @@
 ﻿@model IQueryable<Presentation.ViewModels.ContactUserViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All user's contacts";
 }
 
-<h1>Index</h1>
+<h1>All user's contacts</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Country))
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().City)

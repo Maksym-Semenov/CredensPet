@@ -1,10 +1,10 @@
 ﻿@model Presentation.ViewModels.ContactProjectViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit contact";
 }
 
-<h1>Edit</h1>
+<h1>Edit contact</h1>
 
 <h4>Contact</h4>
 <hr />
@@ -13,6 +13,7 @@
         <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ContactProjectId" />
+            <input type="hidden" asp-for="ProjectId" /> 
             <div class="form-group">
                 <label asp-for="Country" class="control-label"></label>
                 <input asp-for="Country" class="form-control" />
