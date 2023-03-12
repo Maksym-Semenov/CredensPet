@@ -55,7 +55,7 @@ namespace Presentation.Controllers
                 await _serviceContactUser.AddAsync(_mapperToDTO.Map<ContactUserDTO>(contactUserViewModel));
                 await _serviceContactUser.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Users");
         }
 
         // GET: Users/Update/5
