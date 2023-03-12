@@ -17,7 +17,7 @@ public class UserViewModel
     public int? RoleId { get; set; }
 
 
-    public string Name { get; set; }
+    public string BranchName { get; set; }
     public int ContactUserId { get; set; }
     //public ContactUserDTO ContactUserDto { get; set; }
 }

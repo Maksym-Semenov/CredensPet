@@ -29,7 +29,7 @@ public partial class User
     public int? MakerId { get; set; }
 
     [ForeignKey("Branch")]
-    public string Name { get; set; }
+    public string BranchName { get; set; }
 
     //public int BranchId { get; set; }
 

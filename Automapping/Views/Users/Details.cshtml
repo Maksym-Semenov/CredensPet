@@ -41,10 +41,10 @@
             @Html.DisplayFor(model => model.RoleId)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.BranchName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.BranchName)
         </dd>
         
         <dt class="col-sm-2">
@@ -53,7 +53,7 @@
         <dd class="col-sm-10">
            
         </dd>
-        @await Html.PartialAsync("_Contact")
+        @await Html.PartialAsync("_ContactUser")
 
         <dd>;
         </dd>

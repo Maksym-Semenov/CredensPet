@@ -9,7 +9,7 @@ public partial class Project
 
     public string? OrderValue { get; set; }
 
-    public string? OrderMonth { get; set; } = DateTime.Now.ToString("mm");
+    public string? OrderMonth { get; set; } = DateTime.Now.ToString("MM");
 
     public string? OrderYear { get; set; } = DateTime.Now.ToString("yy");
 

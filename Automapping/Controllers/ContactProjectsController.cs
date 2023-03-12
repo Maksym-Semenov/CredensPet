@@ -10,13 +10,13 @@ namespace Presentation.Controllers
 {
     public class ContactProjectsController : Controller
     {
-        private readonly IService<ContactProjectDTO> _service;
+        private readonly IService<ContactProjectDTO> _serviceContactProject;
         private readonly IMapper _mapperToView;
         private readonly IMapper _mapperToDTO;
 
-        public ContactProjectsController(IService<ContactProjectDTO> service)
+        public ContactProjectsController(IService<ContactProjectDTO> serviceContactProject)
         {
-            _service = service;
+            _serviceContactProject = serviceContactProject;
             _mapperToView = GenericMapperConfiguration<ContactProjectDTO, ContactProjectViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<ContactProjectViewModel, ContactProjectDTO>.MapTo();
         }
@@ -24,7 +24,7 @@ namespace Presentation.Controllers
         // GET: ContactProjects
         public IActionResult Index()
         {
-            var item = _mapperToView.ProjectTo<ContactProjectViewModel>(_service.FindAll().AsNoTracking());
+            var item = _mapperToView.ProjectTo<ContactProjectViewModel>(_serviceContactProject.FindAll().AsNoTracking());
               return item != null ? 
                           View(item) :
                           Problem("Entity set 'CredensTestContext.Contacts'  is null.");
@@ -33,7 +33,7 @@ namespace Presentation.Controllers
         // GET: ContactProjects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var item = _mapperToView.Map<ContactProjectViewModel>(await _service.FindAll()
+            var item = _mapperToView.Map<ContactProjectViewModel>(await _serviceContactProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactProjectId == id));
             return View(item);
         }
@@ -48,12 +48,12 @@ namespace Presentation.Controllers
         // POST: ContactProjects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactProjectId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor, ProjectId")] ContactProjectViewModel contactProjectViewModel)
+        public async Task<IActionResult> Create([Bind("ContactProjectId, ProjectId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactProjectViewModel contactProjectViewModel)
         {
             if (ModelState.IsValid)
             {
-                await _service.AddAsync(_mapperToDTO.Map<ContactProjectDTO>(contactProjectViewModel));
-                await _service.SaveChangesAsync();
+                await _serviceContactProject.AddAsync(_mapperToDTO.Map<ContactProjectDTO>(contactProjectViewModel));
+                await _serviceContactProject.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
@@ -61,7 +61,7 @@ namespace Presentation.Controllers
         // GET: ContactProjects/Update/5
         public async Task<IActionResult> Update(int? id)
         {
-            var item = _mapperToView.Map<ContactProjectViewModel>(await _service.FindAll()
+            var item = _mapperToView.Map<ContactProjectViewModel>(await _serviceContactProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactProjectId == id));
             if (item == null)
             {
@@ -73,7 +73,7 @@ namespace Presentation.Controllers
         // POST: ContactProjects/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("ContactProjectId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor, ProjectId")] ContactProjectViewModel contactProjectViewModel)
+        public async Task<IActionResult> Update(int? id, [Bind("ContactProjectId, ProjectId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactProjectViewModel contactProjectViewModel)
         {
             if (id != contactProjectViewModel.ContactProjectId)
             {
@@ -82,8 +82,8 @@ namespace Presentation.Controllers
 
             if (ModelState.IsValid)
             {
-                    await _service.UpdateAsync(_mapperToDTO.Map<ContactProjectDTO>(contactProjectViewModel));
-                    await _service.SaveChangesAsync();
+                    await _serviceContactProject.UpdateAsync(_mapperToDTO.Map<ContactProjectDTO>(contactProjectViewModel));
+                    await _serviceContactProject.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
 
@@ -92,9 +92,9 @@ namespace Presentation.Controllers
         // GET: ContactProjects/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            var item = _mapperToView.Map<ContactProjectViewModel>(await _service.FindAll()
+            var item = _mapperToView.Map<ContactProjectViewModel>(await _serviceContactProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactProjectId == id));
-            if (id == null || _service == null || item == null)
+            if (id == null || _serviceContactProject == null || item == null)
             {
                 return NotFound();
             }
@@ -107,18 +107,18 @@ namespace Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            if (_service == null)
+            if (_serviceContactProject == null)
             {
                 return Problem("Entity set 'CredensTestContext.Contacts'  is null.");
             }
-            var item = _mapperToDTO.Map<ContactProjectDTO>(await _service.FindAll()
+            var item = _mapperToDTO.Map<ContactProjectDTO>(await _serviceContactProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactProjectId == id));
             if (item != null)
             {
-                await _service.DeleteAsync(item);
+                await _serviceContactProject.DeleteAsync(item);
             }
 
-            await _service.SaveChangesAsync();
+            await _serviceContactProject.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

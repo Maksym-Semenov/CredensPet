@@ -10,7 +10,7 @@ public partial class Branch
     
     public int BranchId { get; set; }
     [Key]
-    public string? Name { get; set; }
+    public string? BranchName { get; set; }
 
     public string? Phone { get; set; }
 

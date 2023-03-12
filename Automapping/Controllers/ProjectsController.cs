@@ -38,6 +38,8 @@ namespace Presentation.Controllers
         {
             var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
+
+            return PartialView("_ContactProject");
             return View(item);
         }
 
@@ -52,7 +54,7 @@ namespace Presentation.Controllers
         //POST: Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId, OrderValue,OrderMonth,OrderYear,OrderName,Price,City, UserId")] ProjectViewModel projectViewModel)
+        public async Task<IActionResult> Create([Bind("ProjectId, UserId, OrderValue,OrderMonth,OrderYear,OrderName,Price,City")] ProjectViewModel projectViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +79,7 @@ namespace Presentation.Controllers
         //POST: Projects/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("ProjectId,OrderValue,OrderMonth,OrderYear,CustomerId,OrderName,Price,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Litera,BuildingPart,Apartment,Floor,ManagerId,MakerId,BranchId, UserId")] ProjectViewModel projectViewModel)
+        public async Task<IActionResult> Update(int? id, [Bind("ProjectId, UserId,OrderValue,OrderMonth,OrderYear,CustomerId,OrderName,Price,City")] ProjectViewModel projectViewModel)
         {
             if (id != projectViewModel.ProjectId)
             {
