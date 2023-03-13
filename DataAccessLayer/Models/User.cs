@@ -5,8 +5,8 @@ namespace DataAccessLayer.Models;
 
 public partial class User
 {
-    [Key]
-    public int UserId { get; set; }
+    //[Key]
+    //public int UserId { get; set; }
 
     public string? FirstName { get; set; }
 
@@ -27,11 +27,9 @@ public partial class User
     public int? MediatorId { get; set; }
 
     public int? MakerId { get; set; }
+    
 
-    [ForeignKey("Branch")]
-    public string BranchName { get; set; }
-
-    //public int BranchId { get; set; }
+    public int BranchId { get; set; }
 
     public virtual Branch Branch { get; set; } = null!;
 

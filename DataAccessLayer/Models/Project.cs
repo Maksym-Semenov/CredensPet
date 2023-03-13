@@ -4,8 +4,8 @@ namespace DataAccessLayer.Models;
 
 public partial class Project
 {
-    [Key]
-    public int ProjectId { get; set; }
+    //[Key]
+    //public int ProjectId { get; set; }
 
     public string? OrderValue { get; set; }
 

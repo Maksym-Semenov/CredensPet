@@ -4,8 +4,8 @@ namespace DataAccessLayer.Models;
 
 public partial class ContactUser
 {
-    [Key]
-    public int ContactUserId { get; set; }
+    //[Key]
+    //public int ContactUserId { get; set; }
 
     public string? Country { get; set; }
 

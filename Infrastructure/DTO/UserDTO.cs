@@ -26,7 +26,7 @@ public class UserDTO
 
 
 
-    public string BranchName { get; set; }
+    public string BranchId { get; set; }
 
     public int ContactUserId { get; set; }
 
