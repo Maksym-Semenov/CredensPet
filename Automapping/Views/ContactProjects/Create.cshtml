@@ -2,18 +2,16 @@
 
 @{
     ViewData["Title"] = "Create new project's contact";
-    var ProjectId = ViewData["ProjectId"];
 }
 
-<h1>Create new project's contact</h1>
+<h1>Create new project's contact'</h1>
 
-<h4>Contact</h4>
+<h4>ContactProject</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="@ProjectId"/>
             <div class="form-group">
                 <label asp-for="Country" class="control-label"></label>
                 <input asp-for="Country" class="form-control" />
@@ -63,6 +61,10 @@
                 <label asp-for="Floor" class="control-label"></label>
                 <input asp-for="Floor" class="form-control" />
                 <span asp-validation-for="Floor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectId" class="control-label"></label>
+                <select asp-for="ProjectId" class ="form-control" asp-items="ViewBag.ProjectId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

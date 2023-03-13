@@ -1,78 +1,108 @@
 ﻿@model IQueryable<Presentation.ViewModels.ProjectViewModel>
 
 @{
-    ViewData["Title"] = "All projects";
+    ViewData["Title"] = "Index";
 }
 
-<h1>All projects</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().ProjectId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().OrderValue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().OrderMonth)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().OrderYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().OrderName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
-        </th>
-        <th></th>
-    </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ManagerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().MakerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().MediatorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UserId)
+            </th>
+            <th></th>
+        </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderValue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderMonth)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderYear)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastUpdated)
-        </td>
-        <td>
-            <a asp-action="Update" asp-route-id="@item.ProjectId">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a> |
-                    <a asp-action="AddContact" asp-route-id="@item.ProjectId">Add contact</a> 
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderMonth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MakerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BranchId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediatorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                <a asp-action="Update" asp-route-id="@item.ProjectId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a> |
+                <a asp-action="AddContact" asp-route-id="@item.ProjectId">Add contact</a> 
+            </td>
+        </tr>
 }
     </tbody>
 </table>

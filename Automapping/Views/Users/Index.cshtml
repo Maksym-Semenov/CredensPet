@@ -1,48 +1,56 @@
 ﻿@model IQueryable<Presentation.ViewModels.UserViewModel>
 
 @{
-    ViewData["Title"] = "All users";
+    ViewData["Title"] = "Index";
 }
 
-<h1>All users</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().MiddleName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().UserRoleId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().RoleId)
-        </th>
-        <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().BranchName)
-        </th>
-        <th></th>
-    </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().MiddleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UserRoleId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().RoleId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UserCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ManagerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().MediatorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().MakerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
+            </th>
+            <th></th>
+        </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -59,13 +67,28 @@
                 @Html.DisplayFor(modelItem => item.RoleId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BranchName)
+                @Html.DisplayFor(modelItem => item.UserCount)
             </td>
             <td>
-                <a asp-action="Update" asp-route-id="@item.UserId">Edit</a> |
+                @Html.DisplayFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediatorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MakerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BranchId)
+            </td>
+            <td>
+                    <a asp-action="Update" asp-route-userId="@item.UserId" asp-route-branchId="@item.BranchId">Edit </a> |
                 <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a> |
-                <a asp-action="AddContact" asp-route-id="@item.UserId">Add Contact</a>
+                    <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a> |
+                    <a asp-action="AddContact" asp-route-id="@item.UserId">Add contact</a> 
             </td>
         </tr>
 }

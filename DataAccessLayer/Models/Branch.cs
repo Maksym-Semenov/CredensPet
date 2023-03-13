@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DataAccessLayer.Models;
 
@@ -15,10 +12,6 @@ public partial class Branch
     public string? Phone { get; set; }
 
     public bool? IsOpen { get; set; }
-
-    public List<Branch>? ListBranches { get; set; }
-
-    public IEnumerable<Branch>? BranchesList { get; set; }
 
 
     public virtual ICollection<User> Users { get; } = new List<User>();

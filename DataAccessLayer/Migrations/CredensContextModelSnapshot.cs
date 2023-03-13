@@ -22,21 +22,6 @@ namespace DataAccessLayer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BranchBranch", b =>
-                {
-                    b.Property<int>("BranchesListBranchId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ListBranchesBranchId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BranchesListBranchId", "ListBranchesBranchId");
-
-                    b.HasIndex("ListBranchesBranchId");
-
-                    b.ToTable("BranchBranch");
-                });
-
             modelBuilder.Entity("DataAccessLayer.Models.Branch", b =>
                 {
                     b.Property<int>("BranchId")
@@ -257,21 +242,6 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("BranchId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("BranchBranch", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Branch", null)
-                        .WithMany()
-                        .HasForeignKey("BranchesListBranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Models.Branch", null)
-                        .WithMany()
-                        .HasForeignKey("ListBranchesBranchId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.ContactProject", b =>

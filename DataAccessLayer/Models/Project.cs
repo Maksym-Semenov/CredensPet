@@ -4,8 +4,8 @@ namespace DataAccessLayer.Models;
 
 public partial class Project
 {
-    //[Key]
-    //public int ProjectId { get; set; }
+    [Key]
+    public int ProjectId { get; set; }
 
     public string? OrderValue { get; set; }
 
@@ -29,7 +29,7 @@ public partial class Project
 
     public DateTime? Created { get; set; } = DateTime.Now;
 
-    public DateTime? LastUpdated { get; set; }
+    public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
     public virtual ContactProject? ContactProject { get; set; }

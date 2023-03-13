@@ -2,6 +2,7 @@
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
@@ -11,12 +12,14 @@ namespace Presentation.Controllers
     public class ContactProjectsController : Controller
     {
         private readonly IService<ContactProjectDTO> _serviceContactProject;
+        private readonly IService<ProjectDTO> _serviceProject;
         private readonly IMapper _mapperToView;
         private readonly IMapper _mapperToDTO;
 
-        public ContactProjectsController(IService<ContactProjectDTO> serviceContactProject)
+        public ContactProjectsController(IService<ContactProjectDTO> serviceContactProject, IService<ProjectDTO> serviceProject)
         {
             _serviceContactProject = serviceContactProject;
+            _serviceProject = serviceProject; 
             _mapperToView = GenericMapperConfiguration<ContactProjectDTO, ContactProjectViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<ContactProjectViewModel, ContactProjectDTO>.MapTo();
         }
@@ -41,7 +44,8 @@ namespace Presentation.Controllers
         // GET: ContactProjects/Create
         public IActionResult Create(int? id)
         {
-            ViewData["ProjectId"] = id;
+            ViewBag.ProjectId = new SelectList(_serviceProject.FindAll().Select(x => x.ProjectId));
+            //ViewData["ProjectId"] = id;
             return View();
         }
 
@@ -55,7 +59,7 @@ namespace Presentation.Controllers
                 await _serviceContactProject.AddAsync(_mapperToDTO.Map<ContactProjectDTO>(contactProjectViewModel));
                 await _serviceContactProject.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Projects");
         }
 
         // GET: ContactProjects/Update/5

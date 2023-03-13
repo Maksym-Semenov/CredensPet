@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class _001 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,14 +15,15 @@ namespace DataAccessLayer.Migrations
                 name: "Branches",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BranchId = table.Column<int>(type: "int", nullable: false),
+                    BranchId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BranchName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsOpen = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Branches", x => x.Name);
+                    table.PrimaryKey("PK_Branches", x => x.BranchId);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,16 +42,16 @@ namespace DataAccessLayer.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     MediatorId = table.Column<int>(type: "int", nullable: true),
                     MakerId = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    BranchId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_Users_Branches_Name",
-                        column: x => x.Name,
+                        name: "FK_Users_Branches_BranchId",
+                        column: x => x.BranchId,
                         principalTable: "Branches",
-                        principalColumn: "Name",
+                        principalColumn: "BranchId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -91,7 +92,7 @@ namespace DataAccessLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OrderMonth = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OrderYear = table.Column<int>(type: "int", nullable: true),
+                    OrderYear = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OrderName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
@@ -161,9 +162,9 @@ namespace DataAccessLayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Name",
+                name: "IX_Users_BranchId",
                 table: "Users",
-                column: "Name");
+                column: "BranchId");
         }
 
         /// <inheritdoc />

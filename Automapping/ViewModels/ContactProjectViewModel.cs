@@ -27,5 +27,5 @@ public class ContactProjectViewModel
 
 
     public int ProjectId { get; set; }
-    
+
 }

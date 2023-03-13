@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLayer.Models;
 
 public partial class User
 {
-    //[Key]
-    //public int UserId { get; set; }
+    [Key]
+    public int UserId { get; set; }
 
     public string? FirstName { get; set; }
 
@@ -33,7 +32,7 @@ public partial class User
 
     public virtual Branch Branch { get; set; } = null!;
 
-    public virtual ContactUser? ContactsUser { get; set; }
+    //public virtual ContactUser? ContactsUser { get; set; }
 
-    public virtual ICollection<Project> Projects { get; } = new List<Project>();
+    //public virtual ICollection<Project> Projects { get; } = new List<Project>();
 }

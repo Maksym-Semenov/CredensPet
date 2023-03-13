@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(CredensContext))]
-    [Migration("20230313131651_007")]
-    partial class _007
+    [Migration("20230313141313_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,21 +24,6 @@ namespace DataAccessLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BranchBranch", b =>
-                {
-                    b.Property<int>("BranchesListBranchId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ListBranchesBranchId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BranchesListBranchId", "ListBranchesBranchId");
-
-                    b.HasIndex("ListBranchesBranchId");
-
-                    b.ToTable("BranchBranch");
-                });
 
             modelBuilder.Entity("DataAccessLayer.Models.Branch", b =>
                 {
@@ -260,21 +245,6 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("BranchId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("BranchBranch", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Branch", null)
-                        .WithMany()
-                        .HasForeignKey("BranchesListBranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Models.Branch", null)
-                        .WithMany()
-                        .HasForeignKey("ListBranchesBranchId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.ContactProject", b =>

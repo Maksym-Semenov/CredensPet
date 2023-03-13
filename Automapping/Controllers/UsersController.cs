@@ -39,25 +39,24 @@ namespace Presentation.Controllers
             var item =  _mapperToView.Map<UserViewModel>(await _serviceUser.FindAll()
                 .FirstOrDefaultAsync(x => x.UserId  == id));
 
-            return PartialView("_ContactUser");
-
             return View(item);
         }
 
         // GET: Users/Create
         public IActionResult Create()
         {
-            ViewData["Branches"] =new SelectList(_serviceBranch.FindAll().Select(x => x.BranchName).AsNoTracking()).AsEnumerable();
+            ViewBag.BranchId = new SelectList(_serviceBranch.FindAll().Select(x => x.BranchId));
             return View();
         }
 
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FirstName,MiddleName,LastName,UserRoleId, BranchName")] UserViewModel userViewModel)
+        public async Task<IActionResult> Create([Bind("BranchName, BranchId, FirstName,MiddleName,LastName,UserRoleId, RoleId, UserCount,ManagerId, CustomerId, MediatorId, MakerId")] UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
+                
                 await _serviceUser.AddAsync(_mapperToDTO.Map<UserDTO>(userViewModel));
                 await _serviceUser.SaveChangesAsync();
             }
@@ -65,10 +64,12 @@ namespace Presentation.Controllers
         }
 
         // GET: Users/Update/5
-        public async Task<IActionResult> Update(int? id)
+        public async Task<IActionResult> Update(int? userId, int branchId )
         {
-            var item = _mapperToView.Map<UserViewModel>(await _serviceUser.FindAll()
-                .FirstOrDefaultAsync(x => x.UserId == id));
+            ViewBag.BranchId = new SelectList(_serviceBranch.FindAll().Select(x => x.BranchId));
+
+            var item = _mapperToView.Map<UserViewModel>(_serviceUser.FindAll()
+                .Where(x => x.UserId == userId).FirstOrDefault(y => y.BranchId == branchId));
             if (item == null)
             {
                 return NotFound();
@@ -79,9 +80,9 @@ namespace Presentation.Controllers
         // POST: Users/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("UserId,FirstName,MiddleName,LastName,UserRoleId, BranchName, UserId")] UserViewModel userViewModel)
+        public async Task<IActionResult> Update(int? userId, int branchId,[Bind("UserId, BranchId, FirstName,MiddleName,LastName,UserRoleId, RoleId, UserCount,ManagerId, CustomerId, MediatorId, MakerId")] UserViewModel userViewModel)
         {
-            if (id != userViewModel.UserId)
+            if (userId != userViewModel.UserId)
             {
                 return NotFound();
             }

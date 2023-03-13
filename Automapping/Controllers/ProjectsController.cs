@@ -46,8 +46,7 @@ namespace Presentation.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
-            ViewData["Users"] = new SelectList(_serviceUser.FindAll().Select(x => x.UserId));
-
+            ViewBag.UserID = new SelectList(_serviceUser.FindAll().Select(x => x.UserId));
             return View();
         }
 

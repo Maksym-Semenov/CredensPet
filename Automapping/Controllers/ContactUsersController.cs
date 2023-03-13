@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using CredensPet.Infrastructure.DTO;
 using CredensPet.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Presentation.Profiles;
 using Presentation.ViewModels;
 
@@ -11,12 +12,14 @@ namespace Presentation.Controllers
     public class ContactUsersController : Controller
     {
         private readonly IService<ContactUserDTO> _serviceContactUser;
+        private readonly IService<UserDTO> _serviceUser;
         private readonly IMapper _mapperToView;
         private readonly IMapper _mapperToDTO;
 
-        public ContactUsersController(IService<ContactUserDTO> serviceContactUser, IService<UserDTO> serviveUser)
+        public ContactUsersController(IService<ContactUserDTO> serviceContactUser, IService<UserDTO> serviceUser)
         {
             _serviceContactUser = serviceContactUser;
+            _serviceUser = serviceUser;
             _mapperToView = GenericMapperConfiguration<ContactUserDTO, ContactUserViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<ContactUserViewModel, ContactUserDTO>.MapTo();
         }
@@ -41,7 +44,7 @@ namespace Presentation.Controllers
         // GET: Users/Create
         public async Task<IActionResult> Create(int? id)
         {
-            ViewData["UserId"] = id;
+            ViewBag.UserId = new SelectList(_serviceUser.FindAll().Select(x => x.UserId));
             return View();
         }
 

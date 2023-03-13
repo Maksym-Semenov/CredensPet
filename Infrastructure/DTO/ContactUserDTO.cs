@@ -25,6 +25,7 @@ public class ContactUserDTO
     public string? Floor { get; set; }
 
 
+
     public int UserId { get; set; }
 
 }
