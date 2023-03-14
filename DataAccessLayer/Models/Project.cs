@@ -32,6 +32,9 @@ public partial class Project
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
+
+    public int ContactProjectId { get; set; }
+
     public virtual ContactProject? ContactProject { get; set; }
 
     public int UserId { get; set; }

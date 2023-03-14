@@ -12,7 +12,6 @@ public class ContactProjectService : IService<ContactProjectDTO>
         _repository = repository;
     }
 
-
     public virtual async Task AddAsync(ContactProjectDTO entity)
     {
         await _repository.AddAsync(entity);

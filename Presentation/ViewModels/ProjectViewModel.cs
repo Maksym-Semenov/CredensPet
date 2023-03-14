@@ -1,6 +1,8 @@
-﻿namespace CredensPet.Infrastructure.DTO;
+﻿using DataAccessLayer.Models;
 
-public class ProjectDTO
+namespace Presentation.ViewModels;
+
+public class ProjectViewModel
 {
     public int ProjectId { get; set; }
 

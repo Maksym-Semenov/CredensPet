@@ -12,7 +12,6 @@ public class BranchService : IService<BranchDTO>
         _repository = repository;
     }
 
-
     public virtual async Task AddAsync(BranchDTO entity)
     {
         await _repository.AddAsync(entity);

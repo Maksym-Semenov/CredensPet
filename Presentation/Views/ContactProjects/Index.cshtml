@@ -1,0 +1,95 @@
+﻿@model IQueryable<Presentation.ViewModels.ContactProjectViewModel>
+
+@{
+    ViewData["Title"] = "All project's contacts";
+}
+
+<h1>All project's contacts</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ResidentialComplex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TypeStreet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Street)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().BuildingNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Litera)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().BuildingPart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Apt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Floor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ProjectId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResidentialComplex)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeStreet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Street)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuildingNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Litera)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuildingPart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Floor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectId)
+            </td>
+            <td>
+                <a asp-action="Update" asp-route-id="@item.ContactProjectId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ContactProjectId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ContactProjectId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

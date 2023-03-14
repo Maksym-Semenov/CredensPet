@@ -22,7 +22,6 @@ public class BranchRepository : IRepository<BranchDTO>
         _mapperToBranch = GenericMapperConfiguration<BranchDTO, Branch>.MapTo();
     }
 
-
     public virtual async Task AddAsync(BranchDTO entity)
     {
         await _context.Branches.AddAsync(_mapperToBranch.Map<Branch>(entity));
