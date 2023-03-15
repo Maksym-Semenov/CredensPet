@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using CredensPet.Infrastructure.DTO;
 using CredensPet.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Presentation.Profiles;
 using Presentation.ViewModels;
 
@@ -10,13 +11,15 @@ namespace Presentation.Controllers
 {
     public class ContactUsersController : Controller
     {
-        private readonly IService<ContactUserDTO> _service;
+        private readonly IService<ContactUserDTO> _serviceContactUser;
+        private readonly IService<UserDTO> _serviceUser;
         private readonly IMapper _mapperToView;
         private readonly IMapper _mapperToDTO;
 
-        public ContactUsersController(IService<ContactUserDTO> service)
+        public ContactUsersController(IService<ContactUserDTO> serviceContactUser, IService<UserDTO> serviceUser)
         {
-            _service = service;
+            _serviceContactUser = serviceContactUser;
+            _serviceUser = serviceUser;
             _mapperToView = GenericMapperConfiguration<ContactUserDTO, ContactUserViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<ContactUserViewModel, ContactUserDTO>.MapTo();
         }
@@ -24,7 +27,7 @@ namespace Presentation.Controllers
         // GET: Users
         public IActionResult Index()
         {
-            var item = _mapperToView.ProjectTo<ContactUserViewModel>(_service.FindAll().AsNoTracking());
+            var item = _mapperToView.ProjectTo<ContactUserViewModel>(_serviceContactUser.FindAll().AsNoTracking());
             return item != null ?
                         View(item) :
                         Problem("Entity set 'CredensContext.Users'  is null.");
@@ -33,34 +36,35 @@ namespace Presentation.Controllers
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var item = _mapperToView.Map<ContactUserViewModel>(await _service.FindAll()
+            var item = _mapperToView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactUserId == id));
             return View(item);
         }
 
         // GET: Users/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? id)
         {
+            ViewBag.UserId = new SelectList(_serviceUser.FindAll().Select(x => x.UserId));
             return View();
         }
 
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactUserId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactUserViewModel contactUserViewModel)
+        public async Task<IActionResult> Create([Bind("UserId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactUserViewModel contactUserViewModel)
         {
             if (ModelState.IsValid)
             {
-                await _service.AddAsync(_mapperToDTO.Map<ContactUserDTO>(contactUserViewModel));
-                await _service.SaveChangesAsync();
+                await _serviceContactUser.AddAsync(_mapperToDTO.Map<ContactUserDTO>(contactUserViewModel));
+                await _serviceContactUser.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Users");
         }
 
         // GET: Users/Update/5
         public async Task<IActionResult> Update(int? id)
         {
-            var item = _mapperToView.Map<ContactUserViewModel>(_service.FindAll()
+            var item = _mapperToView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactUserId == id));
             if (item == null)
             {
@@ -72,7 +76,7 @@ namespace Presentation.Controllers
         // POST: Users/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("ContactUserId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactUserViewModel contactUserViewModel)
+        public async Task<IActionResult> Update(int? id, [Bind("ContactUserId, UserId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactUserViewModel contactUserViewModel)
         {
             if (id != contactUserViewModel.ContactUserId)
             {
@@ -81,8 +85,8 @@ namespace Presentation.Controllers
 
             if (ModelState.IsValid)
             {
-                await _service.UpdateAsync(_mapperToDTO.Map<ContactUserDTO>(contactUserViewModel));
-                await _service.SaveChangesAsync();
+                await _serviceContactUser.UpdateAsync(_mapperToDTO.Map<ContactUserDTO>(contactUserViewModel));
+                await _serviceContactUser.SaveChangesAsync();
             }
 
             return RedirectToAction(nameof(Index));
@@ -91,9 +95,9 @@ namespace Presentation.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            var item = _mapperToView.Map<ContactUserViewModel>(_service.FindAll()
+            var item = _mapperToView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactUserId == id));
-            if (id == null || _service == null || item == null)
+            if (id == null || _serviceContactUser == null || item == null)
             {
                 return NotFound();
             }
@@ -106,18 +110,18 @@ namespace Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            if (_service == null)
+            if (_serviceContactUser == null)
             {
                 return Problem("Entity set 'CredensTestContext.Projects'  is null.");
             }
-            var item = _mapperToDTO.Map<ContactUserDTO>(_service.FindAll()
+            var item = _mapperToDTO.Map<ContactUserDTO>(await _serviceContactUser.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactUserId == id));
             if (item != null)
             {
-                await _service.DeleteAsync(item);
+                await _serviceContactUser.DeleteAsync(item);
             }
 
-            await _service.SaveChangesAsync();
+            await _serviceContactUser.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

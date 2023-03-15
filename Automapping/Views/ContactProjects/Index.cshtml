@@ -42,6 +42,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Floor)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ProjectId)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -79,7 +82,7 @@
                 @Html.DisplayFor(modelItem => item.Floor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ContactProjectId)
+                @Html.DisplayFor(modelItem => item.ProjectId)
             </td>
             <td>
                 <a asp-action="Update" asp-route-id="@item.ContactProjectId">Edit</a> |

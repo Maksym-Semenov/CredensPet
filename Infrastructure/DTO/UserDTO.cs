@@ -13,7 +13,6 @@ public class UserDTO
     public string? UserRoleId { get; set; }
 
     public int? RoleId { get; set; }
-
     public int? UserCount { get; set; }
 
     public int? ManagerId { get; set; }
@@ -24,6 +23,12 @@ public class UserDTO
 
     public int? MakerId { get; set; }
 
+
+
     public int BranchId { get; set; }
+
+    //public int ContactUserId { get; set; }
+
+    //public ContactUserDTO ContactUserDto { get; set; }
 
 }

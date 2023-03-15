@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Country))
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().City)
@@ -41,6 +41,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Floor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UserId)
             </th>
             <th></th>
         </tr>
@@ -77,6 +80,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Floor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>
                 <a asp-action="Update" asp-route-id="@item.ContactUserId">Edit</a> |

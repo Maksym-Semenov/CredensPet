@@ -1,10 +1,10 @@
 ﻿@model Presentation.ViewModels.BranchViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create new branch";
 }
 
-<h1>Create</h1>
+<h1>Create new branch</h1>
 
 <h4>Branch</h4>
 <hr />
@@ -14,9 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
            
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="BranchName" class="control-label"></label>
+                <input asp-for="BranchName" class="form-control" />
+                <span asp-validation-for="BranchName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Phone" class="control-label"></label>

@@ -5,18 +5,21 @@ using CredensPet.Infrastructure.DTO;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Presentation.Controllers
 {
     public class ProjectsController : Controller
     {
-        private readonly IService<ProjectDTO> _service;
+        private readonly IService<ProjectDTO> _serviceProject;
+        private readonly IService<UserDTO> _serviceUser;
         private readonly IMapper _mapperToView;
         private readonly IMapper _mapperToDTO;
 
-        public ProjectsController(IService<ProjectDTO> service)
+        public ProjectsController(IService<ProjectDTO> serviceProject, IService<UserDTO> serviceUser)
         {
-            _service = service;
+            _serviceProject = serviceProject;
+            _serviceUser = serviceUser;
             _mapperToView = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<ProjectViewModel, ProjectDTO>.MapTo();
         }
@@ -24,7 +27,7 @@ namespace Presentation.Controllers
         // GET: Projects
         public IActionResult Index()
         {
-            var item = _mapperToView.ProjectTo<ProjectViewModel>(_service.FindAll().AsNoTracking());
+            var item = _mapperToView.ProjectTo<ProjectViewModel>(_serviceProject.FindAll().AsNoTracking());
             return item != null ? 
                 View(item) : 
                 Problem("Entity set 'CredensTestContext.Projects'  is null.");
@@ -33,26 +36,29 @@ namespace Presentation.Controllers
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var item = _mapperToView.Map<ProjectViewModel>(await _service.FindAll()
+            var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
+
+            return PartialView("_ContactProject");
             return View(item);
         }
 
         // GET: Projects/Create
         public IActionResult Create()
         {
+            ViewBag.UserID = new SelectList(_serviceUser.FindAll().Select(x => x.UserId));
             return View();
         }
 
         //POST: Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,OrderValue,OrderMonth,OrderYear,OrderName,Price,City")] ProjectViewModel projectViewModel)
+        public async Task<IActionResult> Create([Bind("ProjectId, UserId, OrderValue,OrderMonth,OrderYear,OrderName,Price,City")] ProjectViewModel projectViewModel)
         {
             if (ModelState.IsValid)
             {
-                await _service.AddAsync(_mapperToDTO.Map<ProjectDTO>(projectViewModel));
-                await _service.SaveChangesAsync();
+                await _serviceProject.AddAsync(_mapperToDTO.Map<ProjectDTO>(projectViewModel));
+                await _serviceProject.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
@@ -60,7 +66,7 @@ namespace Presentation.Controllers
         // GET: Projects/Update/5
         public async Task<IActionResult> Update(int? id)
         {
-            var item = _mapperToView.Map<ProjectViewModel>(_service.FindAll()
+            var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
             if (item == null)
             {
@@ -72,7 +78,7 @@ namespace Presentation.Controllers
         //POST: Projects/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("ProjectId,OrderValue,OrderMonth,OrderYear,CustomerId,OrderName,Price,City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Litera,BuildingPart,Apartment,Floor,ManagerId,MakerId,BranchId")] ProjectViewModel projectViewModel)
+        public async Task<IActionResult> Update(int? id, [Bind("ProjectId, UserId,OrderValue,OrderMonth,OrderYear,CustomerId,OrderName,Price,City")] ProjectViewModel projectViewModel)
         {
             if (id != projectViewModel.ProjectId)
             {
@@ -81,8 +87,8 @@ namespace Presentation.Controllers
 
             if (ModelState.IsValid)
             {
-                await _service.UpdateAsync(_mapperToDTO.Map<ProjectDTO>(projectViewModel));
-                await _service.SaveChangesAsync();
+                await _serviceProject.UpdateAsync(_mapperToDTO.Map<ProjectDTO>(projectViewModel));
+                await _serviceProject.SaveChangesAsync();
             }
 
             return RedirectToAction(nameof(Index));
@@ -91,9 +97,9 @@ namespace Presentation.Controllers
         // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            var item = _mapperToView.Map<ProjectViewModel>(_service.FindAll()
+            var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
-            if (id == null || _service == null || item == null)
+            if (id == null || _serviceProject == null || item == null)
             {
                 return NotFound();
             }
@@ -106,20 +112,26 @@ namespace Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            if (_service == null)
+            if (_serviceProject == null)
             {
                 return Problem("Entity set 'CredensTestContext.Projects'  is null.");
             }
-            var item = _mapperToDTO.Map<ProjectDTO>(_service.FindAll()
+            var item = _mapperToDTO.Map<ProjectDTO>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
             if (item != null)
             {
-                await _service.DeleteAsync(item);
+                await _serviceProject.DeleteAsync(item);
             }
 
-            await _service.SaveChangesAsync();
+            await _serviceProject.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        //Get: Users/AddContact/5
+        public IActionResult AddContact(int? id)
+        {
+            return RedirectToAction("Create", "ContactProjects", new { id });
         }
     }
 }

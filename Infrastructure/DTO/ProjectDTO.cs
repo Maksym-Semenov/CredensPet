@@ -6,9 +6,9 @@ public class ProjectDTO
 
     public string? OrderValue { get; set; }
 
-    public string? OrderMonth { get; set; }
+    public string? OrderMonth { get; set; } = DateTime.Now.ToString("MM");
 
-    public int? OrderYear { get; set; }
+    public string? OrderYear { get; set; } = DateTime.Now.ToString("yy");
 
     public string? OrderName { get; set; }
 
@@ -26,7 +26,12 @@ public class ProjectDTO
 
     public DateTime? Created { get; set; } = DateTime.Now;
 
-    public DateTime? LastUpdated { get; set; }
+    public DateTime? LastUpdated { get; set; } = DateTime.Now;
+
+
+
+    public int UserId { get; set; }
+
 
 
 }

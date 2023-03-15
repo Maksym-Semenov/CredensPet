@@ -1,12 +1,12 @@
 ﻿@model Presentation.ViewModels.ContactUserViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Update";
 }
 
-<h1>Edit</h1>
+<h1>Update</h1>
 
-<h4>ContactsUser</h4>
+<h4>ContactUser</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -62,6 +62,11 @@
                 <label asp-for="Floor" class="control-label"></label>
                 <input asp-for="Floor" class="form-control" />
                 <span asp-validation-for="Floor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

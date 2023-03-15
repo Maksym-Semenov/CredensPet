@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DataAccessLayer.Models;
 
@@ -28,6 +26,8 @@ public partial class ContactProject
     public int? Apt { get; set; }
 
     public string? Floor { get; set; }
+
+
 
     public int ProjectId { get; set; }
 

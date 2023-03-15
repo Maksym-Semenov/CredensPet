@@ -58,6 +58,9 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LastUpdated)
         </dd>
+        
+        @await Html.PartialAsync("_ContactProject")
+
     </dl>
 </div>
 <div>

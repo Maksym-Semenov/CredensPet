@@ -30,11 +30,11 @@ namespace DataAccessLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BranchId"));
 
+                    b.Property<string>("BranchName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("IsOpen")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
@@ -46,11 +46,11 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("DataAccessLayer.Models.ContactProject", b =>
                 {
-                    b.Property<int>("ContactId")
+                    b.Property<int>("ContactProjectId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactProjectId"));
 
                     b.Property<int?>("Apt")
                         .HasColumnType("int");
@@ -85,7 +85,7 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("TypeStreet")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ContactId");
+                    b.HasKey("ContactProjectId");
 
                     b.HasIndex("ProjectId")
                         .IsUnique();
@@ -93,13 +93,13 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("ContactProjects");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.ContactsUser", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.ContactUser", b =>
                 {
-                    b.Property<int>("ContactId")
+                    b.Property<int>("ContactUserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactUserId"));
 
                     b.Property<int?>("Apt")
                         .HasColumnType("int");
@@ -134,12 +134,12 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("ContactId");
+                    b.HasKey("ContactUserId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("ContactsUsers");
+                    b.ToTable("ContactUsers");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Project", b =>
@@ -150,19 +150,7 @@ namespace DataAccessLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProjectId"));
 
-                    b.Property<int?>("Apartment")
-                        .HasColumnType("int");
-
                     b.Property<string>("BranchId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BuildingNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BuildingPart")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Created")
@@ -171,14 +159,8 @@ namespace DataAccessLayer.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Floor")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Litera")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MakerId")
                         .HasColumnType("int");
@@ -198,20 +180,11 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("OrderValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderYear")
-                        .HasColumnType("int");
+                    b.Property<string>("OrderYear")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("Price")
                         .HasColumnType("float");
-
-                    b.Property<string>("ResidentialComplex")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TypeStreet")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -282,11 +255,11 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.ContactsUser", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.ContactUser", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.User", "User")
                         .WithOne("ContactsUser")
-                        .HasForeignKey("DataAccessLayer.Models.ContactsUser", "UserId")
+                        .HasForeignKey("DataAccessLayer.Models.ContactUser", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

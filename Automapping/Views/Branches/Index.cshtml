@@ -2,10 +2,10 @@
 @model IQueryable<Presentation.ViewModels.BranchViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All branches";
 }
 
-<h1>Index</h1>
+<h1>All branches</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -18,7 +18,7 @@
                 @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
             </th>
             <th>
-                @(Html.DisplayNameFor(model => model.FirstOrDefault().Name))
+                @(Html.DisplayNameFor(model => model.FirstOrDefault().BranchName))
             </th>
             <th>
                 @(Html.DisplayNameFor(model => model.FirstOrDefault().Phone))
@@ -37,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.BranchId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.BranchName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)

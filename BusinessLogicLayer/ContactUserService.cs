@@ -35,7 +35,7 @@ public class ContactUserService : IService<ContactUserDTO>
 
     public virtual async Task UpdateAsync(ContactUserDTO entity)
     {
-        await _repository.UpdateAsync(entity); 
+        await _repository.UpdateAsync(entity);
     }
 
 }
