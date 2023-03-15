@@ -1,0 +1,36 @@
+﻿@model Presentation.ViewModels.BranchViewModel
+
+@{
+    ViewData["Title"] = "Branch details";
+}
+
+<h1>Branch details</h1>
+
+<div>
+    <h4>Branch</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BranchName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BranchName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsOpen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsOpen)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Update" asp-route-id="@Model?.BranchId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

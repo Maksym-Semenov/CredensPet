@@ -1,6 +1,8 @@
-﻿namespace CredensPet.Infrastructure.DTO;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public class ContactProjectDTO
+namespace Presentation.ViewModels;
+
+public class ContactProjectViewModel : ViewComponent
 {
     public int ContactProjectId { get; set; }
 
@@ -27,5 +29,6 @@ public class ContactProjectDTO
 
 
     public int ProjectId { get; set; }
+
 
 }

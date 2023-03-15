@@ -22,7 +22,6 @@ public class UserRepository : IRepository<UserDTO>
         _mapperToUser = GenericMapperConfiguration<UserDTO, User>.MapTo();
     }
 
-
     public virtual async Task AddAsync(UserDTO entity)
     {
         await _context.Users.AddAsync(_mapperToUser.Map<User>(entity));

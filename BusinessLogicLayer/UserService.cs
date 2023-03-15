@@ -12,7 +12,6 @@ public class UserService : IService<UserDTO>
         _repository = repository;
     }
 
-
     public virtual async Task AddAsync(UserDTO entity)
     {
         await _repository.AddAsync(entity);

@@ -12,7 +12,6 @@ public class ProjectService : IService<ProjectDTO>
         _repository = repository;
     }
 
-
     public virtual async Task AddAsync(ProjectDTO entity)
     {
         await _repository.AddAsync(entity);

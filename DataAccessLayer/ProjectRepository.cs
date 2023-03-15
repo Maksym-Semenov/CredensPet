@@ -22,7 +22,6 @@ public class ProjectRepository : IRepository<ProjectDTO>
         _mapperToProject = GenericMapperConfiguration<ProjectDTO, Project>.MapTo();
     }
 
-
     public virtual async Task AddAsync(ProjectDTO entity)
     {
         await _context.Projects.AddAsync(_mapperToProject.Map<Project>(entity));
