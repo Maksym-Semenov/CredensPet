@@ -26,6 +26,8 @@ public class UserViewModel
 
     public int? MakerId { get; set; }
     public int BranchId { get; set; }
+
+
     //public int ContactUserId { get; set; }
     //public ContactUserDTO ContactUserDto { get; set; }
 }

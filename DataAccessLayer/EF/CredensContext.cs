@@ -31,10 +31,10 @@ public partial class CredensContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Project>()
-            .HasOne(b => b.ContactProject)
-            .WithOne(i => i.Project)
-            .HasForeignKey<ContactProject>(b => b.ContactProjectId);
+        //modelBuilder.Entity<Project>()
+        //    .HasOne(b => b.ContactProject)
+        //    .WithOne(i => i.Project)
+        //    .HasForeignKey<ContactProject>(b => b.ContactProjectId);
 
         OnModelCreatingPartial(modelBuilder);
     }

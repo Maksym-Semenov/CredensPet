@@ -4,6 +4,7 @@ using DataAccessLayer.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(CredensContext))]
-    partial class CredensContextModelSnapshot : ModelSnapshot
+    [Migration("20230319094221_002")]
+    partial class _002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,10 +50,7 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("DataAccessLayer.Models.ContactProject", b =>
                 {
                     b.Property<int>("ContactProjectId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactProjectId"));
 
                     b.Property<int?>("Apt")
                         .HasColumnType("int");
@@ -86,8 +86,6 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ContactProjectId");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("ContactProjects");
                 });
@@ -150,6 +148,9 @@ namespace DataAccessLayer.Migrations
 
                     b.Property<string>("BranchId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ContactProjectId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
@@ -245,8 +246,8 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("DataAccessLayer.Models.ContactProject", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
+                        .WithOne("ContactProject")
+                        .HasForeignKey("DataAccessLayer.Models.ContactProject", "ContactProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -267,7 +268,7 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("DataAccessLayer.Models.Project", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.User", "User")
-                        .WithMany("Projects")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -291,9 +292,9 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.User", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Project", b =>
                 {
-                    b.Navigation("Projects");
+                    b.Navigation("ContactProject");
                 });
 #pragma warning restore 612, 618
         }

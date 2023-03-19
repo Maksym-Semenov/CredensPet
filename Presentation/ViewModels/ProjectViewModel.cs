@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Presentation.ViewModels;
 
@@ -34,7 +35,7 @@ public class ProjectViewModel
 
     public int UserId { get; set; }
 
-    public int ContactProjectId { get; set; }
+    //public int ContactProjectId { get; set; }
 
 
 }

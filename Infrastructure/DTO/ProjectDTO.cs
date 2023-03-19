@@ -32,7 +32,7 @@ public class ProjectDTO
 
     public int UserId { get; set; }
 
-    public int ContactProjectId { get; set; }
+    //public int ContactProjectId { get; set; }
 
 
 }
