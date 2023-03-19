@@ -13,6 +13,7 @@ public class UserDTO
     public string? UserRoleId { get; set; }
 
     public int? RoleId { get; set; }
+
     public int? UserCount { get; set; }
 
     public int? ManagerId { get; set; }

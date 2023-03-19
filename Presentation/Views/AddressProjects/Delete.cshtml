@@ -1,4 +1,4 @@
-﻿@model Presentation.ViewModels.ContactProjectViewModel
+﻿@model Presentation.ViewModels.AddressProjectViewModel
 
 @{
     ViewData["Title"] = "Delete project's contact";
@@ -80,7 +80,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="ContactProjectId" />
+        <input type="hidden" asp-for="AddressProjectId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

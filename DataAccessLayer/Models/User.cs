@@ -34,5 +34,5 @@ public partial class User
 
     //public virtual ContactUser? ContactsUser { get; set; }
 
-    //public virtual ICollection<Project> Projects { get; } = new List<Project>();
+    public virtual ICollection<Project> Projects { get; } = new List<Project>();
 }

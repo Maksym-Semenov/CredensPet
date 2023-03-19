@@ -1,10 +1,10 @@
-﻿@model IQueryable<Presentation.ViewModels.ContactProjectViewModel>
+﻿@model IQueryable<Presentation.ViewModels.AddressProjectViewModel>
 
 @{
-    ViewData["Title"] = "All project's contacts";
+    ViewData["Title"] = "All project's addresses";
 }
 
-<h1>All project's contacts</h1>
+<h1>All project's addresses</h1>
 
 <p>
 </p>
@@ -84,9 +84,9 @@
                 @Html.DisplayFor(modelItem => item.ProjectId)
             </td>
             <td>
-                <a asp-action="Update" asp-route-id="@item.ContactProjectId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ContactProjectId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ContactProjectId">Delete</a>
+                <a asp-action="Update" asp-route-id="@item.AddressProjectId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AddressProjectId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AddressProjectId">Delete</a>
             </td>
         </tr>
 }

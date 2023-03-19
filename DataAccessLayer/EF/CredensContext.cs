@@ -17,7 +17,7 @@ public partial class CredensContext : DbContext
 
     public virtual DbSet<Branch> Branches { get; set; }
 
-    public virtual DbSet<ContactProject> ContactProjects { get; set; }
+    public virtual DbSet<AddressProject> ContactProjects { get; set; }
 
     public virtual DbSet<ContactUser> ContactUsers { get; set; }
 
@@ -31,10 +31,10 @@ public partial class CredensContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Project>()
-            .HasOne(b => b.ContactProject)
-            .WithOne(i => i.Project)
-            .HasForeignKey<ContactProject>(b => b.ContactProjectId);
+        //modelBuilder.Entity<Project>()
+        //    .HasOne(b => b.ContactProject)
+        //    .WithOne(i => i.Project)
+        //    .HasForeignKey<ContactProject>(b => b.ContactProjectId);
 
         OnModelCreatingPartial(modelBuilder);
     }
@@ -47,7 +47,7 @@ public class CredensDbContextFactory : IDesignTimeDbContextFactory<CredensContex
 
     {
         var optionsBuilder = new DbContextOptionsBuilder<CredensContext>();
-        optionsBuilder.UseSqlServer("Server=MAX-PC;Database=CredensPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=CredensPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
         return new CredensContext(optionsBuilder.Options);
     }
 }

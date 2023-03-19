@@ -1,24 +1,22 @@
-﻿@model Presentation.ViewModels.ProjectViewModel
+﻿@model DataAccessLayer.Models.Project
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "CreateFromUser";
 }
 
-<h1>Create</h1>
+<h1>CreateFromUser</h1>
 
 <h4>Project</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="CreateFromUser">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.User"></select>
+            <div>
+                <input type="hidden" asp-for="UserId" value="@ViewBag.User"></input>
             </div>
-            <div class="form-group">
-                <label asp-for="BranchId" class="control-label"></label>
-                <select asp-for="BranchId" class ="form-control" asp-items="ViewBag.Branch"></select>
+            <div>
+                <input type="hidden" asp-for="BranchId" value="@ViewBag.Branch"></input>
             </div>
             <div class="form-group">
                 <label asp-for="OrderValue" class="control-label"></label>

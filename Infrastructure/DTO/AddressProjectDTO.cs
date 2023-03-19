@@ -1,8 +1,8 @@
 ﻿namespace CredensPet.Infrastructure.DTO;
 
-public class ContactProjectDTO
+public class AddressProjectDTO
 {
-    public int ContactProjectId { get; set; }
+    public int AddressProjectId { get; set; }
 
     public string? Country { get; set; }
 

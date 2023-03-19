@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class _001 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -61,6 +61,9 @@ namespace DataAccessLayer.Migrations
                 {
                     ContactUserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    PhoneMain = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ResidentialComplex = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -102,7 +105,6 @@ namespace DataAccessLayer.Migrations
                     MediatorId = table.Column<int>(type: "int", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ContactProjectId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -120,7 +122,8 @@ namespace DataAccessLayer.Migrations
                 name: "ContactProjects",
                 columns: table => new
                 {
-                    ContactProjectId = table.Column<int>(type: "int", nullable: false),
+                    AddressProjectId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ResidentialComplex = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -135,14 +138,19 @@ namespace DataAccessLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContactProjects", x => x.ContactProjectId);
+                    table.PrimaryKey("PK_ContactProjects", x => x.AddressProjectId);
                     table.ForeignKey(
-                        name: "FK_ContactProjects_Projects_ContactProjectId",
-                        column: x => x.ContactProjectId,
+                        name: "FK_ContactProjects_Projects_ProjectId",
+                        column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContactProjects_ProjectId",
+                table: "ContactProjects",
+                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContactUsers_UserId",

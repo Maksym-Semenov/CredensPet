@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
+using System.Net;
 
 namespace Presentation.Controllers
 {
@@ -16,7 +17,9 @@ namespace Presentation.Controllers
         private readonly IMapper _mapperToView;
         private readonly IMapper _mapperToDTO;
 
-        public UsersController(IService<UserDTO> serviceUser, IService<BranchDTO> serviceBranch, IService<ContactUserDTO> serviceContactUser)
+        public UsersController(IService<UserDTO> serviceUser, 
+                               IService<BranchDTO> serviceBranch, 
+                               IService<ContactUserDTO> serviceContactUser)
         {
             _serviceUser = serviceUser;
             _serviceBranch = serviceBranch;
@@ -27,6 +30,7 @@ namespace Presentation.Controllers
         // GET: Users
         public IActionResult Index()
         {
+            ViewBag.BranchName = new SelectList(_serviceBranch.FindAll(), "BranchId","BranchName");
             var item = _mapperToView.ProjectTo<UserViewModel>(_serviceUser.FindAll().AsNoTracking());
               return item != null ? 
                           View( item) :
@@ -38,38 +42,62 @@ namespace Presentation.Controllers
         {
             var item =  _mapperToView.Map<UserViewModel>(await _serviceUser.FindAll()
                 .FirstOrDefaultAsync(x => x.UserId  == id));
-
             return View(item);
         }
 
         // GET: Users/Create
         public IActionResult Create()
         {
-            ViewBag.BranchId = new SelectList(_serviceBranch.FindAll().Select(x => x.BranchId));
+            ViewBag.Branches = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
             return View();
         }
 
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BranchName, BranchId, FirstName, MiddleName, LastName, UserRoleId, RoleId, UserCount, ManagerId, CustomerId, MediatorId, MakerId")] UserViewModel userViewModel)
+        public async Task<IActionResult> Create([Bind("BranchName, BranchId, FirstName, MiddleName, LastName, " +
+                                                                  "UserRoleId, RoleId, UserCount, ManagerId, CustomerId, " +
+                                                                  "MediatorId, MakerId")] UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
-                
                 await _serviceUser.AddAsync(_mapperToDTO.Map<UserDTO>(userViewModel));
                 await _serviceUser.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Users/Update/5
-        public async Task<IActionResult> Update(int? userId, int branchId )
+        // GET: Users/Create
+        public IActionResult CreateFromBranch(int id)
         {
-            ViewBag.BranchId = new SelectList(_serviceBranch.FindAll().Select(x => x.BranchId));
+            ViewBag.BranchId = id;
+            //ViewBag.Branches = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            return View();
+        }
 
-            var item = _mapperToView.Map<UserViewModel>(_serviceUser.FindAll()
-                .Where(x => x.UserId == userId).FirstOrDefault(y => y.BranchId == branchId));
+        // POST: Users/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFromBranch([Bind("BranchId, FirstName, MiddleName, LastName, " +
+                                                                            "UserRoleId, RoleId, UserCount, ManagerId, CustomerId, " +
+                                                                            "MediatorId, MakerId")] UserViewModel userViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+
+                await _serviceUser.AddAsync(_mapperToDTO.Map<UserDTO>(userViewModel));
+                await _serviceUser.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        // GET: Users/Update/5
+        public async Task<IActionResult> Update(int? id)
+        {
+            ViewBag.Branches = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+
+            var item = _mapperToView.Map<UserViewModel>( await _serviceUser.FindAll()
+                .FirstOrDefaultAsync(x => x.BranchId == id));
+
             if (item == null)
             {
                 return NotFound();
@@ -80,9 +108,11 @@ namespace Presentation.Controllers
         // POST: Users/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? userId, int branchId,[Bind("UserId, BranchId, FirstName, MiddleName, LastName, UserRoleId, RoleId, UserCount,ManagerId, CustomerId, MediatorId, MakerId")] UserViewModel userViewModel)
+        public async Task<IActionResult> Update(int? id, [Bind("UserId, BranchId, FirstName, MiddleName, LastName, " +
+                                                                           "UserRoleId, RoleId, UserCount,ManagerId, CustomerId, " +
+                                                                           "MediatorId, MakerId")] UserViewModel userViewModel)
         {
-            if (userId != userViewModel.UserId)
+            if (id != userViewModel.UserId)
             {
                 return NotFound();
             }

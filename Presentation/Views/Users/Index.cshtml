@@ -45,6 +45,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
             </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -85,10 +86,11 @@
                 @Html.DisplayFor(modelItem => item.BranchId)
             </td>
             <td>
-                    <a asp-action="Update" asp-route-userId="@item.UserId" asp-route-branchId="@item.BranchId">Edit </a> |
+                    <a asp-action="Update" asp-route-Id="@item.UserId">Edit </a> |
                 <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a> |
-                    <a asp-controller="ContactUsers" asp-action="Create" asp-route-id="@item.UserId">Add contact</a> 
+                    <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a> |<br>
+                    <a asp-controller="ContactUsers" asp-action="Create" asp-route-id="@item.UserId">Add contact</a> |<br>
+                    <a asp-controller="Projects" asp-action="CreateFromUser" asp-route-id="@item.UserId">Add project</a> |
             </td>
         </tr>
 }
