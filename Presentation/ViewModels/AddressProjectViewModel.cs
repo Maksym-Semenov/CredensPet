@@ -4,7 +4,7 @@ namespace Presentation.ViewModels;
 
 public class AddressProjectViewModel : ViewComponent
 {
-    public int ContactProjectId { get; set; }
+    public int AddressProjectId { get; set; }
 
     public string? Country { get; set; }
 

@@ -36,7 +36,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             var item = _mapperToView.Map<AddressProjectViewModel>(await _serviceContactProject.FindAll()
-                .FirstOrDefaultAsync(x => x.ContactProjectId == id));
+                .FirstOrDefaultAsync(x => x.AddressProjectId == id));
             return View(item);
         }
 
@@ -70,7 +70,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Update(int? id)
         {
             var item = _mapperToView.Map<AddressProjectViewModel>(await _serviceContactProject.FindAll()
-                .FirstOrDefaultAsync(x => x.ContactProjectId == id));
+                .FirstOrDefaultAsync(x => x.AddressProjectId == id));
             if (item == null)
             {
                 return NotFound();
@@ -83,7 +83,7 @@ namespace Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int? id, [Bind("ContactProjectId, ProjectId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] AddressProjectViewModel contactProjectViewModel)
         {
-            if (id != contactProjectViewModel.ContactProjectId)
+            if (id != contactProjectViewModel.AddressProjectId)
             {
                 return NotFound();
             }
@@ -101,7 +101,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             var item = _mapperToView.Map<AddressProjectViewModel>(await _serviceContactProject.FindAll()
-                .FirstOrDefaultAsync(x => x.ContactProjectId == id));
+                .FirstOrDefaultAsync(x => x.AddressProjectId == id));
             if (id == null || _serviceContactProject == null || item == null)
             {
                 return NotFound();
@@ -120,7 +120,7 @@ namespace Presentation.Controllers
                 return Problem("Entity set 'CredensTestContext.Contacts'  is null.");
             }
             var item = _mapperToDTO.Map<AddressProjectDTO>(await _serviceContactProject.FindAll()
-                .FirstOrDefaultAsync(x => x.ContactProjectId == id));
+                .FirstOrDefaultAsync(x => x.AddressProjectId == id));
             if (item != null)
             {
                 await _serviceContactProject.DeleteAsync(item);
