@@ -1,10 +1,10 @@
 ﻿@model Presentation.ViewModels.ProjectViewModel
 
 @{
-    ViewData["Title"] = "Create new project";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Create new project</h1>
+<h1>Create</h1>
 
 <h4>Project</h4>
 <hr />
@@ -12,6 +12,14 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.User"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BranchId" class="control-label"></label>
+                <select asp-for="BranchId" class ="form-control" asp-items="ViewBag.Branch"></select>
+            </div>
             <div class="form-group">
                 <label asp-for="OrderValue" class="control-label"></label>
                 <input asp-for="OrderValue" class="form-control" />
@@ -72,14 +80,6 @@
                 <input asp-for="LastUpdated" class="form-control" />
                 <span asp-validation-for="LastUpdated" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
-            </div>
-           @* <div class="form-group">
-                <label asp-for="UserNames" class="control-label"></label>
-                <select asp-for="UserNames" class="form-control" asp-items="ViewBag.UserNames"></select>
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
