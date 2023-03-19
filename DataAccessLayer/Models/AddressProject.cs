@@ -5,7 +5,7 @@ namespace DataAccessLayer.Models;
 public partial class AddressProject
 {
     [Key]
-    public int ContactProjectId { get; set; }
+    public int AddressProjectId { get; set; }
 
     public string? Country { get; set; }
 

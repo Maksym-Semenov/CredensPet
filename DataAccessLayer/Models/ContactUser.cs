@@ -6,6 +6,12 @@ public partial class ContactUser
 {
     [Key]
     public int ContactUserId { get; set; }
+    
+    [Required]
+    public string PhoneMain { get; set; } = string.Empty;
+    public string? Phone2 { get; set; } = string.Empty;
+
+    public string? Email { get; set; }
 
     public string? Country { get; set; }
 

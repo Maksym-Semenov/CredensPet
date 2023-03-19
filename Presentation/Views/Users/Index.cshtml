@@ -90,7 +90,7 @@
                 <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a> |<br>
                     <a asp-controller="ContactUsers" asp-action="Create" asp-route-id="@item.UserId">Add contact</a> |<br>
-                    <a asp-controller="Projects" asp-action="Create" asp-route-id="@item.UserId">Add project</a> |
+                    <a asp-controller="Projects" asp-action="CreateFromUser" asp-route-id="@item.UserId">Add project</a> |
             </td>
         </tr>
 }

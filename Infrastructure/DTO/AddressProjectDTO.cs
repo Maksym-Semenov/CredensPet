@@ -2,7 +2,7 @@
 
 public class AddressProjectDTO
 {
-    public int ContactProjectId { get; set; }
+    public int AddressProjectId { get; set; }
 
     public string? Country { get; set; }
 
