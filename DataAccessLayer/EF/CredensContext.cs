@@ -47,7 +47,7 @@ public class CredensDbContextFactory : IDesignTimeDbContextFactory<CredensContex
 
     {
         var optionsBuilder = new DbContextOptionsBuilder<CredensContext>();
-        optionsBuilder.UseSqlServer("Server=MAX-PC;Database=CredensPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=CredensPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
         return new CredensContext(optionsBuilder.Options);
     }
 }
