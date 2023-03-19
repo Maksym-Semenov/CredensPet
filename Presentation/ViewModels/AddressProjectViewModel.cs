@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DataAccessLayer.Models;
+namespace Presentation.ViewModels;
 
-public partial class ContactProject
+public class AddressProjectViewModel : ViewComponent
 {
-    [Key]
     public int ContactProjectId { get; set; }
 
     public string? Country { get; set; }
@@ -31,5 +30,5 @@ public partial class ContactProject
 
     public int ProjectId { get; set; }
 
-    public virtual Project Project { get; set; } = null!;
+
 }

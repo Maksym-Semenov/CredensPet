@@ -1,6 +1,6 @@
 ﻿namespace CredensPet.Infrastructure.DTO;
 
-public class ContactProjectDTO
+public class AddressProjectDTO
 {
     public int ContactProjectId { get; set; }
 
