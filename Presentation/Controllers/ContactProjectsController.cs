@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
+using System.Text.RegularExpressions;
 
 namespace Presentation.Controllers
 {
@@ -44,11 +45,8 @@ namespace Presentation.Controllers
         public IActionResult Create(int id)
         {
             //ViewBag.ProjectId = new SelectList( _serviceProject.FindAll().Where(x => x.ProjectId == id));
-            var item = _serviceProject.FindAll().FirstOrDefault(x => x.ProjectId == id);
-            //if (item.Cu != null)
-            //{
-            //    throw new ArgumentNullException(nameof(entity.ProjectId));
-            //}
+           
+
 
             return View();
         }

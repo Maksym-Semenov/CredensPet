@@ -48,7 +48,8 @@
             <td>
                 <a asp-action="Update" asp-route-id="@item.BranchId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.BranchId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BranchId">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.BranchId">Delete</a> |
+                    <a asp-controller="Users" asp-action="CreateFromBranch" asp-route-id="@item.BranchId">Add new user</a>
             </td>
         </tr>
 }
