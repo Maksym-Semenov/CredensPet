@@ -4,7 +4,6 @@ using CredensPet.Infrastructure;
 using DataAccessLayer.Repository;
 using BusinessLogicLayer;
 using CredensPet.Infrastructure.DTO;
-using Presentation.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +21,8 @@ builder.Services.AddScoped(typeof(IService<ProjectDTO>), typeof(ProjectService))
 builder.Services.AddScoped(typeof(IRepository<BranchDTO>), typeof(BranchRepository));
 builder.Services.AddScoped(typeof(IService<BranchDTO>), typeof(BranchService));
 
-builder.Services.AddScoped(typeof(IRepository<ContactProjectDTO>), typeof(ContactProjectRepository));
-builder.Services.AddScoped(typeof(IService<ContactProjectDTO>), typeof(ContactProjectService));
+builder.Services.AddScoped(typeof(IRepository<AddressProjectDTO>), typeof(AddressProjectRepository));
+builder.Services.AddScoped(typeof(IService<AddressProjectDTO>), typeof(AddressProjectService));
 
 builder.Services.AddScoped(typeof(IRepository<ContactUserDTO>), typeof(ContactUserRepository));
 builder.Services.AddScoped(typeof(IService<ContactUserDTO>), typeof(ContactUserService));
