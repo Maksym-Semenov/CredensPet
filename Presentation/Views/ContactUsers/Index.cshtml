@@ -1,16 +1,25 @@
 ﻿@model IQueryable<Presentation.ViewModels.ContactUserViewModel>
 
 @{
-    ViewData["Title"] = "All user's contacts";
+    ViewData["Title"] = "List of contacts";
 }
 
-<h1>All user's contacts</h1>
+<h1>List of contacts</h1>
 
 <p>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().PhoneMain)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Phone2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
             </th>
@@ -42,6 +51,12 @@
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Floor)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().UserId)
             </th>
             <th></th>
@@ -50,6 +65,15 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneMain)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Country)
             </td>
@@ -79,6 +103,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Floor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UserId)

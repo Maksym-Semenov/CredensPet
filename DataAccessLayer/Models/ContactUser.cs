@@ -38,7 +38,6 @@ public partial class ContactUser
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-
     public int UserId { get; set; }
 
     public virtual User User { get; set; } = null!;

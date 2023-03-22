@@ -1,18 +1,35 @@
 ﻿@model Presentation.ViewModels.ContactUserViewModel
 
 @{
-    ViewData["Title"] = "Create new user's contact";
+    ViewData["Title"] = "Create from user";
 }
 
-<h1>Create new user's contact</h1>
+<h1>Create from user</h1>
 
 <h4>ContactUser</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="CreateFromUser">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UserId"/>
+            <div class="form-group">
+                <input type="hidden" asp-for="UserId" value="@ViewBag.UserId"></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneMain" class="control-label"></label>
+                <input asp-for="PhoneMain" class="form-control" />
+                <span asp-validation-for="PhoneMain" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone2" class="control-label"></label>
+                <input asp-for="Phone2" class="form-control" />
+                <span asp-validation-for="Phone2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Country" class="control-label"></label>
                 <input asp-for="Country" class="form-control" />
@@ -62,6 +79,16 @@
                 <label asp-for="Floor" class="control-label"></label>
                 <input asp-for="Floor" class="form-control" />
                 <span asp-validation-for="Floor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" class="form-control" />
+                <span asp-validation-for="Created" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastUpdated" class="control-label"></label>
+                <input asp-for="LastUpdated" class="form-control" />
+                <span asp-validation-for="LastUpdated" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

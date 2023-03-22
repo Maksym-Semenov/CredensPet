@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Presentation.ViewModels;
 
@@ -6,9 +7,11 @@ public class ContactUserViewModel
 {
     public int ContactUserId { get; set; }
 
-    public string PhoneMain { get; set; }
+    public string PhoneMain { get; set; } = string.Empty;
 
-    public string? Phone2 { get; set; }
+    public string? Phone2 { get; set; } = string.Empty;
+
+    public string? Email { get; set; }
 
     public string? Country { get; set; }
 
@@ -36,7 +39,5 @@ public class ContactUserViewModel
 
 
     public int UserId { get; set; }
-
-    public virtual User User { get; set; } = null!;
 
 }

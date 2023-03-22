@@ -1,12 +1,17 @@
-﻿namespace CredensPet.Infrastructure.DTO;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CredensPet.Infrastructure.DTO;
 
 public class ContactUserDTO
 {
     public int ContactUserId { get; set; }
 
-    public string PhoneMain { get; set; }
+    public string PhoneMain { get; set; } = string.Empty;
 
-    public string? Phone2 { get; set; }
+    public string? Phone2 { get; set; } = string.Empty;
+
+    public string? Email { get; set; }
+
     public string? Country { get; set; }
 
     public string? City { get; set; }
