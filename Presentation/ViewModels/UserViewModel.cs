@@ -25,9 +25,12 @@ public class UserViewModel
     public int? MediatorId { get; set; }
 
     public int? MakerId { get; set; }
+
+    public DateTime? Created { get; set; } = DateTime.Now;
+
+    public DateTime? LastUpdated { get; set; } = DateTime.Now;
+
+
     public int BranchId { get; set; }
 
-
-    //public int ContactUserId { get; set; }
-    //public ContactUserDTO ContactUserDto { get; set; }
 }

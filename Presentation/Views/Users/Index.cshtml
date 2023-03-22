@@ -1,10 +1,11 @@
-﻿@model IQueryable<Presentation.ViewModels.UserViewModel>
+﻿@using Microsoft.EntityFrameworkCore
+@model IQueryable<Presentation.ViewModels.UserViewModel>
 
 @{
-    ViewData["Title"] = "All users";
+    ViewData["Title"] = "Index";
 }
 
-<h1>All users</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -25,10 +26,10 @@
                 @Html.DisplayNameFor(model => model.FirstOrDefault().UserRoleId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().RoleId)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UserCount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().UserCount)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().RoleId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().ManagerId)
@@ -43,9 +44,14 @@
                 @Html.DisplayNameFor(model => model.FirstOrDefault().MakerId)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
             </th>
-            
             <th></th>
         </tr>
     </thead>
@@ -83,14 +89,20 @@
                 @Html.DisplayFor(modelItem => item.MakerId)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdated)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.BranchId)
             </td>
             <td>
-                    <a asp-action="Update" asp-route-Id="@item.UserId">Edit </a> |
+                <a asp-action="Update" asp-route-id="@item.UserId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a> |<br>
-                    <a asp-controller="ContactUsers" asp-action="Create" asp-route-id="@item.UserId">Add contact</a> |<br>
-                    <a asp-controller="Projects" asp-action="CreateFromUser" asp-route-id="@item.UserId">Add project</a> |
+                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a> |
+                <a asp-controller="Projects" asp-action="CreateFromUser" asp-route-id="@item.UserId">Create project</a> |
+                <a asp-controller="ContactUsers" asp-action="CreateFromUser" asp-route-id="@item.UserId">Create contact</a>
             </td>
         </tr>
 }

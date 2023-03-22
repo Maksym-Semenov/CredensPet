@@ -50,8 +50,8 @@ namespace Presentation.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
-            ViewBag.User = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
-            ViewBag.Branch = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
             var a = ViewBag.Branch;
 
             return View();
@@ -75,9 +75,8 @@ namespace Presentation.Controllers
         // GET: Projects/Create
         public IActionResult CreateFromUser(int id)
         {
-            ViewBag.User = id;
-            ViewBag.Branch = new SelectList( _serviceUser.FindAll().Select(x => x.UserId == id), "BranchId", "UserId");
-            var a = ViewBag.Branch;
+            ViewBag.UserId = id;
+            ViewBag.BranchId = new SelectList( _serviceUser.FindAll().Select(x => x.UserId == id), "BranchId", "UserId");
             
             return View();
         }
@@ -85,9 +84,9 @@ namespace Presentation.Controllers
         //POST: Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateFromUser([Bind("UserId, BranchId, OrderValue, OrderMonth, OrderYear" +
-                                                              ", OrderName, Price, City,CustomerId, ManagerId, MakerId" +
-                                                              ", MediatorId, Created, LastUpdated")] ProjectViewModel projectViewModel)
+        public async Task<IActionResult> CreateFromUser([Bind("UserId, BranchId, OrderValue, OrderMonth, OrderYear, " +
+                                                              "OrderName, Price, City,CustomerId, ManagerId, MakerId, " +
+                                                              "MediatorId, Created, LastUpdated")] ProjectViewModel projectViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +98,11 @@ namespace Presentation.Controllers
 
         // GET: Projects/Update/5
         public async Task<IActionResult> Update(int? id)
+        
         {
+            ViewBag.ProjectId = id;
+            ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
             var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
             if (item == null)
@@ -112,13 +115,15 @@ namespace Presentation.Controllers
         //POST: Projects/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("ProjectId, UserId, OrderValue, OrderMonth, OrderYear, CustomerId, OrderName, Price, City")] ProjectViewModel projectViewModel)
+        public async Task<IActionResult> Update(int? id, [Bind("ProjectId, UserId, BranchId, OrderValue, OrderMonth, OrderYear, " +
+                                                               "OrderName, Price, City,CustomerId, ManagerId, MakerId, " +
+                                                               "MediatorId, Created, LastUpdated")] ProjectViewModel projectViewModel)
         {
             if (id != projectViewModel.ProjectId)
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
                 await _serviceProject.UpdateAsync(_mapperToDTO.Map<ProjectDTO>(projectViewModel));

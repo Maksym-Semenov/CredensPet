@@ -26,9 +26,11 @@ public class AddressProjectViewModel : ViewComponent
 
     public string? Floor { get; set; }
 
+    public DateTime? Created { get; set; } = DateTime.Now;
+
+    public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
     public int ProjectId { get; set; }
-
 
 }

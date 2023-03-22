@@ -28,10 +28,8 @@ public partial class Project
 
     public int? MediatorId { get; set; }
 
-    [DisplayFormat(DataFormatString = "{dd-MM-yyyy")]
     public DateTime? Created { get; set; } = DateTime.Now;
 
-    [DisplayFormat(DataFormatString = "{dd-MM-yyyy")]
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 

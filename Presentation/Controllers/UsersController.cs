@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
-using System.Net;
 
 namespace Presentation.Controllers
 {
@@ -30,7 +29,7 @@ namespace Presentation.Controllers
         // GET: Users
         public IActionResult Index()
         {
-            ViewBag.BranchName = new SelectList(_serviceBranch.FindAll(), "BranchId","BranchName");
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId","BranchName");
             var item = _mapperToView.ProjectTo<UserViewModel>(_serviceUser.FindAll().AsNoTracking());
               return item != null ? 
                           View( item) :
@@ -40,6 +39,7 @@ namespace Presentation.Controllers
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.BranceshNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
             var item =  _mapperToView.Map<UserViewModel>(await _serviceUser.FindAll()
                 .FirstOrDefaultAsync(x => x.UserId  == id));
             return View(item);
@@ -48,7 +48,7 @@ namespace Presentation.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
-            ViewBag.Branches = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            ViewBag.BranchName = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BranchName, BranchId, FirstName, MiddleName, LastName, " +
                                                                   "UserRoleId, RoleId, UserCount, ManagerId, CustomerId, " +
-                                                                  "MediatorId, MakerId")] UserViewModel userViewModel)
+                                                                  "MediatorId, MakerId, Created, LastUpdated")] UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -67,24 +67,23 @@ namespace Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Users/Create
+        // GET: Users/CreateFromBranch
         public IActionResult CreateFromBranch(int id)
         {
             ViewBag.BranchId = id;
-            //ViewBag.Branches = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Users/CreateFromBranch
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateFromBranch([Bind("BranchId, FirstName, MiddleName, LastName, " +
+        public async Task<IActionResult> CreateFromBranch( [Bind("BranchId, FirstName, MiddleName, LastName, " +
                                                                             "UserRoleId, RoleId, UserCount, ManagerId, CustomerId, " +
-                                                                            "MediatorId, MakerId")] UserViewModel userViewModel)
+                                                                            "MediatorId, MakerId, Created, LastUpdated")] UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
-
                 await _serviceUser.AddAsync(_mapperToDTO.Map<UserDTO>(userViewModel));
                 await _serviceUser.SaveChangesAsync();
             }
@@ -93,10 +92,11 @@ namespace Presentation.Controllers
         // GET: Users/Update/5
         public async Task<IActionResult> Update(int? id)
         {
-            ViewBag.Branches = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            ViewBag.UserId = id;
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
 
             var item = _mapperToView.Map<UserViewModel>( await _serviceUser.FindAll()
-                .FirstOrDefaultAsync(x => x.BranchId == id));
+                .FirstOrDefaultAsync(x => x.UserId == id));
 
             if (item == null)
             {
@@ -108,9 +108,9 @@ namespace Presentation.Controllers
         // POST: Users/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("UserId, BranchId, FirstName, MiddleName, LastName, " +
+        public async Task<IActionResult> Update(int id,[Bind("UserId, BranchId, FirstName, MiddleName, LastName, " +
                                                                            "UserRoleId, RoleId, UserCount,ManagerId, CustomerId, " +
-                                                                           "MediatorId, MakerId")] UserViewModel userViewModel)
+                                                                           "MediatorId, MakerId, Created, LastUpdated")] UserViewModel userViewModel)
         {
             if (id != userViewModel.UserId)
             {

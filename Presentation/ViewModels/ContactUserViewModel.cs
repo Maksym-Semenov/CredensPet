@@ -1,4 +1,6 @@
-﻿namespace Presentation.ViewModels;
+﻿using DataAccessLayer.Models;
+
+namespace Presentation.ViewModels;
 
 public class ContactUserViewModel
 {
@@ -28,7 +30,13 @@ public class ContactUserViewModel
 
     public string? Floor { get; set; }
 
+    public DateTime? Created { get; set; } = DateTime.Now;
+
+    public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
     public int UserId { get; set; }
+
+    public virtual User User { get; set; } = null!;
+
 }

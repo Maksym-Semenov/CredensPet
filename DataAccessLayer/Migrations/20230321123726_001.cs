@@ -19,7 +19,9 @@ namespace DataAccessLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BranchName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsOpen = table.Column<bool>(type: "bit", nullable: true)
+                    IsOpen = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,6 +44,8 @@ namespace DataAccessLayer.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     MediatorId = table.Column<int>(type: "int", nullable: true),
                     MakerId = table.Column<int>(type: "int", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BranchId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -74,6 +78,8 @@ namespace DataAccessLayer.Migrations
                     BuildingPart = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Apt = table.Column<int>(type: "int", nullable: true),
                     Floor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -134,6 +140,8 @@ namespace DataAccessLayer.Migrations
                     BuildingPart = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Apt = table.Column<int>(type: "int", nullable: true),
                     Floor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ProjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -155,7 +163,8 @@ namespace DataAccessLayer.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ContactUsers_UserId",
                 table: "ContactUsers",
-                column: "UserId");
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_UserId",

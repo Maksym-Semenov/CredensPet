@@ -1,4 +1,4 @@
-﻿@model DataAccessLayer.Models.Project
+﻿@model Presentation.ViewModels.ProjectViewModel
 
 @{
     ViewData["Title"] = "CreateFromUser";
@@ -13,10 +13,10 @@
         <form asp-action="CreateFromUser">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>
-                <input type="hidden" asp-for="UserId" value="@ViewBag.User"></input>
+                <input type="hidden" asp-for="UserId" value="@ViewBag.UsersNames"></input>
             </div>
             <div>
-                <input type="hidden" asp-for="BranchId" value="@ViewBag.Branch"></input>
+                <input type="hidden" asp-for="BranchId" asp-for="@ViewBag.BranchesNames"></input>
             </div>
             <div class="form-group">
                 <label asp-for="OrderValue" class="control-label"></label>
@@ -57,11 +57,6 @@
                 <label asp-for="MakerId" class="control-label"></label>
                 <input asp-for="MakerId" class="form-control" />
                 <span asp-validation-for="MakerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BranchId" class="control-label"></label>
-                <input asp-for="BranchId" class="form-control" />
-                <span asp-validation-for="BranchId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MediatorId" class="control-label"></label>

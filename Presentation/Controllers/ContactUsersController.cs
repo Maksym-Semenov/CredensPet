@@ -61,6 +61,25 @@ namespace Presentation.Controllers
             return RedirectToAction("Index", "Users");
         }
 
+        public async Task<IActionResult> CreateFromUser(int? id)
+        {
+            ViewBag.UserId = new SelectList(_serviceUser.FindAll().Select(x => x.UserId));
+            return View();
+        }
+
+        // POST: Users/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFromUser([Bind("UserId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactUserViewModel contactUserViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await _serviceContactUser.AddAsync(_mapperToDTO.Map<ContactUserDTO>(contactUserViewModel));
+                await _serviceContactUser.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", "Users");
+        }
+
         // GET: Users/Update/5
         public async Task<IActionResult> Update(int? id)
         {

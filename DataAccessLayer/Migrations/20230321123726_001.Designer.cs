@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(CredensContext))]
-    [Migration("20230319171314_001")]
+    [Migration("20230321123726_001")]
     partial class _001
     {
         /// <inheritdoc />
@@ -48,8 +48,14 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Floor")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Litera")
                         .HasColumnType("nvarchar(max)");
@@ -84,8 +90,14 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("BranchName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool?>("IsOpen")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
@@ -118,11 +130,17 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Floor")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Litera")
                         .HasColumnType("nvarchar(max)");
@@ -148,7 +166,8 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("ContactUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("ContactUsers");
                 });
@@ -218,6 +237,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("BranchId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
@@ -226,6 +248,9 @@ namespace DataAccessLayer.Migrations
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("MakerId")
                         .HasColumnType("int");
@@ -269,8 +294,8 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("DataAccessLayer.Models.ContactUser", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("ContactsUser")
+                        .HasForeignKey("DataAccessLayer.Models.ContactUser", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -306,6 +331,8 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("DataAccessLayer.Models.User", b =>
                 {
+                    b.Navigation("ContactsUser");
+
                     b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618

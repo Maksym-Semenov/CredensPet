@@ -26,13 +26,17 @@ public partial class User
     public int? MediatorId { get; set; }
 
     public int? MakerId { get; set; }
-    
+
+    public DateTime? Created { get; set; } = DateTime.Now;
+
+    public DateTime? LastUpdated { get; set; } = DateTime.Now;
+
 
     public int BranchId { get; set; }
 
     public virtual Branch Branch { get; set; } = null!;
 
-    //public virtual ContactUser? ContactsUser { get; set; }
+    public virtual ContactUser? ContactsUser { get; set; }
 
     public virtual ICollection<Project> Projects { get; } = new List<Project>();
 }

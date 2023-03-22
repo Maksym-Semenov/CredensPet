@@ -1,10 +1,10 @@
 ﻿@model Presentation.ViewModels.UserViewModel
 
 @{
-    ViewData["Title"] = "User details";
+    ViewData["Title"] = "Details";
 }
 
-<h1>User details</h1>
+<h1>Details</h1>
 
 <div>
     <h4>User</h4>
@@ -71,11 +71,22 @@
             @Html.DisplayFor(model => model.MakerId)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastUpdated)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastUpdated)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.BranchId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BranchId)
-        </dd>
+        @Html.DropDownListFor(model => model.BranchId, ViewBag.BranchesNames as SelectList)
     </dl>
 </div>
 <div>
