@@ -13,28 +13,28 @@ public class AddressProjectRepository : IRepository<AddressProjectDTO>
 {
     private readonly CredensContext _context;
     private readonly IMapper _mapperToDTO;
-    private readonly IMapper _mapperToContactProject;
+    private readonly IMapper _mapperToAddressProject;
 
     public AddressProjectRepository(CredensContext context)
     {
         _context = context;
         _mapperToDTO = GenericMapperConfiguration<AddressProject, AddressProjectDTO>.MapTo();
-        _mapperToContactProject = GenericMapperConfiguration<AddressProjectDTO, AddressProject>.MapTo();
+        _mapperToAddressProject = GenericMapperConfiguration<AddressProjectDTO, AddressProject>.MapTo();
     }
 
     public virtual async Task AddAsync(AddressProjectDTO entity)
     {
-        await _context.ContactProjects.AddAsync(_mapperToContactProject.Map<AddressProject>(entity));
+        await _context.AddressProjects.AddAsync(_mapperToAddressProject.Map<AddressProject>(entity));
     }
 
     public virtual async Task DeleteAsync(AddressProjectDTO entity)
     {
-        _context.ContactProjects.Remove(_mapperToContactProject.Map<AddressProject>(entity));
+        _context.AddressProjects.Remove(_mapperToAddressProject.Map<AddressProject>(entity));
     }
 
     public IQueryable<AddressProjectDTO> FindAll()
     {
-        return _context.ContactProjects.ProjectTo<AddressProjectDTO>(_mapperToDTO.ConfigurationProvider);
+        return _context.AddressProjects.ProjectTo<AddressProjectDTO>(_mapperToDTO.ConfigurationProvider);
     }
 
     public virtual async Task SaveChangesAsync()
@@ -44,7 +44,7 @@ public class AddressProjectRepository : IRepository<AddressProjectDTO>
 
     public virtual async Task UpdateAsync(AddressProjectDTO entity)
     {
-        _context.Entry(_mapperToContactProject.Map<AddressProject>(entity)).State = EntityState.Modified;
+        _context.Entry(_mapperToAddressProject.Map<AddressProject>(entity)).State = EntityState.Modified;
     }
    
 }

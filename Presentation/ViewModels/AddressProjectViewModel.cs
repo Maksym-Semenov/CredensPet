@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿namespace Presentation.ViewModels;
 
-namespace Presentation.ViewModels;
-
-public class AddressProjectViewModel : ViewComponent
+public class AddressProjectViewModel
 {
     public int AddressProjectId { get; set; }
 

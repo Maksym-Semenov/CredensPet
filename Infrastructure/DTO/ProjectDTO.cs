@@ -29,10 +29,6 @@ public class ProjectDTO
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-
     public int UserId { get; set; }
-
-    //public int ContactProjectId { get; set; }
-
 
 }

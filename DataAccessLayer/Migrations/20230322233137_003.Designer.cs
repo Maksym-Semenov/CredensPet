@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(CredensContext))]
-    [Migration("20230321123726_001")]
-    partial class _001
+    [Migration("20230322233137_003")]
+    partial class _003
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,9 +74,10 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("AddressProjectId");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("ProjectId")
+                        .IsUnique();
 
-                    b.ToTable("ContactProjects");
+                    b.ToTable("AddressProjects");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Branch", b =>
@@ -283,8 +284,8 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("DataAccessLayer.Models.AddressProject", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
+                        .WithOne("AddressProject")
+                        .HasForeignKey("DataAccessLayer.Models.AddressProject", "ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -327,6 +328,11 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("DataAccessLayer.Models.Branch", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Project", b =>
+                {
+                    b.Navigation("AddressProject");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.User", b =>

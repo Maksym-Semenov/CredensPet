@@ -34,9 +34,7 @@ public partial class Project
 
 
 
-    //public int ContactProjectId { get; set; }
-
-    //public virtual ContactProject? ContactProject { get; set; }
+    public virtual AddressProject? AddressProject { get; set; }
 
     public int UserId { get; set; }
 

@@ -71,9 +71,10 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("AddressProjectId");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("ProjectId")
+                        .IsUnique();
 
-                    b.ToTable("ContactProjects");
+                    b.ToTable("AddressProjects");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Branch", b =>
@@ -280,8 +281,8 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("DataAccessLayer.Models.AddressProject", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
+                        .WithOne("AddressProject")
+                        .HasForeignKey("DataAccessLayer.Models.AddressProject", "ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -324,6 +325,11 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("DataAccessLayer.Models.Branch", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Project", b =>
+                {
+                    b.Navigation("AddressProject");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.User", b =>

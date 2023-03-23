@@ -1,13 +1,11 @@
 ﻿@model IQueryable<Presentation.ViewModels.AddressProjectViewModel>
 
 @{
-    ViewData["Title"] = "All project's addresses";
+    ViewData["Title"] = "All addresses";
 }
 
-<h1>All project's addresses</h1>
+<h1>All addresses</h1>
 
-<p>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -40,6 +38,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Floor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().ProjectId)
@@ -79,6 +83,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Floor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectId)

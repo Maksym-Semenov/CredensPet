@@ -13,10 +13,10 @@
         <form asp-action="CreateFromUser">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>
-                <input type="hidden" asp-for="UserId" value="@ViewBag.UsersNames"></input>
+                <input type="hidden" asp-for="UserId" value="@ViewBag.UserId"></input>
             </div>
             <div>
-                <input type="hidden" asp-for="BranchId" asp-for="@ViewBag.BranchesNames"></input>
+                <input type="hidden" asp-for="BranchId" asp-for="@ViewBag.BranchId"></input>
             </div>
             <div class="form-group">
                 <label asp-for="OrderValue" class="control-label"></label>

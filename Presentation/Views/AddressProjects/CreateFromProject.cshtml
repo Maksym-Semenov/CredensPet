@@ -1,18 +1,18 @@
 ﻿@model Presentation.ViewModels.AddressProjectViewModel
 
 @{
-    ViewData["Title"] = "Create new project's contact";
+    ViewData["Title"] = "Create from project";
 }
 
-<h1>Create new project's contact</h1>
+<h1>Create from project</h1>
 
-<h4>ContactProject</h4>
+<h4>Address Project</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="CreateFromProject">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProjectId"/>
+                <input type="hidden" asp-for="ProjectId" value="@ViewBag.ProjectId"></input>
             <div class="form-group">
                 <label asp-for="Country" class="control-label"></label>
                 <input asp-for="Country" class="form-control" />
@@ -62,6 +62,16 @@
                 <label asp-for="Floor" class="control-label"></label>
                 <input asp-for="Floor" class="form-control" />
                 <span asp-validation-for="Floor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" class="form-control" />
+                <span asp-validation-for="Created" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastUpdated" class="control-label"></label>
+                <input asp-for="LastUpdated" class="form-control" />
+                <span asp-validation-for="LastUpdated" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
