@@ -48,7 +48,7 @@ namespace Presentation.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind(
-                            "BranchName, Phone, IsOpen")] BranchViewModel branchViewModel)
+                            "BranchName, Phone, IsOpen, Created, LastUpdated")] BranchViewModel branchViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace Presentation.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int? id, [Bind(
-                            "BranchId, BranchName, Phone, IsOpen")] BranchViewModel branchViewModel)
+                            "BranchId, BranchName, Phone, IsOpen, Created, LastUpdated")] BranchViewModel branchViewModel)
         {
             if (id != branchViewModel.BranchId)
             {
