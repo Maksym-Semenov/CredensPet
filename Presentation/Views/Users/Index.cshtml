@@ -1,8 +1,9 @@
 ﻿@using Microsoft.EntityFrameworkCore
-@model IQueryable<Presentation.ViewModels.UserViewModel>
+@model Presentation.ViewModels.UserBranchViewModel
 
 @{
     ViewData["Title"] = "List of users";
+    
 }
 
 <h1>List of users</h1>
@@ -14,49 +15,49 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().MiddleName)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().MiddleName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().UserRoleId)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().UserRoleId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().UserCount)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().UserCount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().RoleId)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().RoleId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ManagerId)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().ManagerId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().CustomerId)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().CustomerId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().MediatorId)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().MediatorId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().MakerId)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().MakerId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().Created)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().LastUpdated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
+                @Html.DisplayNameFor(model => model.ListBranchProperties.FirstOrDefault().BranchName)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.ListUserProperties) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -95,13 +96,18 @@
                 @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BranchId)
+                @{
+                    string? branchName = @Model.ListBranchProperties
+                        .Where(x => x.BranchId == item.BranchId)
+                        .FirstOrDefault()?.BranchName;
+                }
+                @Html.DisplayFor(modelItem => branchName)
             </td>
             <td>
                 <a asp-action="Update" asp-route-id="@item.UserId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a> |
-                <a asp-controller="Projects" asp-action="CreateFromUser" asp-route-id="@item.UserId">Create project</a> |
+                <a asp-controller="Projects" asp-action="CreateFromUser"  asp-route-userid="@item.UserId" asp-route-branchid="@item.BranchId">Create project</a> |
                 <a asp-controller="ContactUsers" asp-action="CreateFromUser" asp-route-id="@item.UserId">Create contact</a>
             </td>
         </tr>

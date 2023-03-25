@@ -9,9 +9,9 @@ public class ProjectViewModel
 
     public string? OrderValue { get; set; }
 
-    public string? OrderMonth { get; set; } = DateTime.Now.ToString("MM");
+    public string? OrderMonth { get; set; }
 
-    public string? OrderYear { get; set; } = DateTime.Now.ToString("yy");
+    public string? OrderYear { get; set; }
 
     public string? OrderName { get; set; }
 
@@ -23,7 +23,7 @@ public class ProjectViewModel
 
     public int? MakerId { get; set; }
 
-    public string? BranchId { get; set; }
+    public int? BranchId { get; set; }
 
     public int? MediatorId { get; set; }
 

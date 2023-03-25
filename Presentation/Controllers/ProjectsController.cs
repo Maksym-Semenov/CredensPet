@@ -14,7 +14,9 @@ namespace Presentation.Controllers
         private readonly IService<ProjectDTO> _serviceProject;
         private readonly IService<UserDTO> _serviceUser;
         private readonly IService<BranchDTO> _serviceBranch;
-        private readonly IMapper _mapperToView;
+        private readonly IMapper _mapperToProjectView;
+        private readonly IMapper _mapperToUserView;
+        private readonly IMapper _mapperToBranchView;
         private readonly IMapper _mapperToDTO;
 
         public ProjectsController(IService<ProjectDTO> serviceProject
@@ -24,7 +26,9 @@ namespace Presentation.Controllers
             _serviceProject = serviceProject;
             _serviceUser = serviceUser;
             _serviceBranch = serviceBranch;
-            _mapperToView = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
+            _mapperToProjectView = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
+            _mapperToUserView = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
+            _mapperToBranchView = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<ProjectViewModel, ProjectDTO>.MapTo();
             
         }
@@ -32,7 +36,10 @@ namespace Presentation.Controllers
         // GET: Projects
         public IActionResult Index()
         {
-            var item = _mapperToView.ProjectTo<ProjectViewModel>(_serviceProject.FindAll().AsNoTracking());
+            var item = new ProjectUserBranchViewModel();
+            item.ListProjectProperties = _mapperToProjectView.ProjectTo<ProjectViewModel>(_serviceProject.FindAll());
+            item.ListUserProperties = _mapperToUserView.ProjectTo<UserViewModel>(_serviceUser.FindAll());
+            item.ListBranchProperties = _mapperToBranchView.ProjectTo<BranchViewModel>(_serviceBranch.FindAll());
             return item != null ? 
                 View(item) : 
                 Problem("Entity set 'CredensTestContext.Projects'  is null.");
@@ -41,7 +48,7 @@ namespace Presentation.Controllers
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
+            var item = _mapperToProjectView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
 
             return View(item);
@@ -72,16 +79,17 @@ namespace Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Projects/Create
-        public IActionResult CreateFromUser(int id)
+        // GET: Projects/CreateFromUser
+        public IActionResult CreateFromUser(int userId, int branchId)
         {
-            ViewBag.UserId = id;
-            ViewBag.BranchId = new SelectList( _serviceUser.FindAll().Select(x => x.UserId == id), "BranchId", "UserId");
+            ViewBag.UserId = userId;
+            ViewBag.BranchId = branchId;
             
             return View();
         }
 
-        //POST: Projects/Create
+
+        //POST: Projects/CreateFromUser
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateFromUser([Bind("UserId, BranchId, OrderValue, OrderMonth, OrderYear, " +
@@ -103,7 +111,7 @@ namespace Presentation.Controllers
             ViewBag.ProjectId = id;
             ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
             ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
-            var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
+            var item = _mapperToProjectView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
             if (item == null)
             {
@@ -136,7 +144,7 @@ namespace Presentation.Controllers
         // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
+            var item = _mapperToProjectView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
             if (id == null || _serviceProject == null || item == null)
             {
