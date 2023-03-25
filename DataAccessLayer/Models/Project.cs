@@ -10,9 +10,9 @@ public partial class Project
 
     public string? OrderValue { get; set; }
     
-    public string? OrderMonth { get; set; } = DateTime.Now.ToString("d");
+    public string? OrderMonth { get; set; }
 
-    public string? OrderYear { get; set; } = DateTime.Now.ToString("D");
+    public string? OrderYear { get; set; }
 
     public string? OrderName { get; set; }
 
@@ -24,7 +24,7 @@ public partial class Project
 
     public int? MakerId { get; set; }
 
-    public string? BranchId { get; set; }
+    public int? BranchId { get; set; }
 
     public int? MediatorId { get; set; }
 

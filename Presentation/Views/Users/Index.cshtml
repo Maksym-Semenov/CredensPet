@@ -97,9 +97,9 @@
             </td>
             <td>
                 @{
-                    string branchName = @Model.ListBranchProperties
+                    string? branchName = @Model.ListBranchProperties
                         .Where(x => x.BranchId == item.BranchId)
-                        .FirstOrDefault().BranchName;
+                        .FirstOrDefault()?.BranchName;
                 }
                 @Html.DisplayFor(modelItem => branchName)
             </td>

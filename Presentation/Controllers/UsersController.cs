@@ -32,9 +32,7 @@ namespace Presentation.Controllers
         {
             var item = new UserBranchViewModel();
             item.ListUserProperties = _mapperToUserView.ProjectTo<UserViewModel>(_serviceUser.FindAll().AsNoTracking());
-            item.ListBranchProperties =
-                _mapperToBranchView.ProjectTo<BranchViewModel>(_serviceBranch.FindAll().AsNoTracking());
-
+            item.ListBranchProperties = _mapperToBranchView.ProjectTo<BranchViewModel>(_serviceBranch.FindAll().AsNoTracking());
               return item != null ? 
                           View( item) :
                           Problem("Entity set 'CredensContext.Users'  is null.");
