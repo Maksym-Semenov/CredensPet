@@ -16,6 +16,7 @@ namespace Presentation.Controllers
         private readonly IMapper _mapperToUserView;
         private readonly IMapper _mapperToBranchView;
         private readonly IMapper _mapperToDTO;
+        private readonly IMapper _mapperBranchDTOToBranchModel;
 
         public UsersController(IService<UserDTO> serviceUser, 
                                IService<BranchDTO> serviceBranch)
@@ -25,17 +26,20 @@ namespace Presentation.Controllers
             _mapperToUserView = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
             _mapperToBranchView = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<UserViewModel, UserDTO>.MapTo();
+            _mapperBranchDTOToBranchModel = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
         }
+
 
         // GET: Users
         public IActionResult Index()
-        {
+     {
             var item = new UserBranchViewModel();
             item.ListUserProperties = _mapperToUserView.ProjectTo<UserViewModel>(_serviceUser.FindAll().AsNoTracking());
             item.ListBranchProperties = _mapperToBranchView.ProjectTo<BranchViewModel>(_serviceBranch.FindAll().AsNoTracking());
               return item != null ? 
                           View( item) :
                           Problem("Entity set 'CredensContext.Users'  is null.");
+
         }
 
         // GET: Users/Details/5
