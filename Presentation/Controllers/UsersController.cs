@@ -28,21 +28,9 @@ namespace Presentation.Controllers
             _mapperBranchDTOToBranchModel = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
         }
 
-        // GET: Users
-        public IActionResult Index()
-        {
-            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
-            var item = _mapperToView.ProjectTo<UserViewModel>(_serviceUser.FindAll().AsNoTracking());
-            return item != null ?
-                        View(item) :
-                        Problem("Entity set 'CredensContext.Users'  is null.");
-            return item != null ?
-                          View(item) :
-                          Problem("Entity set 'CredensContext.Users'  is null.");
-        }
 
         // GET: Users
-        public IActionResult Index2()
+        public IActionResult Index()
         {
             UserBranchViewModel userBranchView = new UserBranchViewModel();
             userBranchView.BranchesUsers =_mapperBranchDTOToBranchModel.ProjectTo<BranchViewModel>(_serviceBranch.FindAll());
