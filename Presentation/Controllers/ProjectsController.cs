@@ -72,16 +72,17 @@ namespace Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Projects/Create
-        public IActionResult CreateFromUser(int id)
+        // GET: Projects/CreateFromUser
+        public IActionResult CreateFromUser(int userId, int branchId)
         {
-            ViewBag.UserId = id;
-            ViewBag.BranchId = new SelectList( _serviceUser.FindAll().Select(x => x.UserId == id), "BranchId", "UserId");
+            ViewBag.UserId = userId;
+            ViewBag.BranchId = branchId;
             
             return View();
         }
 
-        //POST: Projects/Create
+
+        //POST: Projects/CreateFromUser
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateFromUser([Bind("UserId, BranchId, OrderValue, OrderMonth, OrderYear, " +
