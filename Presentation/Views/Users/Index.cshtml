@@ -15,19 +15,49 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UsersBranches.FirstOrDefault().FirstName)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UsersBranches.FirstOrDefault().UserId)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().MiddleName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BranchesUsers.FirstOrDefault().BranchName)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().LastName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().UserRoleId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().UserCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().RoleId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().ManagerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().MediatorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().MakerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().LastUpdated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListBranchProperties.FirstOrDefault().BranchName)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-      
-        @foreach (var item in Model.UsersBranches) {
+@foreach (var item in Model.ListUserProperties) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -36,10 +66,12 @@
                 @Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>
-                    @{
-                        string rez = @Model.BranchesUsers.Where(x => x.BranchId == item.BranchId).FirstOrDefault().BranchName;
-                    }
-                    @Html.DisplayFor(modelItem => rez)
+                @{
+                    string? branchName = @Model.ListBranchProperties
+                        .Where(x => x.BranchId == item.BranchId)
+                        .FirstOrDefault()?.BranchName;
+                }
+                @Html.DisplayFor(modelItem => branchName)
             </td>
            
             <td>

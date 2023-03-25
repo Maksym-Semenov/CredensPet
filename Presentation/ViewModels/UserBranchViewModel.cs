@@ -1,8 +1,8 @@
-﻿
-namespace Presentation.ViewModels;
+
+﻿namespace Presentation.ViewModels;
 
 public class UserBranchViewModel
 {
-    public IQueryable<UserViewModel> UsersBranches { get; set; }
-    public IQueryable<BranchViewModel> BranchesUsers { get; set; }
+    public IQueryable<UserViewModel> ListUserProperties { get; set; }
+    public IQueryable<BranchViewModel> ListBranchProperties { get; set; }
 }

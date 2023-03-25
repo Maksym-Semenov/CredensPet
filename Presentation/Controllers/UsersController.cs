@@ -13,17 +13,18 @@ namespace Presentation.Controllers
     {
         private readonly IService<UserDTO> _serviceUser;
         private readonly IService<BranchDTO> _serviceBranch;
-        private readonly IMapper _mapperToView;
+        private readonly IMapper _mapperToUserView;
+        private readonly IMapper _mapperToBranchView;
         private readonly IMapper _mapperToDTO;
         private readonly IMapper _mapperBranchDTOToBranchModel;
 
         public UsersController(IService<UserDTO> serviceUser, 
-                               IService<BranchDTO> serviceBranch, 
-                               IService<ContactUserDTO> serviceContactUser)
+                               IService<BranchDTO> serviceBranch)
         {
             _serviceUser = serviceUser;
             _serviceBranch = serviceBranch;
-            _mapperToView = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
+            _mapperToUserView = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
+            _mapperToBranchView = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<UserViewModel, UserDTO>.MapTo();
             _mapperBranchDTOToBranchModel = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
         }
@@ -31,21 +32,21 @@ namespace Presentation.Controllers
 
         // GET: Users
         public IActionResult Index()
-        {
-            UserBranchViewModel userBranchView = new UserBranchViewModel();
-            userBranchView.BranchesUsers =_mapperBranchDTOToBranchModel.ProjectTo<BranchViewModel>(_serviceBranch.FindAll());
-            userBranchView.UsersBranches = _mapperToView.ProjectTo<UserViewModel>(_serviceUser.FindAll());
-         
-             return userBranchView != null ?
-                        View(userBranchView) :
-                        Problem("Entity set 'CredensContext.Users'  is null.");
+     {
+            var item = new UserBranchViewModel();
+            item.ListUserProperties = _mapperToUserView.ProjectTo<UserViewModel>(_serviceUser.FindAll().AsNoTracking());
+            item.ListBranchProperties = _mapperToBranchView.ProjectTo<BranchViewModel>(_serviceBranch.FindAll().AsNoTracking());
+              return item != null ? 
+                          View( item) :
+                          Problem("Entity set 'CredensContext.Users'  is null.");
+
         }
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             ViewBag.BranceshNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
-            var item =  _mapperToView.Map<UserViewModel>(await _serviceUser.FindAll()
+            var item =  _mapperToUserView.Map<UserViewModel>(await _serviceUser.FindAll()
                 .FirstOrDefaultAsync(x => x.UserId  == id));
             return View(item);
         }
@@ -53,7 +54,7 @@ namespace Presentation.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
-            ViewBag.BranchName = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
             return View();
         }
 
@@ -100,7 +101,7 @@ namespace Presentation.Controllers
             ViewBag.UserId = id;
             ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
 
-            var item = _mapperToView.Map<UserViewModel>( await _serviceUser.FindAll()
+            var item = _mapperToUserView.Map<UserViewModel>( await _serviceUser.FindAll()
                 .FirstOrDefaultAsync(x => x.UserId == id));
 
             if (item == null)
@@ -134,7 +135,7 @@ namespace Presentation.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            var item = _mapperToView.Map<UserViewModel>(await _serviceUser.FindAll()
+            var item = _mapperToUserView.Map<UserViewModel>(await _serviceUser.FindAll()
                 .FirstOrDefaultAsync(x => x.UserId == id));
             if (id == null || _serviceUser == null || item == null)
             {
