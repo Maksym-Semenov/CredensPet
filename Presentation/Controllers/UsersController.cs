@@ -15,6 +15,7 @@ namespace Presentation.Controllers
         private readonly IService<BranchDTO> _serviceBranch;
         private readonly IMapper _mapperToView;
         private readonly IMapper _mapperToDTO;
+        private readonly IMapper _mapperBranchDTOToBranchModel;
 
         public UsersController(IService<UserDTO> serviceUser, 
                                IService<BranchDTO> serviceBranch, 
@@ -24,16 +25,32 @@ namespace Presentation.Controllers
             _serviceBranch = serviceBranch;
             _mapperToView = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<UserViewModel, UserDTO>.MapTo();
+            _mapperBranchDTOToBranchModel = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
         }
 
         // GET: Users
         public IActionResult Index()
         {
-            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId","BranchName");
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
             var item = _mapperToView.ProjectTo<UserViewModel>(_serviceUser.FindAll().AsNoTracking());
-              return item != null ? 
-                          View( item) :
+            return item != null ?
+                        View(item) :
+                        Problem("Entity set 'CredensContext.Users'  is null.");
+            return item != null ?
+                          View(item) :
                           Problem("Entity set 'CredensContext.Users'  is null.");
+        }
+
+        // GET: Users
+        public IActionResult Index2()
+        {
+            UserBranchViewModel userBranchView = new UserBranchViewModel();
+            userBranchView.BranchesUsers =_mapperBranchDTOToBranchModel.ProjectTo<BranchViewModel>(_serviceBranch.FindAll());
+            userBranchView.UsersBranches = _mapperToView.ProjectTo<UserViewModel>(_serviceUser.FindAll());
+         
+             return userBranchView != null ?
+                        View(userBranchView) :
+                        Problem("Entity set 'CredensContext.Users'  is null.");
         }
 
         // GET: Users/Details/5
