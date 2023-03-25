@@ -2,10 +2,10 @@
 
 namespace DataAccessLayer.Models;
 
-public partial class ContactProject
+public partial class AddressProject
 {
     [Key]
-    public int ContactProjectId { get; set; }
+    public int AddressProjectId { get; set; }
 
     public string? Country { get; set; }
 
@@ -27,9 +27,10 @@ public partial class ContactProject
 
     public string? Floor { get; set; }
 
+    public DateTime? Created { get; set; } = DateTime.Now;
 
+    public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
     public int ProjectId { get; set; }
-
     public virtual Project Project { get; set; } = null!;
 }

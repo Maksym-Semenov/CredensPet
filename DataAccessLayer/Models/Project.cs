@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataAccessLayer.Models;
 
@@ -8,10 +9,10 @@ public partial class Project
     public int ProjectId { get; set; }
 
     public string? OrderValue { get; set; }
+    
+    public string? OrderMonth { get; set; }
 
-    public string? OrderMonth { get; set; } = DateTime.Now.ToString("MM");
-
-    public string? OrderYear { get; set; } = DateTime.Now.ToString("yy");
+    public string? OrderYear { get; set; }
 
     public string? OrderName { get; set; }
 
@@ -23,7 +24,7 @@ public partial class Project
 
     public int? MakerId { get; set; }
 
-    public string? BranchId { get; set; }
+    public int? BranchId { get; set; }
 
     public int? MediatorId { get; set; }
 
@@ -33,9 +34,7 @@ public partial class Project
 
 
 
-    public int ContactProjectId { get; set; }
-
-    public virtual ContactProject? ContactProject { get; set; }
+    public virtual AddressProject? AddressProject { get; set; }
 
     public int UserId { get; set; }
 

@@ -13,21 +13,33 @@ namespace Presentation.Controllers
     {
         private readonly IService<ProjectDTO> _serviceProject;
         private readonly IService<UserDTO> _serviceUser;
-        private readonly IMapper _mapperToView;
+        private readonly IService<BranchDTO> _serviceBranch;
+        private readonly IMapper _mapperToProjectView;
+        private readonly IMapper _mapperToUserView;
+        private readonly IMapper _mapperToBranchView;
         private readonly IMapper _mapperToDTO;
 
-        public ProjectsController(IService<ProjectDTO> serviceProject, IService<UserDTO> serviceUser)
+        public ProjectsController(IService<ProjectDTO> serviceProject
+                                , IService<UserDTO> serviceUser
+                                , IService<BranchDTO> serviceBranch)
         {
             _serviceProject = serviceProject;
             _serviceUser = serviceUser;
-            _mapperToView = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
+            _serviceBranch = serviceBranch;
+            _mapperToProjectView = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
+            _mapperToUserView = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
+            _mapperToBranchView = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<ProjectViewModel, ProjectDTO>.MapTo();
+            
         }
 
         // GET: Projects
         public IActionResult Index()
         {
-            var item = _mapperToView.ProjectTo<ProjectViewModel>(_serviceProject.FindAll().AsNoTracking());
+            var item = new ProjectUserBranchViewModel();
+            item.ListProjectProperties = _mapperToProjectView.ProjectTo<ProjectViewModel>(_serviceProject.FindAll());
+            item.ListUserProperties = _mapperToUserView.ProjectTo<UserViewModel>(_serviceUser.FindAll());
+            item.ListBranchProperties = _mapperToBranchView.ProjectTo<BranchViewModel>(_serviceBranch.FindAll());
             return item != null ? 
                 View(item) : 
                 Problem("Entity set 'CredensTestContext.Projects'  is null.");
@@ -36,7 +48,7 @@ namespace Presentation.Controllers
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
+            var item = _mapperToProjectView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
 
             return View(item);
@@ -45,14 +57,44 @@ namespace Presentation.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
-            ViewBag.UserID = new SelectList(_serviceUser.FindAll().Select(x => x.UserId));
+            ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            var a = ViewBag.Branch;
+
             return View();
         }
 
         //POST: Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId, UserId, OrderValue, OrderMonth, OrderYear, OrderName, Price, City")] ProjectViewModel projectViewModel)
+        public async Task<IActionResult> Create([Bind("UserId, BranchId, OrderValue, OrderMonth, OrderYear" +
+                                                      ", OrderName, Price, City,CustomerId, ManagerId, MakerId" +
+                                                      ", MediatorId, Created, LastUpdated")] ProjectViewModel projectViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await _serviceProject.AddAsync(_mapperToDTO.Map<ProjectDTO>(projectViewModel));
+                await _serviceProject.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Projects/CreateFromUser
+        public IActionResult CreateFromUser(int userId, int branchId)
+        {
+            ViewBag.UserId = userId;
+            ViewBag.BranchId = branchId;
+            
+            return View();
+        }
+
+
+        //POST: Projects/CreateFromUser
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFromUser([Bind("UserId, BranchId, OrderValue, OrderMonth, OrderYear, " +
+                                                              "OrderName, Price, City,CustomerId, ManagerId, MakerId, " +
+                                                              "MediatorId, Created, LastUpdated")] ProjectViewModel projectViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -64,8 +106,12 @@ namespace Presentation.Controllers
 
         // GET: Projects/Update/5
         public async Task<IActionResult> Update(int? id)
+        
         {
-            var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
+            ViewBag.ProjectId = id;
+            ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            var item = _mapperToProjectView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
             if (item == null)
             {
@@ -77,13 +123,15 @@ namespace Presentation.Controllers
         //POST: Projects/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("ProjectId, UserId, OrderValue, OrderMonth, OrderYear, CustomerId, OrderName, Price, City")] ProjectViewModel projectViewModel)
+        public async Task<IActionResult> Update(int? id, [Bind("ProjectId, UserId, BranchId, OrderValue, OrderMonth, OrderYear, " +
+                                                               "OrderName, Price, City,CustomerId, ManagerId, MakerId, " +
+                                                               "MediatorId, Created, LastUpdated")] ProjectViewModel projectViewModel)
         {
             if (id != projectViewModel.ProjectId)
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
                 await _serviceProject.UpdateAsync(_mapperToDTO.Map<ProjectDTO>(projectViewModel));
@@ -96,7 +144,7 @@ namespace Presentation.Controllers
         // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            var item = _mapperToView.Map<ProjectViewModel>(await _serviceProject.FindAll()
+            var item = _mapperToProjectView.Map<ProjectViewModel>(await _serviceProject.FindAll()
                 .FirstOrDefaultAsync(x => x.ProjectId == id));
             if (id == null || _serviceProject == null || item == null)
             {

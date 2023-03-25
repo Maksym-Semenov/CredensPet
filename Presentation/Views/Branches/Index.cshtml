@@ -1,11 +1,10 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IQueryable<Presentation.ViewModels.BranchViewModel>
+﻿@model IQueryable<Presentation.ViewModels.BranchViewModel>
 
 @{
-    ViewData["Title"] = "All branches";
+    ViewData["Title"] = "List of branches";
 }
 
-<h1>All branches</h1>
+<h1>List of branches</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,20 +12,21 @@
 <table class="table">
     <thead>
         <tr>
-           
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().BranchName)
             </th>
             <th>
-                @(Html.DisplayNameFor(model => model.FirstOrDefault().BranchName))
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Phone)
             </th>
             <th>
-                @(Html.DisplayNameFor(model => model.FirstOrDefault().Phone))
+                @Html.DisplayNameFor(model => model.FirstOrDefault().IsOpen)
             </th>
             <th>
-                @(Html.DisplayNameFor(model => model.FirstOrDefault().IsOpen))
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
             </th>
-           
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -34,10 +34,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BranchId)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.BranchName)
+                @Html.DisplayFor(modelItem => item.BranchName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)
@@ -46,9 +43,16 @@
                 @Html.DisplayFor(modelItem => item.IsOpen)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdated)
+            </td>
+            <td>
                 <a asp-action="Update" asp-route-id="@item.BranchId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.BranchId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BranchId">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.BranchId">Delete</a>
+                    <a asp-controller="Users" asp-action="CreateFromBranch" asp-route-id="@item.BranchId">Add new user</a>
             </td>
         </tr>
 }

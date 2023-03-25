@@ -13,21 +13,26 @@ namespace Presentation.Controllers
     {
         private readonly IService<UserDTO> _serviceUser;
         private readonly IService<BranchDTO> _serviceBranch;
-        private readonly IMapper _mapperToView;
+        private readonly IMapper _mapperToUserView;
+        private readonly IMapper _mapperToBranchView;
         private readonly IMapper _mapperToDTO;
 
-        public UsersController(IService<UserDTO> serviceUser, IService<BranchDTO> serviceBranch, IService<ContactUserDTO> serviceContactUser)
+        public UsersController(IService<UserDTO> serviceUser, 
+                               IService<BranchDTO> serviceBranch)
         {
             _serviceUser = serviceUser;
             _serviceBranch = serviceBranch;
-            _mapperToView = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
+            _mapperToUserView = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
+            _mapperToBranchView = GenericMapperConfiguration<BranchDTO, BranchViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<UserViewModel, UserDTO>.MapTo();
         }
 
         // GET: Users
         public IActionResult Index()
         {
-            var item = _mapperToView.ProjectTo<UserViewModel>(_serviceUser.FindAll().AsNoTracking());
+            var item = new UserBranchViewModel();
+            item.ListUserProperties = _mapperToUserView.ProjectTo<UserViewModel>(_serviceUser.FindAll().AsNoTracking());
+            item.ListBranchProperties = _mapperToBranchView.ProjectTo<BranchViewModel>(_serviceBranch.FindAll().AsNoTracking());
               return item != null ? 
                           View( item) :
                           Problem("Entity set 'CredensContext.Users'  is null.");
@@ -36,40 +41,65 @@ namespace Presentation.Controllers
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var item =  _mapperToView.Map<UserViewModel>(await _serviceUser.FindAll()
+            ViewBag.BranceshNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            var item =  _mapperToUserView.Map<UserViewModel>(await _serviceUser.FindAll()
                 .FirstOrDefaultAsync(x => x.UserId  == id));
-
             return View(item);
         }
 
         // GET: Users/Create
         public IActionResult Create()
         {
-            ViewBag.BranchId = new SelectList(_serviceBranch.FindAll().Select(x => x.BranchId));
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
             return View();
         }
 
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BranchName, BranchId, FirstName, MiddleName, LastName, UserRoleId, RoleId, UserCount, ManagerId, CustomerId, MediatorId, MakerId")] UserViewModel userViewModel)
+        public async Task<IActionResult> Create([Bind("BranchName, BranchId, FirstName, MiddleName, LastName, " +
+                                                                  "UserRoleId, RoleId, UserCount, ManagerId, CustomerId, " +
+                                                                  "MediatorId, MakerId, Created, LastUpdated")] UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
-                
                 await _serviceUser.AddAsync(_mapperToDTO.Map<UserDTO>(userViewModel));
                 await _serviceUser.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Users/Update/5
-        public async Task<IActionResult> Update(int? userId, int branchId )
+        // GET: Users/CreateFromBranch
+        public IActionResult CreateFromBranch(int id)
         {
-            ViewBag.BranchId = new SelectList(_serviceBranch.FindAll().Select(x => x.BranchId));
+            ViewBag.BranchId = id;
 
-            var item = _mapperToView.Map<UserViewModel>(_serviceUser.FindAll()
-                .Where(x => x.UserId == userId).FirstOrDefault(y => y.BranchId == branchId));
+            return View();
+        }
+
+        // POST: Users/CreateFromBranch
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFromBranch( [Bind("BranchId, FirstName, MiddleName, LastName, " +
+                                                                            "UserRoleId, RoleId, UserCount, ManagerId, CustomerId, " +
+                                                                            "MediatorId, MakerId, Created, LastUpdated")] UserViewModel userViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await _serviceUser.AddAsync(_mapperToDTO.Map<UserDTO>(userViewModel));
+                await _serviceUser.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        // GET: Users/Update/5
+        public async Task<IActionResult> Update(int? id)
+        {
+            ViewBag.UserId = id;
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+
+            var item = _mapperToUserView.Map<UserViewModel>( await _serviceUser.FindAll()
+                .FirstOrDefaultAsync(x => x.UserId == id));
+
             if (item == null)
             {
                 return NotFound();
@@ -80,9 +110,11 @@ namespace Presentation.Controllers
         // POST: Users/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? userId, int branchId,[Bind("UserId, BranchId, FirstName, MiddleName, LastName, UserRoleId, RoleId, UserCount,ManagerId, CustomerId, MediatorId, MakerId")] UserViewModel userViewModel)
+        public async Task<IActionResult> Update(int id,[Bind("UserId, BranchId, FirstName, MiddleName, LastName, " +
+                                                                           "UserRoleId, RoleId, UserCount,ManagerId, CustomerId, " +
+                                                                           "MediatorId, MakerId, Created, LastUpdated")] UserViewModel userViewModel)
         {
-            if (userId != userViewModel.UserId)
+            if (id != userViewModel.UserId)
             {
                 return NotFound();
             }
@@ -99,7 +131,7 @@ namespace Presentation.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            var item = _mapperToView.Map<UserViewModel>(await _serviceUser.FindAll()
+            var item = _mapperToUserView.Map<UserViewModel>(await _serviceUser.FindAll()
                 .FirstOrDefaultAsync(x => x.UserId == id));
             if (id == null || _serviceUser == null || item == null)
             {

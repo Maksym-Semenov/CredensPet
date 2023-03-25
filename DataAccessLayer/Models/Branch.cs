@@ -13,6 +13,10 @@ public partial class Branch
 
     public bool? IsOpen { get; set; }
 
+    public DateTime? Created { get; set; } = DateTime.Now;
+
+    public DateTime? LastUpdated { get; set; } = DateTime.Now;
+
 
     public virtual ICollection<User> Users { get; } = new List<User>();
 }

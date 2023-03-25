@@ -12,19 +12,17 @@ namespace Presentation.Controllers
     public class ContactUsersController : Controller
     {
         private readonly IService<ContactUserDTO> _serviceContactUser;
-        private readonly IService<UserDTO> _serviceUser;
         private readonly IMapper _mapperToView;
         private readonly IMapper _mapperToDTO;
 
-        public ContactUsersController(IService<ContactUserDTO> serviceContactUser, IService<UserDTO> serviceUser)
+        public ContactUsersController(IService<ContactUserDTO> serviceContactUser)
         {
             _serviceContactUser = serviceContactUser;
-            _serviceUser = serviceUser;
             _mapperToView = GenericMapperConfiguration<ContactUserDTO, ContactUserViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<ContactUserViewModel, ContactUserDTO>.MapTo();
         }
 
-        // GET: Users
+        // GET: ContactUsers
         public IActionResult Index()
         {
             var item = _mapperToView.ProjectTo<ContactUserViewModel>(_serviceContactUser.FindAll().AsNoTracking());
@@ -33,7 +31,7 @@ namespace Presentation.Controllers
                         Problem("Entity set 'CredensContext.Users'  is null.");
         }
 
-        // GET: Users/Details/5
+        // GET: ContactUsers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             var item = _mapperToView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
@@ -41,17 +39,21 @@ namespace Presentation.Controllers
             return View(item);
         }
 
-        // GET: Users/Create
-        public async Task<IActionResult> Create(int? id)
+        // GET: ContactUsers/CreateFromUser
+
+        public async Task<IActionResult> CreateFromUser(int? id)
         {
-            ViewBag.UserId = new SelectList(_serviceUser.FindAll().Select(x => x.UserId));
+            ViewBag.UserId = id;
             return View();
         }
 
-        // POST: Users/Create
+        // POST: ContactUsers/CreateFromUser
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactUserViewModel contactUserViewModel)
+        public async Task<IActionResult> CreateFromUser([Bind("UserId, PhoneMain, Phone2, Email, " +
+                                                                          "Country, City, ResidentialComplex, " +
+                                                                          "TypeStreet, Street, BuildingNumber, Litera, " +
+                                                                          "BuildingPart, Apt, Floor, Created, LastUpdated")] ContactUserViewModel contactUserViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +63,7 @@ namespace Presentation.Controllers
             return RedirectToAction("Index", "Users");
         }
 
-        // GET: Users/Update/5
+        // GET: ContactUsers/Update/5
         public async Task<IActionResult> Update(int? id)
         {
             var item = _mapperToView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
@@ -73,10 +75,13 @@ namespace Presentation.Controllers
             return View(item);
         }
 
-        // POST: Users/Update/5
+        // POST: ContactUsers/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("ContactUserId, UserId, Country, City,ResidentialComplex,TypeStreet,Street,BuildingNumber,Lit,BuildingPart,Apt,Floor")] ContactUserViewModel contactUserViewModel)
+        public async Task<IActionResult> Update(int? id, [Bind("UserId, ContactUserId, PhoneMain, Phone2, Email, " +
+                                                               "Country, City, ResidentialComplex, " +
+                                                               "TypeStreet, Street, BuildingNumber, Litera, " +
+                                                               "BuildingPart, Apt, Floor, Created, LastUpdated")] ContactUserViewModel contactUserViewModel)
         {
             if (id != contactUserViewModel.ContactUserId)
             {
@@ -92,7 +97,7 @@ namespace Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Users/Delete/5
+        // GET: ContactUsers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             var item = _mapperToView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
@@ -105,7 +110,7 @@ namespace Presentation.Controllers
             return View(item);
         }
 
-        // POST: Users/Delete/5
+        // POST: ContactUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)

@@ -1,18 +1,19 @@
-﻿@model Presentation.ViewModels.ContactProjectViewModel
+﻿@model Presentation.ViewModels.AddressProjectViewModel
 
 @{
-    ViewData["Title"] = "Create new project's contact";
+    ViewData["Title"] = "Update project's contact";
 }
 
-<h1>Create new project's contact</h1>
+<h1>Update project's contact</h1>
 
 <h4>ContactProject</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProjectId"/>
+            <input type="hidden" asp-for="AddressProjectId" />
             <div class="form-group">
                 <label asp-for="Country" class="control-label"></label>
                 <input asp-for="Country" class="form-control" />
@@ -63,8 +64,9 @@
                 <input asp-for="Floor" class="form-control" />
                 <span asp-validation-for="Floor" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="ProjectId"/>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿namespace Presentation.ViewModels;
 
-namespace Presentation.ViewModels;
-
-public class ContactProjectViewModel : ViewComponent
+public class AddressProjectViewModel
 {
-    public int ContactProjectId { get; set; }
+    public int AddressProjectId { get; set; }
 
     public string? Country { get; set; }
 
@@ -26,9 +24,11 @@ public class ContactProjectViewModel : ViewComponent
 
     public string? Floor { get; set; }
 
+    public DateTime? Created { get; set; } = DateTime.Now;
+
+    public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
     public int ProjectId { get; set; }
-
 
 }

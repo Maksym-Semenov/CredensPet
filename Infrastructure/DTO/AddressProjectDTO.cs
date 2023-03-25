@@ -1,8 +1,8 @@
 ﻿namespace CredensPet.Infrastructure.DTO;
 
-public class ContactProjectDTO
+public class AddressProjectDTO
 {
-    public int ContactProjectId { get; set; }
+    public int AddressProjectId { get; set; }
 
     public string? Country { get; set; }
 
@@ -24,6 +24,9 @@ public class ContactProjectDTO
 
     public string? Floor { get; set; }
 
+    public DateTime? Created { get; set; } = DateTime.Now;
+
+    public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
     public int ProjectId { get; set; }

@@ -1,15 +1,33 @@
 ﻿@model Presentation.ViewModels.ContactUserViewModel
 
 @{
-    ViewData["Title"] = "User's contact details";
+    ViewData["Title"] = "All details";
 }
 
-<h1>User's contact details</h1>
+<h1>All details</h1>
 
 <div>
     <h4>ContactUser</h4>
     <hr />
     <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneMain)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneMain)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Phone2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Country)
         </dt>
@@ -69,6 +87,18 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Floor)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastUpdated)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastUpdated)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.UserId)

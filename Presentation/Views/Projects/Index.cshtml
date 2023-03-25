@@ -1,10 +1,10 @@
-﻿@model IQueryable<Presentation.ViewModels.ProjectViewModel>
+﻿@model Presentation.ViewModels.ProjectUserBranchViewModel
 
 @{
-    ViewData["Title"] = "All projects";
+    ViewData["Title"] = "List of projects";
 }
 
-<h1>All projects</h1>
+<h1>List of projects</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,49 +13,49 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderValue)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().OrderValue)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderMonth)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().OrderMonth)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderYear)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().OrderYear)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderName)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().OrderName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().CustomerId)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().CustomerId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ManagerId)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().ManagerId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().MakerId)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().MakerId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().BranchId)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().MediatorId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().MediatorId)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().Created)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().LastUpdated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
+                @Html.DisplayNameFor(model => model.ListBranchProperties.FirstOrDefault().BranchName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().UserId)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().FirstName)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.ListProjectProperties) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.OrderValue)
@@ -82,9 +82,6 @@
                 @Html.DisplayFor(modelItem => item.MakerId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BranchId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.MediatorId)
             </td>
             <td>
@@ -94,13 +91,26 @@
                 @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @{
+                    string? branchName = @Model.ListBranchProperties
+                        .Where(b => b.BranchId == item.BranchId)
+                        .FirstOrDefault().BranchName;
+                }
+                @Html.DisplayFor(modelItem => branchName)
+            </td>
+            <td>
+                @{
+                    string? userName = @Model.ListUserProperties
+                        .Where(u => u.UserId == item.UserId)
+                        .FirstOrDefault().FirstName;
+                }
+                @Html.DisplayFor(modelItem => userName)
             </td>
             <td>
                 <a asp-action="Update" asp-route-id="@item.ProjectId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a> |
-                <a asp-controller="ContactProjects" asp-action="Create" asp-route-id="@item.ProjectId">Add contact</a> 
+                <a asp-controller="AddressProjects" asp-action="CreateFromProject" asp-route-id="@item.ProjectId">Add address</a> 
             </td>
         </tr>
 }
