@@ -57,31 +57,61 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ListUserProperties) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @{
-                    string? branchName = @Model.ListBranchProperties
+        @foreach (var item in Model.ListUserProperties)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MiddleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserRoleId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManagerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MediatorId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MakerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastUpdated)
+                </td>
+                <td>
+                    @{
+                        string? branchName = @Model.ListBranchProperties
                         .Where(x => x.BranchId == item.BranchId)
                         .FirstOrDefault()?.BranchName;
-                }
-                @Html.DisplayFor(modelItem => branchName)
-            </td>
-           
-            <td>
-                <a asp-action="Update" asp-route-id="@item.UserId">Edit</a> |
+                    }
+                    @Html.DisplayFor(modelItem => branchName)
+                </td>
+                <td>
+                    <a asp-action="Update" asp-route-id="@item.UserId">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a> |
                     <a asp-controller="Projects" asp-action="CreateFromUser" asp-route-userid="@item.UserId" asp-route-branchid="@item.BranchId">Create project</a> |
                     <a asp-controller="ContactUsers" asp-action="CreateFromUser" asp-route-id="@item.UserId">Create contact</a>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
