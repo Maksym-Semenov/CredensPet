@@ -1,58 +1,61 @@
-﻿@model IQueryable<Presentation.ViewModels.AddressProjectViewModel>
+﻿@model Presentation.ViewModels.AddressProjectWithProjectViewModel
 
 @{
-    ViewData["Title"] = "All addresses";
+    ViewData["Title"] = "Index";
 }
 
-<h1>All addresses</h1>
+<h1>Index</h1>
 
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().Country)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().City)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ResidentialComplex)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().ResidentialComplex)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().TypeStreet)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().TypeStreet)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Street)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().Street)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().BuildingNumber)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().BuildingNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Litera)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().Litera)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().BuildingPart)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().BuildingPart)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Apt)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().Apt)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Floor)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().Floor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().Created)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
+                @Html.DisplayNameFor(model => model.ListAddressProjectProperties.FirstOrDefault().LastUpdated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ProjectId)
+                @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().OrderName)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.ListAddressProjectProperties) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Country)
@@ -91,7 +94,12 @@
                 @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProjectId)
+                @{
+                    string orderName = @Model.ListProjectProperties
+                        .Where(p => p.ProjectId == item.ProjectId)
+                        .FirstOrDefault().OrderName;
+                }
+                @Html.DisplayFor(modelItem => orderName)
             </td>
             <td>
                 <a asp-action="Update" asp-route-id="@item.AddressProjectId">Edit</a> |

@@ -12,20 +12,30 @@ namespace Presentation.Controllers
     public class ContactUsersController : Controller
     {
         private readonly IService<ContactUserDTO> _serviceContactUser;
-        private readonly IMapper _mapperToView;
+        private readonly IService<UserDTO> _serviceUser;
+        private readonly IMapper _mapperToContactUserView;
+        private readonly IMapper _mapperToUserView;
         private readonly IMapper _mapperToDTO;
 
-        public ContactUsersController(IService<ContactUserDTO> serviceContactUser)
+        public ContactUsersController(IService<ContactUserDTO> serviceContactUser,
+                                      IService<UserDTO> serviceUser)
         {
             _serviceContactUser = serviceContactUser;
-            _mapperToView = GenericMapperConfiguration<ContactUserDTO, ContactUserViewModel>.MapTo();
+            _serviceUser = serviceUser;
+            _mapperToContactUserView = GenericMapperConfiguration<ContactUserDTO, ContactUserViewModel>.MapTo();
+            _mapperToUserView = GenericMapperConfiguration<UserDTO, UserViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<ContactUserViewModel, ContactUserDTO>.MapTo();
         }
 
         // GET: ContactUsers
         public IActionResult Index()
         {
-            var item = _mapperToView.ProjectTo<ContactUserViewModel>(_serviceContactUser.FindAll().AsNoTracking());
+            var item = new ContactUserWithUserViewModel();
+            item.ListContactUserProperties = _mapperToContactUserView.ProjectTo<ContactUserViewModel>
+                (_serviceContactUser.FindAll().AsNoTracking());
+            item.ListUserProperties = _mapperToUserView.ProjectTo<UserViewModel>
+                (_serviceUser.FindAll().AsNoTracking());
+                
             return item != null ?
                         View(item) :
                         Problem("Entity set 'CredensContext.Users'  is null.");
@@ -34,7 +44,7 @@ namespace Presentation.Controllers
         // GET: ContactUsers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var item = _mapperToView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
+            var item = _mapperToContactUserView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactUserId == id));
             return View(item);
         }
@@ -66,7 +76,7 @@ namespace Presentation.Controllers
         // GET: ContactUsers/Update/5
         public async Task<IActionResult> Update(int? id)
         {
-            var item = _mapperToView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
+            var item = _mapperToContactUserView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactUserId == id));
             if (item == null)
             {
@@ -100,7 +110,7 @@ namespace Presentation.Controllers
         // GET: ContactUsers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            var item = _mapperToView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
+            var item = _mapperToContactUserView.Map<ContactUserViewModel>(await _serviceContactUser.FindAll()
                 .FirstOrDefaultAsync(x => x.ContactUserId == id));
             if (id == null || _serviceContactUser == null || item == null)
             {

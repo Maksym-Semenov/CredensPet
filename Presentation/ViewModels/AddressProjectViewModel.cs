@@ -1,4 +1,6 @@
-﻿namespace Presentation.ViewModels;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Presentation.ViewModels;
 
 public class AddressProjectViewModel
 {
@@ -30,5 +32,6 @@ public class AddressProjectViewModel
 
 
     public int ProjectId { get; set; }
+
 
 }

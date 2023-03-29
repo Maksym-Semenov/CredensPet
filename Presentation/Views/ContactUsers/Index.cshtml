@@ -1,4 +1,4 @@
-﻿@model IQueryable<Presentation.ViewModels.ContactUserViewModel>
+﻿@model Presentation.ViewModels.ContactUserWithUserViewModel
 
 @{
     ViewData["Title"] = "List of contacts";
@@ -12,58 +12,58 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().PhoneMain)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().PhoneMain)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Phone2)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().Phone2)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().Country)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().City)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ResidentialComplex)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().ResidentialComplex)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().TypeStreet)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().TypeStreet)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Street)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().Street)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().BuildingNumber)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().BuildingNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Litera)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().Litera)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().BuildingPart)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().BuildingPart)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Apt)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().Apt)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Floor)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().Floor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().Created)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().LastUpdated)
+                @Html.DisplayNameFor(model => model.ListContactUserProperties.FirstOrDefault().LastUpdated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().UserId)
+                @Html.DisplayNameFor(model => model.ListUserProperties.FirstOrDefault().FirstName)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.ListContactUserProperties) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneMain)
@@ -111,6 +111,11 @@
                 @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>
             <td>
+                @{
+                    string userName = @Model.ListUserProperties
+                        .Where(n => n.UserId == item.UserId)
+                        .FirstOrDefault().FirstName;
+                }
                 @Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>

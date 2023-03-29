@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Immutable;
+using AutoMapper;
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -11,21 +12,32 @@ namespace Presentation.Controllers
     public class AddressProjectsController : Controller
     {
         private readonly IService<AddressProjectDTO> _serviceAddressProject;
-        private readonly IMapper _mapperToView;
+        private readonly IService<ProjectDTO> _serviceProject;
+        private readonly IMapper _mapperToAddressView;
+        private readonly IMapper _mapperToProjectView;
         private readonly IMapper _mapperToDTO;
 
-        public AddressProjectsController(IService<AddressProjectDTO> serviceAddressProject)
+        public AddressProjectsController(IService<AddressProjectDTO> serviceAddressProject,
+                                         IService<ProjectDTO> serviceProject)
         {
             _serviceAddressProject = serviceAddressProject;
-            _mapperToView = GenericMapperConfiguration<AddressProjectDTO, AddressProjectViewModel>.MapTo();
+            _serviceProject = serviceProject;
+            _mapperToAddressView = GenericMapperConfiguration<AddressProjectDTO, AddressProjectViewModel>.MapTo();
+            _mapperToProjectView = GenericMapperConfiguration<ProjectDTO, ProjectViewModel>.MapTo();
             _mapperToDTO = GenericMapperConfiguration<AddressProjectViewModel, AddressProjectDTO>.MapTo();
         }
 
         // GET: ContactProjects
         public IActionResult Index()
         {
-            var item = _mapperToView.ProjectTo<AddressProjectViewModel>(_serviceAddressProject.FindAll().AsNoTracking());
-              return item != null ? 
+            var item = new AddressProjectWithProjectViewModel();
+
+            item.ListProjectProperties = _mapperToProjectView.ProjectTo<ProjectViewModel>
+                (_serviceProject.FindAll().AsNoTracking());
+            item.ListAddressProjectProperties = _mapperToAddressView.ProjectTo<AddressProjectViewModel>
+                (_serviceAddressProject.FindAll().AsNoTracking());
+            
+            return item != null ? 
                           View(item) :
                           Problem("Entity set 'CredensTestContext.Contacts'  is null.");
         }
@@ -33,7 +45,7 @@ namespace Presentation.Controllers
         // GET: AddressProjects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var item = _mapperToView.Map<AddressProjectViewModel>(await _serviceAddressProject.FindAll()
+            var item = _mapperToAddressView.Map<AddressProjectViewModel>(await _serviceAddressProject.FindAll()
                 .FirstOrDefaultAsync(x => x.AddressProjectId == id));
             return View(item);
         }
@@ -64,7 +76,7 @@ namespace Presentation.Controllers
         // GET: AddressProjects/Update/5
         public async Task<IActionResult> Update(int? id)
         {
-            var item = _mapperToView.Map<AddressProjectViewModel>(await _serviceAddressProject.FindAll()
+            var item = _mapperToAddressView.Map<AddressProjectViewModel>(await _serviceAddressProject.FindAll()
                 .FirstOrDefaultAsync(x => x.AddressProjectId == id));
             if (item == null)
             {
@@ -97,7 +109,7 @@ namespace Presentation.Controllers
         // GET: AddressProjects/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            var item = _mapperToView.Map<AddressProjectViewModel>(await _serviceAddressProject.FindAll()
+            var item = _mapperToAddressView.Map<AddressProjectViewModel>(await _serviceAddressProject.FindAll()
                 .FirstOrDefaultAsync(x => x.AddressProjectId == id));
             if (id == null || _serviceAddressProject == null || item == null)
             {
