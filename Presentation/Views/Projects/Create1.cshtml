@@ -1,0 +1,167 @@
+﻿@model CredensPet.Infrastructure.DTO.ProjectDTO
+
+@{
+    ViewData["Title"] = "Create1";
+}
+
+<h1>Create1</h1>
+
+<h4>Project</h4>
+<hr />
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        $('#ProjectId').change(function()
+        {
+            var url = '@Url.Content("~/")' + "Project/GetUser";
+            var ddlsource = "#ProjectId";
+            $.getJSON(url,{UserId: $(ddlsource).val() }, function (data) 
+            {
+                var items = '';
+                $("UserId").empty();
+                $.each(data, function (i,user)
+                {
+                    items += "<option value='" + user.value + "'>" + user.text + "</option";
+                });
+                $('#UserId').html(items);
+           });
+        });
+    }
+</script>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create1">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BranchId" class="control-label"></label>
+                <select asp-for="BranchId" class="form-control" 
+                        asp-items="@(new SelectList(ViewBag.BranchesName, "BranchId", "BranchName"))"> </select>
+                <span asp-validation-for="OrderValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label ="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.UsersName, "UserId", "FirstName"))"> </select>
+                <span asp-validation-for="OrderValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderValue" class="control-label"></label>
+                <input asp-for="OrderValue" class="form-control" />
+                <span asp-validation-for="OrderValue" cls="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderMonth" class="control-label"></label>
+                <input asp-for="OrderMonth" class="form-control" />
+                <span asp-validation-for="OrderMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderYear" class="control-label"></label>
+                <input asp-for="OrderYear" class="form-control" />
+                <span asp-validation-for="OrderYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderName" class="control-label"></label>
+                <input asp-for="OrderName" class="form-control" />
+                <span asp-validation-for="OrderName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <label asp-for="CustomerId" class="control-label"></label>
+                <input asp-for="CustomerId" class="form-control" />
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManagerId" class="control-label"></label>
+                <input asp-for="ManagerId" class="form-control" />
+                <span asp-validation-for="ManagerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MakerId" class="control-label"></label>
+                <input asp-for="MakerId" class="form-control" />
+                <span asp-validation-for="MakerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BranchId" class="control-label"></label>
+                <input asp-for="BranchId" class="form-control" />
+                <span asp-validation-for="BranchId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MediatorId" class="control-label"></label>
+                <input asp-for="MediatorId" class="form-control" />
+              bvfgm    <span asp-validation-for="MediatorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" class="form-control" />
+                <span asp-validation-for="Created" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastUpdated" class="control-label"></label>
+                <input asp-for="LastUpdated" class="form-control" />
+                <span asp-validation-for="LastUpdated" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    \
+    }
+
+
+
+    lllllllkj
+                +--

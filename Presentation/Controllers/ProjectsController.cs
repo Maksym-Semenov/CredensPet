@@ -54,12 +54,43 @@ namespace Presentation.Controllers
             return View(item);
         }
 
+        public JsonResult GetUser()
+        {
+            List<UserDTO> users = new List<UserDTO>();
+            users = _serviceUser.FindAll().ToList();
+            users.Insert(0, new UserDTO() { FirstName = "Select", UserId = 0 });
+            return Json(new SelectList(users, "UserId", "FirstName"));
+        }
+
+        public IActionResult Create1()
+        {
+            List<BranchDTO> branches = new List<BranchDTO>();
+            branches = _serviceBranch.FindAll().ToList();
+            branches.Insert(0, new BranchDTO() { BranchId = 0, BranchName = "Select" });
+            ViewBag.BranchesName = branches;
+
+            List<UserDTO> users = new List<UserDTO>();
+            users = _serviceUser.FindAll().ToList();
+            users.Insert(0, new UserDTO() { FirstName = "Select", UserId = 0 });
+            ViewBag.UsersName = users;
+
+            return View();
+        }
+
         // GET: Projects/Create
         public IActionResult Create()
         {
-            ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
-            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
-            var a = ViewBag.Branch;
+
+            //ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
+            //ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName);
+            //return View();
+
+            List<BranchDTO> branches = new List<BranchDTO>();
+            branches =  _serviceBranch.FindAll().ToList();
+            branches.Insert(0, new BranchDTO() { BranchId = 0, BranchName = "Select" });
+            ViewBag.BranchesName = branches;
+
+        
 
             return View();
         }
