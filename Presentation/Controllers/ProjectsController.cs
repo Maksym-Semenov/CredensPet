@@ -6,9 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using Presentation.Profiles;
 using Presentation.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DataAccessLayer.Models;
+using System.Data;
+using System.Diagnostics;
+using System.Collections;
 
 namespace Presentation.Controllers
 {
+    //https://www.youtube.com/watch?v=y_lJf8SnZNo
     public class ProjectsController : Controller
     {
         private readonly IService<ProjectDTO> _serviceProject;
@@ -37,7 +42,7 @@ namespace Presentation.Controllers
         public IActionResult Index()
         {
             var item = new ProjectUserBranchViewModel();
-            item.ListProjectProperties = _mapperToProjectView.ProjectTo<ProjectViewModel>(_serviceProject.FindAll());
+            item.ListProjectProperties = _mapperToProjectView.ProjectTo<ProjectViewModel>(_serviceProject.FindAll().OrderBy(x => x.OrderValue));
             item.ListUserProperties = _mapperToUserView.ProjectTo<UserViewModel>(_serviceUser.FindAll());
             item.ListBranchProperties = _mapperToBranchView.ProjectTo<BranchViewModel>(_serviceBranch.FindAll());
             return item != null ? 
@@ -53,62 +58,96 @@ namespace Presentation.Controllers
 
             return View(item);
         }
-
-        public JsonResult GetUser()
+       
+        [HttpGet]
+        public JsonResult GetUsersByBranch(int branchId)
         {
-            List<UserDTO> users = new List<UserDTO>();
-            users = _serviceUser.FindAll().ToList();
-            users.Insert(0, new UserDTO() { FirstName = "Select", UserId = 0 });
-            return Json(new SelectList(users, "UserId", "FirstName"));
+            List<SelectListItem> users = GetUsersById(branchId);
+            return Json(users);
         }
 
-        public IActionResult Create1()
+        public List<SelectListItem> GetUsersById(int BranchId = 1)
         {
-            List<BranchDTO> branches = new List<BranchDTO>();
-            branches = _serviceBranch.FindAll().ToList();
-            branches.Insert(0, new BranchDTO() { BranchId = 0, BranchName = "Select" });
-            ViewBag.BranchesName = branches;
-
-            List<UserDTO> users = new List<UserDTO>();
-            users = _serviceUser.FindAll().ToList();
-            users.Insert(0, new UserDTO() { FirstName = "Select", UserId = 0 });
-            ViewBag.UsersName = users;
-
-            return View();
-        }
-
-        // GET: Projects/Create
-        public IActionResult Create()
-        {
-
-            //ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
-            //ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName);
-            //return View();
-
-            List<BranchDTO> branches = new List<BranchDTO>();
-            branches =  _serviceBranch.FindAll().ToList();
-            branches.Insert(0, new BranchDTO() { BranchId = 0, BranchName = "Select" });
-            ViewBag.BranchesName = branches;
-
-        
-
-            return View();
-        }
-
-        //POST: Projects/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId, BranchId, OrderValue, OrderMonth, OrderYear" +
-                                                      ", OrderName, Price, City,CustomerId, ManagerId, MakerId" +
-                                                      ", MediatorId, Created, LastUpdated")] ProjectViewModel projectViewModel)
-        {
-            if (ModelState.IsValid)
+            List<SelectListItem> lstUsers = _serviceUser.FindAll().Where(x => x.BranchId == BranchId)
+                .Select(n =>
+                new SelectListItem()
+                {
+                    Value = n.UserId.ToString(),
+                    Text = n.FirstName
+                }).ToList();
+            
+            var defItem = new SelectListItem()
             {
-                await _serviceProject.AddAsync(_mapperToDTO.Map<ProjectDTO>(projectViewModel));
-                await _serviceProject.SaveChangesAsync();
-            }
+                Value = "",
+                Text = "----Select User----"
+            };
+
+            lstUsers.Insert(0, defItem);
+
+            return lstUsers;
+        }
+        public List<SelectListItem> GetUsers()
+        {
+            List<SelectListItem> lstUsers = _serviceUser.FindAll()
+                .Select(n =>
+                new SelectListItem()
+                {
+                    Value = n.UserId.ToString(),
+                    Text = n.FirstName
+                }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "----Select User----"
+            };
+
+            lstUsers.Insert(0, defItem);
+
+            return lstUsers;
+        }
+
+        public List<SelectListItem> GetBranches()
+        {
+            List<SelectListItem> lstBranches = _serviceBranch.FindAll()
+                .Select(n =>
+                new SelectListItem()
+                {
+                    Value = n.BranchId.ToString(),
+                    Text = n.BranchName
+                }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "----Select Branch----"
+            };
+
+            lstBranches.Insert(0, defItem);
+
+            return lstBranches;
+        }
+
+    
+        [HttpGet]
+        public IActionResult Create ()
+        {
+            ProjectViewModel projectViewModel = new ProjectViewModel();
+            ViewBag.Branches = GetBranches();
+            ViewBag.Users = GetUsers();
+            return View(projectViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Create(ProjectViewModel projectViewModel)
+        {
+            _serviceProject.AddAsync(_mapperToDTO.Map<ProjectDTO>(projectViewModel));
+            _serviceProject.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
+
+        
 
         // GET: Projects/CreateFromUser
         public IActionResult CreateFromUser(int userId, int branchId)
