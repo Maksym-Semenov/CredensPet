@@ -12,6 +12,7 @@
 <table class="table">
     <thead>
         <tr>
+          
             <th>
                 @Html.DisplayNameFor(model => model.ListProjectProperties.FirstOrDefault().OrderValue)
             </th>
@@ -57,6 +58,7 @@
     <tbody>
 @foreach (var item in Model.ListProjectProperties) {
         <tr>
+               
             <td>
                 @Html.DisplayFor(modelItem => item.OrderValue)
             </td>

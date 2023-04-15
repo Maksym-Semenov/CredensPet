@@ -1,9 +1,9 @@
-﻿namespace Presentation.ViewModels;
-
-public class ProjectUserBranchViewModel
+﻿namespace Presentation.ViewModels
 {
-    public IQueryable<UserViewModel>? ListUserProperties { get; set; }
-    public IQueryable<BranchViewModel>? ListBranchProperties { get; set; }
-    public IQueryable<ProjectViewModel>? ListProjectProperties { get; set; }
-
+    public class ProjectUserBranchViewModel
+    {
+        public IEnumerable<ProjectViewModel> ListProjectProperties;
+        public IEnumerable<UserViewModel> ListUserProperties;
+        public IEnumerable<BranchViewModel> ListBranchProperties;
+    }
 }
