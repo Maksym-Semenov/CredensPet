@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="CreateFromProject">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="ProjectId" value="@ViewBag.ProjectId"></input>
+                <input type="hidden" asp-for="ProjectId" value="ViewBag.ProjectId"></input>
             <div class="form-group">
                 <label asp-for="Country" class="control-label"></label>
                 <input asp-for="Country" class="form-control" />

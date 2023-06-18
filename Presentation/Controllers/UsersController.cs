@@ -56,7 +56,6 @@ namespace Presentation.Controllers
         public IActionResult Create()
         {
             ViewBag.BranchName = new SelectList(_serviceBranch.FindAll(), "Id", "BranchName");
-            //ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "Id", "BranchName");
             return View();
         }
 
