@@ -1,11 +1,12 @@
 ﻿using DataAccessLayer.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace DataAccessLayer.EF;
 
-public partial class CredensContext : IdentityDbContext
+public partial class CredensContext : IdentityDbContext<IdentityUser>
 {
     public CredensContext()
     {
