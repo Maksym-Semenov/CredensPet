@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLayer.Models;
 
 public partial class AddressProject
 {
-    [Key]
-    public int AddressProjectId { get; set; }
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
 
     public string? Country { get; set; }
 
@@ -31,6 +32,6 @@ public partial class AddressProject
 
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
-    public int ProjectId { get; set; }
+    public Guid ProjectId { get; set; }
     public virtual Project Project { get; set; } = null!;
 }

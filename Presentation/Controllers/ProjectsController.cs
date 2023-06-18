@@ -46,10 +46,10 @@ namespace Presentation.Controllers
         }
 
         // GET: Projects/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             var item = _mapperToProjectView.Map<ProjectViewModel>(await _serviceProject.FindAll()
-                .FirstOrDefaultAsync(x => x.ProjectId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
 
             return View(item);
         }
@@ -57,8 +57,8 @@ namespace Presentation.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
-            ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
-            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "Id", "FirstName");
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "Id", "BranchName");
             var a = ViewBag.Branch;
 
             return View();
@@ -105,14 +105,14 @@ namespace Presentation.Controllers
         }
 
         // GET: Projects/Update/5
-        public async Task<IActionResult> Update(int? id)
+        public async Task<IActionResult> Update(Guid? id)
         
         {
             ViewBag.ProjectId = id;
             ViewBag.UsersNames = new SelectList(_serviceUser.FindAll(), "UserId", "FirstName");
             ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
             var item = _mapperToProjectView.Map<ProjectViewModel>(await _serviceProject.FindAll()
-                .FirstOrDefaultAsync(x => x.ProjectId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (item == null)
             {
                 return NotFound();
@@ -123,11 +123,11 @@ namespace Presentation.Controllers
         //POST: Projects/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("ProjectId, UserId, BranchId, OrderValue, OrderMonth, OrderYear, " +
-                                                               "OrderName, Price, City,CustomerId, ManagerId, MakerId, " +
-                                                               "MediatorId, Created, LastUpdated")] ProjectViewModel projectViewModel)
+        public async Task<IActionResult> Update(Guid? id, [Bind("ProjectId, UserId, BranchId, OrderValue, OrderMonth, OrderYear, " +
+                                                                "OrderName, Price, City,CustomerId, ManagerId, MakerId, " +
+                                                                "MediatorId, Created, LastUpdated")] ProjectViewModel projectViewModel)
         {
-            if (id != projectViewModel.ProjectId)
+            if (id != projectViewModel.Id)
             {
                 return NotFound();
             }
@@ -142,10 +142,10 @@ namespace Presentation.Controllers
         }
 
         // GET: Projects/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             var item = _mapperToProjectView.Map<ProjectViewModel>(await _serviceProject.FindAll()
-                .FirstOrDefaultAsync(x => x.ProjectId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (id == null || _serviceProject == null || item == null)
             {
                 return NotFound();
@@ -157,14 +157,14 @@ namespace Presentation.Controllers
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(Guid? id)
         {
             if (_serviceProject == null)
             {
                 return Problem("Entity set 'CredensTestContext.Projects'  is null.");
             }
             var item = _mapperToDTO.Map<ProjectDTO>(await _serviceProject.FindAll()
-                .FirstOrDefaultAsync(x => x.ProjectId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (item != null)
             {
                 await _serviceProject.DeleteAsync(item);

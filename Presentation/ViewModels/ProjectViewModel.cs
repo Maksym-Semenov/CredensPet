@@ -5,7 +5,7 @@ namespace Presentation.ViewModels;
 
 public class ProjectViewModel
 {
-    public int ProjectId { get; set; }
+    public Guid Id { get; set; }
 
     public string? OrderValue { get; set; }
 
@@ -17,21 +17,21 @@ public class ProjectViewModel
 
     public double? Price { get; set; }
 
-    public int? CustomerId { get; set; }
+    public Guid? CustomerId { get; set; }
 
-    public int? ManagerId { get; set; }
+    public Guid? ManagerId { get; set; }
 
-    public int? MakerId { get; set; }
+    public Guid? MakerId { get; set; }
 
-    public int? BranchId { get; set; }
+    public Guid? BranchId { get; set; }
 
-    public int? MediatorId { get; set; }
+    public Guid? MediatorId { get; set; }
 
     public DateTime? Created { get; set; } = DateTime.Now;
 
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 
 }

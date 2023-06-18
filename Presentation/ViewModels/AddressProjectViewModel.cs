@@ -4,7 +4,7 @@ namespace Presentation.ViewModels;
 
 public class AddressProjectViewModel
 {
-    public int AddressProjectId { get; set; }
+    public Guid Id { get; set; }
 
     public string? Country { get; set; }
 
@@ -31,7 +31,7 @@ public class AddressProjectViewModel
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-    public int ProjectId { get; set; }
+    public Guid ProjectId { get; set; }
 
 
 }

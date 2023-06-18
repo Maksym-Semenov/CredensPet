@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CredensPet.Infrastructure;
 using CredensPet.Infrastructure.DTO;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -43,18 +44,19 @@ namespace Presentation.Controllers
         }
 
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
-            ViewBag.BranceshNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            ViewBag.BranceshNames = new SelectList(_serviceBranch.FindAll(), "Id", "BranchName");
             var item =  _mapperToUserView.Map<UserViewModel>(await _serviceUser.FindAll()
-                .FirstOrDefaultAsync(x => x.UserId  == id));
+                .FirstOrDefaultAsync(x => x.Id  == id));
             return View(item);
         }
 
         // GET: Users/Create
         public IActionResult Create()
         {
-            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            ViewBag.BranchName = new SelectList(_serviceBranch.FindAll(), "Id", "BranchName");
+            //ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "Id", "BranchName");
             return View();
         }
 
@@ -64,6 +66,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Create([Bind("BranchName, BranchId, FirstName, MiddleName, LastName, " +
                                                                   "UserRoleId, RoleId, UserCount, ManagerId, CustomerId, " +
                                                                   "MediatorId, MakerId, Created, LastUpdated")] UserViewModel userViewModel)
+        
         {
             if (ModelState.IsValid)
             {
@@ -74,9 +77,9 @@ namespace Presentation.Controllers
         }
 
         // GET: Users/CreateFromBranch
-        public IActionResult CreateFromBranch(int id)
+        public IActionResult CreateFromBranch(Guid id)
         {
-            ViewBag.BranchId = id;
+            ViewData["BranchesNames"] = new SelectList(_serviceBranch.FindAll(), "Id", "BranchName");
 
             return View();
         }
@@ -84,7 +87,7 @@ namespace Presentation.Controllers
         // POST: Users/CreateFromBranch
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateFromBranch( [Bind("BranchId, FirstName, MiddleName, LastName, " +
+        public async Task<IActionResult> CreateFromBranch( [Bind("Id, FirstName, MiddleName, LastName, " +
                                                                             "UserRoleId, RoleId, UserCount, ManagerId, CustomerId, " +
                                                                             "MediatorId, MakerId, Created, LastUpdated")] UserViewModel userViewModel)
         {
@@ -96,13 +99,13 @@ namespace Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
         // GET: Users/Update/5
-        public async Task<IActionResult> Update(int? id)
+        public async Task<IActionResult> Update(Guid? id)
         {
             ViewBag.UserId = id;
-            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "BranchId", "BranchName");
+            ViewBag.BranchesNames = new SelectList(_serviceBranch.FindAll(), "Id", "BranchName");
 
             var item = _mapperToUserView.Map<UserViewModel>( await _serviceUser.FindAll()
-                .FirstOrDefaultAsync(x => x.UserId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
 
             if (item == null)
             {
@@ -114,11 +117,11 @@ namespace Presentation.Controllers
         // POST: Users/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int id,[Bind("UserId, BranchId, FirstName, MiddleName, LastName, " +
-                                                                           "UserRoleId, RoleId, UserCount,ManagerId, CustomerId, " +
-                                                                           "MediatorId, MakerId, Created, LastUpdated")] UserViewModel userViewModel)
+        public async Task<IActionResult> Update(Guid id,[Bind("UserId, Id, FirstName, MiddleName, LastName, " +
+                                                              "UserRoleId, RoleId, UserCount,ManagerId, CustomerId, " +
+                                                              "MediatorId, MakerId, Created, LastUpdated")] UserViewModel userViewModel)
         {
-            if (id != userViewModel.UserId)
+            if (id != userViewModel.Id)
             {
                 return NotFound();
             }
@@ -133,10 +136,10 @@ namespace Presentation.Controllers
         }
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             var item = _mapperToUserView.Map<UserViewModel>(await _serviceUser.FindAll()
-                .FirstOrDefaultAsync(x => x.UserId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (id == null || _serviceUser == null || item == null)
             {
                 return NotFound();
@@ -148,14 +151,14 @@ namespace Presentation.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(Guid? id)
         {
             if (_serviceUser == null)
             {
                 return Problem("Entity set 'CredensTestContext.Projects'  is null.");
             }
             var item = _mapperToDTO.Map<UserDTO>(await _serviceUser.FindAll()
-                .FirstOrDefaultAsync(x => x.UserId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (item != null)
             {
                 await _serviceUser.DeleteAsync(item);

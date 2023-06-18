@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UserId" value="@ViewBag.UserId"></input>
+            <input type="hidden" asp-for="Id" value="@ViewBag.UserId"></input>
             <div class="form-group">
                 <label asp-for="BranchId" class="control-label"></label>
                 <select asp-for="BranchId" class="form-control" asp-items="ViewBag.BranchesNames"></select>

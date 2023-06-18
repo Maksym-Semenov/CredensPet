@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create new user";
+    @ViewBag.BranchName
 }
 
 <h1>Create new user</h1>
@@ -12,10 +13,11 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" value="ViewBag.BranchName"></input>
             <div class="form-group">
             
                 <label asp-for="BranchId" class="control-label">Branch name</label>
-                <select asp-for="BranchId" class ="form-control" asp-items="ViewBag.BranchesNames"></select>
+                <select asp-for="BranchId" class ="form-control" asp-items="ViewBag.BranchName"></select>
 
             </div>
             <div class="form-group">

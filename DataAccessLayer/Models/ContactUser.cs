@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLayer.Models;
 
 public partial class ContactUser
 {
-    [Key]
-    public int ContactUserId { get; set; }
-    
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
+
     [Required]
     public string PhoneMain { get; set; } = string.Empty;
     public string? Phone2 { get; set; } = string.Empty;
@@ -38,7 +39,7 @@ public partial class ContactUser
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 
     public virtual User User { get; set; } = null!;
 }

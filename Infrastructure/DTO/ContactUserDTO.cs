@@ -4,7 +4,7 @@ namespace CredensPet.Infrastructure.DTO;
 
 public class ContactUserDTO
 {
-    public int ContactUserId { get; set; }
+    public Guid Id { get; set; }
 
     public string PhoneMain { get; set; } = string.Empty;
 
@@ -37,6 +37,6 @@ public class ContactUserDTO
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 
 }

@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateFromProject">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -96,15 +96,15 @@
             <td>
                 @{
                     string orderName = @Model.ListProjectProperties
-                        .Where(p => p.ProjectId == item.ProjectId)
+                        .Where(p => p.Id == item.ProjectId)
                         .FirstOrDefault().OrderName;
                 }
                 @Html.DisplayFor(modelItem => orderName)
             </td>
             <td>
-                <a asp-action="Update" asp-route-id="@item.AddressProjectId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AddressProjectId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AddressProjectId">Delete</a>
+                <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

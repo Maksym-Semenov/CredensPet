@@ -31,10 +31,10 @@ namespace Presentation.Controllers
         }
 
         // GET: Branches/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             var item = _mapperToView.Map<BranchViewModel>(await _serviceBranch.FindAll()
-                .FirstOrDefaultAsync(x => x.BranchId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             return View(item);
         }
 
@@ -59,10 +59,10 @@ namespace Presentation.Controllers
         }
 
         // GET: Branches/Update/5
-        public async Task<IActionResult> Update(int? id)
+        public async Task<IActionResult> Update(Guid? id)
         {
             var item = _mapperToView.Map<BranchViewModel>(await _serviceBranch.FindAll()
-                .FirstOrDefaultAsync(x => x.BranchId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (item == null)
             {
                 return NotFound();
@@ -73,10 +73,10 @@ namespace Presentation.Controllers
         // POST: Branches/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind(
+        public async Task<IActionResult> Update(Guid? id, [Bind(
                             "BranchId, BranchName, Phone, IsOpen, Created, LastUpdated")] BranchViewModel branchViewModel)
         {
-            if (id != branchViewModel.BranchId)
+            if (id != branchViewModel.Id)
             {
                 return NotFound();
             }
@@ -91,10 +91,10 @@ namespace Presentation.Controllers
         }
         
         // GET: Branches/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             var item = _mapperToView.Map<BranchViewModel>(await _serviceBranch.FindAll()
-                .FirstOrDefaultAsync(x => x.BranchId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (id == null || _serviceBranch == null || item == null)
             {
                 return NotFound();
@@ -106,14 +106,14 @@ namespace Presentation.Controllers
         // POST: Branches/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(Guid? id)
         {
             if (_serviceBranch == null)
             {
                 return Problem("Entity set 'CredensTestContext.Branches'  is null.");
             }
             var item = _mapperToDTO.Map<BranchDTO>(await _serviceBranch.FindAll()
-                .FirstOrDefaultAsync(x => x.BranchId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (item != null)
             {
                 await _serviceBranch.DeleteAsync(item);

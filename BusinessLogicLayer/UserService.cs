@@ -36,5 +36,4 @@ public class UserService : IService<UserDTO>
     {
         await _repository.UpdateAsync(entity);
     }
-
 }

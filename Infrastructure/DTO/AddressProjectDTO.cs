@@ -2,7 +2,7 @@
 
 public class AddressProjectDTO
 {
-    public int AddressProjectId { get; set; }
+    public Guid Id { get; set; }
 
     public string? Country { get; set; }
 
@@ -29,6 +29,6 @@ public class AddressProjectDTO
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-    public int ProjectId { get; set; }
+    public Guid ProjectId { get; set; }
 
 }

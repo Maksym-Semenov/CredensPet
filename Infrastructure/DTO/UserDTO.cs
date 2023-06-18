@@ -1,8 +1,11 @@
-﻿namespace CredensPet.Infrastructure.DTO;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace CredensPet.Infrastructure.DTO;
 
 public class UserDTO
 {
-    public int UserId { get; set; }
+    public Guid Id { get; set; }
 
     public string? FirstName { get; set; }
 
@@ -10,26 +13,26 @@ public class UserDTO
 
     public string? LastName { get; set; }
 
-    public string? UserRoleId { get; set; }
+    public Guid? UserRoleId { get; set; }
 
-    public int? RoleId { get; set; }
+    public Guid? RoleId { get; set; }
 
     public int? UserCount { get; set; }
 
-    public int? ManagerId { get; set; }
+    public Guid? ManagerId { get; set; }
 
-    public int? CustomerId { get; set; }
+    public Guid? CustomerId { get; set; }
 
-    public int? MediatorId { get; set; }
+    public Guid? MediatorId { get; set; }
 
-    public int? MakerId { get; set; }
+    public Guid? MakerId { get; set; }
 
     public DateTime? Created { get; set; } = DateTime.Now;
 
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-    public int BranchId { get; set; }
+    public Guid BranchId { get; set; }
 
 
 }

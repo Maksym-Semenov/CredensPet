@@ -1,10 +1,11 @@
 ﻿using DataAccessLayer.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace DataAccessLayer.EF;
 
-public partial class CredensContext : DbContext
+public partial class CredensContext : IdentityDbContext
 {
     public CredensContext()
     {
@@ -27,14 +28,16 @@ public partial class CredensContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //=> optionsBuilder.UseMySql("Server=db23.freehost.com.ua;Database=meblis2_credens;User=meblis2_zmey;Password=IwYyR0wnG;", ServerVersion.AutoDetect("Server=db23.freehost.com.ua;Database=meblis2_credens;User=meblis2_zmey;Password=IwYyR0wnG;"));
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=CredensPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=DEATHFORRUSSIA\\SQLEXPRESS;Database=CredensIdentity;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //modelBuilder.Entity<Project>()
-        //    .HasOne(b => b.ContactProject)
-        //    .WithOne(i => i.Project)
-        //    .HasForeignKey<ContactProject>(b => b.ContactProjectId);
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Project>()
+            .HasOne(b => b.AddressProject)
+            .WithOne(i => i.Project)
+            .HasForeignKey<AddressProject>(b => b.ProjectId);
 
         OnModelCreatingPartial(modelBuilder);
     }
