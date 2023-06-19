@@ -9,8 +9,6 @@ namespace DataAccessLayer.EF;
 public partial class CredensContext : IdentityDbContext<User, IdentityRole<Guid>,
                      Guid, IdentityUserClaim<Guid>, IdentityUserRole<Guid>,
                      IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
-
-
 {
     public CredensContext()
     {
