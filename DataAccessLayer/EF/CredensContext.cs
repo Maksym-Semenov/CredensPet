@@ -1,11 +1,16 @@
 ﻿using DataAccessLayer.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace DataAccessLayer.EF;
 
-public partial class CredensContext : IdentityDbContext
+public partial class CredensContext : IdentityDbContext<User, IdentityRole<Guid>,
+                     Guid, IdentityUserClaim<Guid>, IdentityUserRole<Guid>,
+                     IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
+
+
 {
     public CredensContext()
     {
@@ -50,7 +55,7 @@ public class CredensDbContextFactory : IDesignTimeDbContextFactory<CredensContex
 
     {
         var optionsBuilder = new DbContextOptionsBuilder<CredensContext>();
-        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=CredensPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=DEATHFORRUSSIA\\SQLEXPRESS;Database=CredensIdentity;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
         return new CredensContext(optionsBuilder.Options);
     }
 }
