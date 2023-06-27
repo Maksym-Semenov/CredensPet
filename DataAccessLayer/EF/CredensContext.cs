@@ -7,10 +7,6 @@ namespace DataAccessLayer.EF;
 
 public partial class CredensContext : IdentityDbContext<User>
 {
-    public CredensContext()
-    {
-    }
-
     public CredensContext(DbContextOptions<CredensContext> options) : base(options)
     {
         Database.EnsureCreated();
@@ -26,20 +22,21 @@ public partial class CredensContext : IdentityDbContext<User>
 
     public virtual DbSet<User> Users { get; set; }
 
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //    //=> optionsBuilder.UseMySql("Server=db23.freehost.com.ua;Database=meblis2_credens;User=meblis2_zmey;Password=IwYyR0wnG;", ServerVersion.AutoDetect("Server=db23.freehost.com.ua;Database=meblis2_credens;User=meblis2_zmey;Password=IwYyR0wnG;"));
-    //    => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=CredensPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //=> optionsBuilder.UseMySql("Server=db23.freehost.com.ua;Database=meblis2_credens;User=meblis2_zmey;Password=IwYyR0wnG;", ServerVersion.AutoDetect("Server=db23.freehost.com.ua;Database=meblis2_credens;User=meblis2_zmey;Password=IwYyR0wnG;"));
+        => optionsBuilder.UseSqlServer("Server=DEATHFORRUSSIA\\SQLEXPRESS;Database=CredensPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         //modelBuilder.Entity<Project>()
         //    .HasOne(b => b.ContactProject)
         //    .WithOne(i => i.Project)
         //    .HasForeignKey<ContactProject>(b => b.ContactProjectId);
 
-        OnModelCreatingPartial(modelBuilder);
+       // OnModelCreatingPartial(modelBuilder);
     }
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
 
 public class CredensDbContextFactory : IDesignTimeDbContextFactory<CredensContext>
@@ -48,7 +45,7 @@ public class CredensDbContextFactory : IDesignTimeDbContextFactory<CredensContex
 
     {
         var optionsBuilder = new DbContextOptionsBuilder<CredensContext>();
-        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=CredensPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=DEATHFORRUSSIA\\SQLEXPRESS;Database=CredensPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
         return new CredensContext(optionsBuilder.Options);
     }
 }

@@ -5,7 +5,7 @@ namespace Presentation.ViewModels;
 
 public class ContactUserViewModel
 {
-    public int ContactUserId { get; set; }
+    public string Id { get; set; }
 
     public string PhoneMain { get; set; } = string.Empty;
 
@@ -38,6 +38,6 @@ public class ContactUserViewModel
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
 }

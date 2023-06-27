@@ -31,6 +31,6 @@ public partial class AddressProject
 
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
-    public int ProjectId { get; set; }
+    public string ProjectId { get; set; } = Guid.NewGuid().ToString();
     public virtual Project Project { get; set; } = null!;
 }

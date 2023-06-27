@@ -97,10 +97,10 @@
                 @Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>
-                <a asp-action="Update" asp-route-id="@item.ProjectId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a> |
-                <a asp-controller="AddressProjects" asp-action="CreateFromProject" asp-route-id="@item.ProjectId">Add address</a> 
+                <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                <a asp-controller="AddressProjects" asp-action="CreateFromProject" asp-route-id="@item.Id">Add address</a> 
             </td>
         </tr>
 }

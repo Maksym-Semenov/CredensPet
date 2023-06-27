@@ -38,7 +38,7 @@ public partial class ContactUser
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-    public int UserId { get; set; }
+    public string UserId { get; set; } = Guid.NewGuid().ToString();
 
     public virtual User User { get; set; } = null!;
 }

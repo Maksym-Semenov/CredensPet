@@ -98,11 +98,11 @@
                 @Html.DisplayFor(modelItem => item.BranchId)
             </td>
             <td>
-                <a asp-action="Update" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a> |
-                <a asp-controller="Projects" asp-action="CreateFromUser" asp-route-id="@item.UserId">Create project</a> |
-                <a asp-controller="ContactUsers" asp-action="CreateFromUser" asp-route-id="@item.UserId">Create contact</a>
+                <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                <a asp-controller="Projects" asp-action="CreateFromUser" asp-route-id="@item.Id">Create project</a> |
+                <a asp-controller="ContactUsers" asp-action="CreateFromUser" asp-route-id="@item.Id">Create contact</a>
             </td>
         </tr>
 }

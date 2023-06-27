@@ -18,15 +18,15 @@ public partial class Project
 
     public double? Price { get; set; }
 
-    public int? CustomerId { get; set; }
+    public string? CustomerId { get; set; }
 
-    public int? ManagerId { get; set; }
+    public string? ManagerId { get; set; }
 
-    public int? MakerId { get; set; }
+    public string? MakerId { get; set; }
 
     public string? BranchId { get; set; }
 
-    public int? MediatorId { get; set; }
+    public string? MediatorId { get; set; }
 
     public DateTime? Created { get; set; } = DateTime.Now;
 
@@ -36,7 +36,7 @@ public partial class Project
 
     public virtual AddressProject? AddressProject { get; set; }
 
-    public int UserId { get; set; }
+    public string UserId { get; set; } = Guid.NewGuid().ToString();
 
     public virtual User User { get; set; } = null!;
 }

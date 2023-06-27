@@ -2,7 +2,7 @@
 
 public class BranchViewModel
 {
-    public int BranchId { get; set; }
+    public string Id { get; set; }
 
     public string? BranchName { get; set; }
 

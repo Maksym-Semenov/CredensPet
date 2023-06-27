@@ -2,7 +2,7 @@
 
 public class UserDTO
 {
-    public int UserId { get; set; }
+    public string Id { get; set; }
 
     public string? FirstName { get; set; }
 
@@ -12,24 +12,24 @@ public class UserDTO
 
     public string? UserRoleId { get; set; }
 
-    public int? RoleId { get; set; }
+    public string? RoleId { get; set; }
 
     public int? UserCount { get; set; }
 
-    public int? ManagerId { get; set; }
+    public string? ManagerId { get; set; }
 
-    public int? CustomerId { get; set; }
+    public string? CustomerId { get; set; }
 
-    public int? MediatorId { get; set; }
+    public string? MediatorId { get; set; }
 
-    public int? MakerId { get; set; }
+    public string? MakerId { get; set; }
 
     public DateTime? Created { get; set; } = DateTime.Now;
 
     public DateTime? LastUpdated { get; set; } = DateTime.Now;
 
 
-    public int BranchId { get; set; }
+    public string BranchId { get; set; }
 
 
 }

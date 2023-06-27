@@ -31,10 +31,10 @@ namespace Presentation.Controllers
         }
 
         // GET: AddressProjects/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string? id)
         {
             var item = _mapperToView.Map<AddressProjectViewModel>(await _serviceAddressProject.FindAll()
-                .FirstOrDefaultAsync(x => x.AddressProjectId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             return View(item);
         }
 
@@ -62,10 +62,10 @@ namespace Presentation.Controllers
         }
 
         // GET: AddressProjects/Update/5
-        public async Task<IActionResult> Update(int? id)
+        public async Task<IActionResult> Update(string? id)
         {
             var item = _mapperToView.Map<AddressProjectViewModel>(await _serviceAddressProject.FindAll()
-                .FirstOrDefaultAsync(x => x.AddressProjectId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (item == null)
             {
                 return NotFound();
@@ -76,11 +76,11 @@ namespace Presentation.Controllers
         // POST: AddressProjects/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, [Bind("AddressProjectId, ProjectId, Country, City, ResidentialComplex, " +
+        public async Task<IActionResult> Update(string? id, [Bind("Id, ProjectId, Country, City, ResidentialComplex, " +
                                                                            "TypeStreet, Street, BuildingNumber, Litera, BuildingPart, " +
                                                                            "Apt, Floor, Created, LastUpdated")] AddressProjectViewModel addressProjectViewModel)
         {
-            if (id != addressProjectViewModel.AddressProjectId)
+            if (id != addressProjectViewModel.Id)
             {
                 return NotFound();
             }
@@ -95,10 +95,10 @@ namespace Presentation.Controllers
         }
 
         // GET: AddressProjects/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             var item = _mapperToView.Map<AddressProjectViewModel>(await _serviceAddressProject.FindAll()
-                .FirstOrDefaultAsync(x => x.AddressProjectId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (id == null || _serviceAddressProject == null || item == null)
             {
                 return NotFound();
@@ -110,14 +110,14 @@ namespace Presentation.Controllers
         // POST: AddressProjects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(string? id)
         {
             if (_serviceAddressProject == null)
             {
                 return Problem("Entity set 'CredensTestContext.Contacts'  is null.");
             }
             var item = _mapperToDTO.Map<AddressProjectDTO>(await _serviceAddressProject.FindAll()
-                .FirstOrDefaultAsync(x => x.AddressProjectId == id));
+                .FirstOrDefaultAsync(x => x.Id == id));
             if (item != null)
             {
                 await _serviceAddressProject.DeleteAsync(item);
