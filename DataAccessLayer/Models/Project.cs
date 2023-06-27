@@ -6,7 +6,7 @@ namespace DataAccessLayer.Models;
 public partial class Project
 {
     [Key]
-    public int ProjectId { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     public string? OrderValue { get; set; }
     

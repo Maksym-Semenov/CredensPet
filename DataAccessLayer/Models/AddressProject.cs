@@ -5,7 +5,7 @@ namespace DataAccessLayer.Models;
 public partial class AddressProject
 {
     [Key]
-    public int AddressProjectId { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     public string? Country { get; set; }
 

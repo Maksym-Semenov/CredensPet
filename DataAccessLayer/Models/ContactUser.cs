@@ -5,7 +5,7 @@ namespace DataAccessLayer.Models;
 public partial class ContactUser
 {
     [Key]
-    public int ContactUserId { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     
     [Required]
     public string PhoneMain { get; set; } = string.Empty;

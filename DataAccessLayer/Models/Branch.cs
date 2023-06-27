@@ -5,7 +5,7 @@ namespace DataAccessLayer.Models;
 public partial class Branch
 {
     [Key]
-    public int BranchId { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     public string? BranchName { get; set; }
 

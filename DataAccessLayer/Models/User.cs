@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace DataAccessLayer.Models;
 
-public partial class User
+public partial class User : IdentityUser
 {
     [Key]
-    public int UserId { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     public string? FirstName { get; set; }
 
